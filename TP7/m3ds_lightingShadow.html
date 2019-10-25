@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.32">
+<style type="text/css">
+.li-itemize{margin:1ex 0ex;}
+.li-enumerate{margin:1ex 0ex;}
+.dd-description{margin:0ex 0ex 1ex 4ex;}
+.dt-description{margin:0ex;}
+.toc{list-style:none;}
+.footnotetext{margin:0ex; padding:0ex;}
+div.footnotetext P{margin:0px; text-indent:1em;}
+.thefootnotes{text-align:left;margin:0ex;}
+.dt-thefootnotes{margin:0em;}
+.dd-thefootnotes{margin:0em 0em 0em 2em;}
+.footnoterule{margin:1em auto 1em 0px;width:50%;}
+.caption{padding-left:2ex; padding-right:2ex; margin-left:auto; margin-right:auto}
+.title{margin:2ex auto;text-align:center}
+.titlemain{margin:1ex 2ex 2ex 1ex;}
+.titlerest{margin:0ex 2ex;}
+.center{text-align:center;margin-left:auto;margin-right:auto;}
+.flushleft{text-align:left;margin-left:0ex;margin-right:auto;}
+.flushright{text-align:right;margin-left:auto;margin-right:0ex;}
+div table{margin-left:inherit;margin-right:inherit;margin-bottom:2px;margin-top:2px}
+td table{margin:auto;}
+table{border-collapse:collapse;}
+td{padding:0;}
+.cellpadding0 tr td{padding:0;}
+.cellpadding1 tr td{padding:1px;}
+pre{text-align:left;margin-left:0ex;margin-right:auto;}
+blockquote{margin-left:4ex;margin-right:4ex;text-align:left;}
+td p{margin:0px;}
+.boxed{border:1px solid black}
+.textboxed{border:1px solid black}
+.vbar{border:none;width:2px;background-color:black;}
+.hbar{border:none;height:2px;width:100%;background-color:black;}
+.hfill{border:none;height:1px;width:200%;background-color:black;}
+.vdisplay{border-collapse:separate;border-spacing:2px;width:auto; empty-cells:show; border:2px solid red;}
+.vdcell{white-space:nowrap;padding:0px; border:2px solid green;}
+.display{border-collapse:separate;border-spacing:2px;width:auto; border:none;}
+.dcell{white-space:nowrap;padding:0px; border:none;}
+.dcenter{margin:0ex auto;}
+.vdcenter{border:solid #FF8000 2px; margin:0ex auto;}
+.minipage{text-align:left; margin-left:0em; margin-right:auto;}
+.marginpar{border:solid thin black; width:20%; text-align:left;}
+.marginparleft{float:left; margin-left:0ex; margin-right:1ex;}
+.marginparright{float:right; margin-left:1ex; margin-right:0ex;}
+.theorem{text-align:left;margin:1ex auto 1ex 0ex;}
+.part{margin:2ex auto;text-align:center}
+.lstlisting{font-family:monospace;white-space:pre;margin-right:auto;margin-left:0pt;text-align:left}
+</style>
+
+<link rel="stylesheet" href="m3ds_lightingShadow_fichiers/prog3d.css" type="text/css">
+<title>m3ds_lightingShadow</title>
+</head>
+<body>
+<!--HEVEA command line is: hevea -entities style.hva m3ds_lightingShadow.tex -o m3ds_lightingShadow.html -->
+<!--CUT STYLE article--><!--CUT DEF section 1 --><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/logoFST_info.png"><img src="m3ds_lightingShadow_fichiers/logoFST_info.png" style="width:30em"></a>
+</div>
+</div>
+ </td></tr>
+<tr><td style="text-align:center;white-space:nowrap"><span style="font-weight:bold">Master Informatique</span> 2018-2019</td></tr>
+</tbody></table><div class="center"><span style="font-weight:bold"><span style="font-size:large">M3DS</span></span></div><p>
+<br>
+<br>
+</p><div class="center"><span style="font-size:x-large"><span style="font-weight:bold">TP 07 : Light et Shadow Map</span></span></div>
+<!--TOC section id="sec1" Introduction-->
+<h2 id="sec1" class="section">1&nbsp;&nbsp;Introduction</h2><!--SEC END --><ul class="itemize"><li class="li-itemize">
+Reprenez <a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/lightingShadow.zip">lightingShadow.zip</a> sur le portail.
+</li><li class="li-itemize">Exécutez pour tester le squelette : vous obtenez une scène avec un éclairage.
+</li></ul><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/shadowStart.jpg"><img src="m3ds_lightingShadow_fichiers/shadowStart.jpg" style="width:25em"></a>
+
+</div><p>L’objectif est d’ajouter un éclairement par pixel et les ombres portées :</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/shadowEnd.jpg"><img src="m3ds_lightingShadow_fichiers/shadowEnd.jpg" style="width:20em"></a>
+
+</div>
+<!--TOC section id="sec2" Eclairement par vertex/éclairement par pixel-->
+<h2 id="sec2" class="section">2&nbsp;&nbsp;Eclairement par vertex/éclairement par pixel</h2><!--SEC END --><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;1. </span></span>
+On travaille pour le moment dans le shader <code>perVertexLighting.vert</code> et <code>perVertexLighting.frag</code> (vous pouvez éditer ces fichiers directement sous Qt : ils se trouvent dans <code>Autres fichiers</code> dans la liste des fichiers du projet à gauche). Pour le moment seul le diffus y est calculé. </p><p><span style="font-weight:bold">Comprenez</span> le calcul de V, N et L (et, bien sûr, quelle est leur signification/rôle), le calcul de l’intensité, le rôle de <code>materialDiffuse</code> et <code>materialAmbient</code>.
+ Constatez également que la position de la source lumineuse, qui est en 
+uniform dans le shader, est supposée être dans le repère de 
+l’observateur.</p><p><span style="font-weight:bold">Remarque :</span> on ne gère pas l’éclairage "double coté" (i.e. seuls les sommets d’une face <code>FRONT</code> sont susceptibles d’être éclairés; les objets qui apparaissent sont correctement orientés directs vers l’extérieur).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;2. </span></span>
+Ajoutez l’éclairement spéculaire dans le vertex shader (calcul de R, 
+calcul de l’intensité spéculaire, ajout à la couleur du sommet <code>fColor</code>). Pour la brillance, prenez par exemple 50. Le matériel spéculaire (le <span style="font-style:italic">k</span><sub><span style="font-style:italic">s</span></sub> du cours) est donné par l’uniform <code>materialSpecular</code>. </p><p><span style="font-weight:bold">Testez</span>
+ et constatez le mauvais effet du spéculaire calculé au sommet (on le 
+voit surtout lorsque vous animez la scène en cliquant sur "animate" : 
+l’effet est probant sur la sphère). </p><div class="center">
+<table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/vertexSpeculaire0.png"><img src="m3ds_lightingShadow_fichiers/vertexSpeculaire0.png" style="width:20em"></a>
+</div>
+</div>
+</td><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/vertexSpeculaire1.png"><img src="m3ds_lightingShadow_fichiers/vertexSpeculaire1.png" style="width:20em"></a>
+</div>
+</div>
+
+</td></tr>
+</tbody></table>
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;3. </span></span>
+On utilise à présent un éclairement par pixel (diffus et spéculaire) : travaillez dans les fichiers <code>perPixelLighting.vert</code> et <code>perPixelLighting.frag</code>. Reportez tout le calcul d’éclairement dans le fragment shader <code>perPixelLighting.frag</code> (c’est quasiment du copier coller : il faut cependant interpoler <span style="font-style:italic">L</span>,<span style="font-style:italic">V</span>,<span style="font-style:italic">N</span> en in/out, puis faire le calcul d’éclairement dans le fragment shader avec ces vecteurs interpolés). </p><p><span style="font-weight:bold">Testez</span> (il faut cliquer sur "perPixel Lighting" pour que le tracé s’effectue avec ce shader dans l’application). <span style="font-weight:bold">Comparez</span>
+ le résultat et comprenez l’ensemble. Notamment, pourquoi le sol semble 
+plus obscur avec l’éclairement par vertex ? (répondez dans le <code>Readme.txt</code>).</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/pixelSpeculaire.jpg"><img src="m3ds_lightingShadow_fichiers/pixelSpeculaire.jpg" style="width:20em"></a>
+
+</div>
+<!--TOC section id="sec3" Ombre par Depth Map-->
+<h2 id="sec3" class="section">3&nbsp;&nbsp;Ombre par Depth Map</h2><!--SEC END --><p><br>
+
+<span style="color:#004CFF"><span style="font-weight:bold"><u>Exercice&nbsp;1. Texture et changement de repères</u></span></span><span style="color:#004CFF"><br>
+</span>
+</p><p><span style="font-weight:bold">Lors des tests</span> utilisez 
+click-gauche + mouvement pour orienter la vue : cela est nécessaire pour
+ bien comprendre les effets constatés (vous pouvez également bouger la 
+caméra avec ’q’,’d,’s’,’z’; l’appui sur ’espace’ change le mode de 
+navigation de la caméra).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;1. </span></span>
+Lorsque vous cliquez sur "Texture Transform" le tracé de chaque objet se
+ fait avec un shader qui correspond aux fichiers "textureTransform.vert"
+ et "textureTransform.frag" (le shader effectuant l’éclairage est 
+désactivé).</p><p>L’objectif de ce shader est d’affecter la couleur du 
+fragment avec la couleur d’une texture. Les coordonnées de textures vont
+ être calculées (et non pas directement données par un attribut). </p><p>Nous allons calculer ces coordonnées de textures en fonction de la position des sommets (à partir de l’attribut <code>position</code>).
+ L’objectif final sera de calculer les coordonnées de textures 
+correctement pour qu’elles correspondent à la projection d’une 
+diapositive. </p><p>Pour le moment, <span style="font-weight:bold">testez</span> le résultat obtenu pour <code>fTexCoord=gl_Position</code> dans le vertex shader (après l’affectation de <code>gl_Position</code> bien sûr). </p><p>Constatez et <span style="font-weight:bold">comprenez</span>
+ le résultat : pourquoi l’image est fixe quand on bouge la caméra ? 
+pourquoi uniquement dans le quart haut droit ? pourquoi ne voit on pas 
+la texture sur le fond de la scène ? (répondre dans le <code>Readme.txt</code>).</p><p>Remarques : 
+</p><ul class="itemize"><li class="li-itemize">
+Rappel : <code>gl_Position</code> donnera des coordonnées entre [-1,1] alors que l’image de texture a des coordonnées comprises </li><li class="li-itemize">l’objet bleu n’est pas tracé avec ce shader; sa visualisation n’est donc pas influencée par la texture.
+entre [0,1]).
+</li></ul><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/textureTransform.png"><img src="m3ds_lightingShadow_fichiers/textureTransform.png" style="width:20em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;2. </span></span>
+En guise de remarque, les textures peuvent être définies avec répétition ou sans répétition : 
+</p><ul class="itemize"><li class="li-itemize">
+sans répétition, <code>texture(image,vec2(s,t))</code> donnera une couleur noire (0,0,0,0) si les coordonnées de texture s et t ne sont pas dans [0,1].
+</li><li class="li-itemize">avec répétition, la partie entière de <span style="font-style:italic">s</span> et <span style="font-style:italic">t</span>
+ est ignorée (par exemple 2.5 donne 0.5, −3.4 donne 0.6; autrement dit 
+les coordonnées de textures sont toujours comprises entre 0 et 1; ce qui
+ revient à avoir la même image répétée sur tout l’espace s,t).
+</li></ul><p>Cette répétition est contrôlée en OpenGL, pour la texture courante, avec l’instruction <code>glTexParameter</code> et les constantes <code>GL_TEXTURE_WRAP...</code> (cf <a href="https://www.opengl.org/sdk/docs/man/html/glTexParameter.xhtml">man glTexParameter</a> . Dans le squelette, avec la classe <code>Texture</code> fournie, il suffit de faire : <code>_univLille1.wrap(GL_REPEAT)</code> ou <code>_univLille1.wrap(GL_CLAMP_TO_BORDER)</code> (instruction présente dans <code>GLApplication::initialize</code>). Testez ces 2 possibilités et comprenez le résultat.</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/textureRepeat.png"><img src="m3ds_lightingShadow_fichiers/textureRepeat.png" style="width:20em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;3. </span></span>
+<span style="font-weight:bold">Remettez</span> <code>_univLille1.wrap(GL_CLAMP_TO_BORDER);</code> avant de poursuivre.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;4. </span></span>
+Dans le fragment shader <code>textureTransform.frag</code>, reportez les coordonnées de <code>fTexCoord.xyz</code>, qui sont donc comprises dans [-1,1], sur [0,1] (notez au passage la division par <code>fTextCoord.w</code>, car en coordonnées homogènes). <span style="font-weight:bold">Testez</span> (la texture doit maintenant correspondre à tout l’écran). Expliquez pourquoi (toujours dans le <code>Readme.txt</code>).</p><p>Remarque : la coordonnée de texture <span style="font-style:italic">z</span> n’est pas encore exploitée, mais elle sera importante dans la suite.</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/textureAllScreen.png"><img src="m3ds_lightingShadow_fichiers/textureAllScreen.png" style="width:20em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;5. </span></span>
+Testez (et comprenez) :
+</p><ol class="enumerate" type="1"><li class="li-enumerate">
+<code>fTexCoord=vec4(position,1);</code> (cliquez sur "Animate" pour constater que la texture est fixe par rapport aux objets). Pouquoi ? (<code>Readme.txt</code>).
+</li><li class="li-enumerate"><code>fTexCoord=positionEye;</code>. Expliquez (<code>Readme.txt</code>). Constatez que ce test correspond à une bonne voie pour l’effet d’une projection d’une diapositive.
+</li></ol><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;6. </span></span>
+Le passage des coordonnées de la position des sommets (qui sont donnés 
+au vertex shader dans le repère local) aux coordonnées de textures est, 
+en fait, un changement de repère. On peut donc généraliser ce calcul en 
+indiquant une matrice 4x4 qui représentera le passage <span style="font-style:italic">M</span><sub><span style="font-style:italic">Texture</span> → <span style="font-style:italic">rep</span>è<span style="font-style:italic">re</span> <span style="font-style:italic">sommets</span></sub>. </p><p>Pour l’effet de diapositive recherché il faudra placer le repère de texture par rapport au repère <code>Eye</code> (et non par rapport au repère local des objets). On va donc travailler sur une matrice <span style="font-style:italic">M</span><sub><span style="font-style:italic">Texture</span> → <span style="font-style:italic">Eye</span></sub>.</p><p>C’est le rôle de l’uniform <code>textureEyeMatrix</code> déjà définie dans le vertex shader <code>textureTransform.vert</code>. </p><p><span style="font-weight:bold">Testez</span> alors la transformation <code>fTexCoord=textureEyeMatrix*positionEye</code> (pour l’instant <code>textureEyeMatrix</code> est affectée à l’identité, donc cela donne le même résultat que l’exemple <code>fTexCoord=positionEye</code>).</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/textureEye.png"><img src="m3ds_lightingShadow_fichiers/textureEye.png" style="width:20em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;7. </span></span>
+Dans l’application, l’uniform <code>textureEyeMatrix</code> du shader correspond à l’attribut <code>_textureEyeMatrix</code> (de la classe <code>GLApplication</code>). Son affectation est assurée par le squelette. </p><p>Pour modifier sa valeur, allez dans <code>GLApplication::update</code> </p><p>et à la suite de <code>_textureEyeMatrix.setIdentity()</code>, faites par exemple <code>_textureEyeMatrix.translate(4,0,0)</code>. </p><p><span style="font-weight:bold">Testez</span> et comprenez le changement de repère effectué.</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/textureTranslate.png"><img src="m3ds_lightingShadow_fichiers/textureTranslate.png" style="width:20em"></a>
+
+</div><p><span style="font-weight:bold">Remarque :</span> attention à l’interprétation. Intuitivement, l’interprétation serait plus aisée avec <span style="font-style:italic">M</span><sub><span style="font-style:italic">Eye</span> → <span style="font-style:italic">Texture</span></sub> (i.e. comment on place la texture par rapport à l’oeil). Mais c’est bien <span style="font-style:italic">M</span><sub><span style="font-style:italic">Texture</span> → <span style="font-style:italic">Eye</span></sub> dont on a besoin pour calculer les coordonnées de texture à partir de la position <code>Eye</code> (faire l’analogie avec le placement de la caméra et <span style="font-style:italic">M</span><sub><span style="font-style:italic">Eye</span> → <span style="font-style:italic">World</span></sub>).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;8. </span></span>
+Cumulez ce <code>translate</code> en faisant juste à la suite <code>_textureEyeMatrix.rotate(_moveAngle,0,0,1)</code>. <span style="font-weight:bold">Testez</span> et comprenez (il faudra cliquer sur "Animate" ou appuyer sur la touche du clavier <code>&lt;A&gt;</code> à l’exécution pour faire évoluer <code>_moveAngle</code>).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;9. </span></span>
+Agrandissez 2 fois la texture (<code>m.scale(k)</code> permet de cumuler à droite un changement d’échelle <span style="font-style:italic">k</span> à la matrice <span style="font-style:italic">m</span>).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;10. </span></span>
+Une fois bien compris le principe, il est aisé de simuler un 
+vidéoprojecteur avec la projection d’une diapositive (i.e. projection de
+ la texture).</p><p>Le vidéo-projecteur est représenté par l’objet bleu de la scène. Son orientation est contrôlable avec click droit.</p><p>Dans le code, le placement du vidéoprojecteur est donné par l’attribut <code>_projectorMatrix</code>, et correspond au passage <span style="font-style:italic">M</span><sub><span style="font-style:italic">World</span> → <span style="font-style:italic">Projecteur</span></sub>. </p><p><span style="font-weight:bold">Affectez</span> alors <code>_textureEyeMatrix</code> (toujours au début de <code>GLApplication::update</code>, à la place des réponses précédentes) pour que le repère <code>Texture</code> corresponde au repère du vidéoprojecteur (<code>_textureEyeMatrix</code> doit donc à présent traduire <span style="font-style:italic">M</span><sub><span style="font-style:italic">Projecteur</span> → <span style="font-style:italic">Eye</span></sub>). </p><p><span style="font-weight:bold">Remarques</span> : <span style="font-style:italic">M</span><sub><span style="font-style:italic">World</span> → <span style="font-style:italic">Eye</span></sub> (i.e. placement de la caméra) est donné par <code>_camera.worldLocal()</code> (de type <code>Matrix4</code>); <code>_camera.localWorld()</code> donne le passage inverse <span style="font-style:italic">M</span><sub><span style="font-style:italic">Eye</span> → <span style="font-style:italic">World</span></sub>; <code>m1=m2.inverse()</code> donne la matrice inverse de la matrice <span style="font-style:italic">m</span>2; <span style="font-style:italic">m</span>3=<span style="font-style:italic">m</span>1*<span style="font-style:italic">m</span>2 donne le produit de 2 matrices.</p><p><span style="font-weight:bold">Testez</span>.
+ Le projecteur s’oriente avec click-droit + mouvement souris. Le 
+placement de la texture doit être cohérent avec le mouvement du 
+projecteur. Il manque encore l’aspect projection (la texture est projeté
+ de façon orthogonale pour l’instant).</p><div class="center">
+<video controls="controls" width="30%">"<source src="m3ds_lightingShadow_fichiers/textureProj.webm" type="video/webm"></video>
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;11. </span></span>
+Pour rendre réaliste la projection de la diapositive, il manque la projection perspective. Il suffit de cumuler un <code>frustum</code> au changement de repère précédent. <span style="font-weight:bold">Faites-le</span> (l’appel à <code>Matrix4::fromFrustum(-0.1,0.1,-0.1,0.1,0.1,100)</code>,
+ par exemple, vous donne une matrice de projection perspective). Jouez 
+avec les paramètres du frustum pour avoir une projection ni trop petite,
+ ni trop grande (laissez cependant le near=0.1 et le far=100, ce qui 
+aura son importance à l’exercice suivant). </p><p><span style="font-weight:bold">Testez</span>
+ (en manipulant l’orientation du projecteur avec click-droit) : le 
+résultat doit être "réaliste" (semblable à la projection d’une 
+diapositive).</p><div class="center">
+<video controls="controls" width="30%">"<source src="m3ds_lightingShadow_fichiers/textureSlide.webm" type="video/webm"></video>
+</div><p>Notez que le projecteur projette dans les 2 sens (retournez le 
+projecteur à 180 degrés par exemple) : dans le fragment shader on peut 
+limiter en affectant la couleur uniquement si <code>fTexCoord.z&gt;=-1 &amp;&amp; fTexCoord.z&lt;=1</code> (i.e. à l’intérieur du volume défini par le frustum en coordonnées normalisées).</p><p><br>
+
+<span style="color:#004CFF"><span style="font-weight:bold"><u>Exercice&nbsp;2. Ombres portées par depth map</u></span></span><span style="color:#004CFF"><br>
+</span>
+</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;1. </span></span>
+Pour réaliser les ombres portées (issues du projecteur) nous allons 
+partir des shaders précédents, mais pour conserver l’effet diapositive, 
+nous allons travailler dans les shaders <code>shadowMap.vert</code> et <code>shadowMap.frag</code>. </p><p><span style="font-weight:bold">Copiez-collez</span> le code de <code>textureTransform.vert</code> dans <code>shadowMap.vert</code> (écrasez tout son contenu qui ne servait qu’à ce que le squelette du tp compile et s’exécute) et le code de <code>textureTransform.frag</code> dans <code>shadowMap.frag</code> (idem : écrasez tout le contenu). </p><p><span style="font-weight:bold">Renommez</span> alors <code>sampler2D image1;</code> en <code>sampler2D depthTexture</code> (et donc changez également le <code>texture(image1,...)</code> en <code>texture(depthTexture,...)</code>). <code>depthTexture</code>
+ est en effet l’uniform qui est affecté par l’application pour ce 
+shader. Si vous testez vous devez obtenir une projection blanche (tous 
+les pixels de la texture <code>depthTexture</code> sont à la valeur 1).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;2. </span></span>
+Dans l’application C++, la texture <code>depthTexture</code> correspond à l’attribut <code>_depthTexture</code> (définie dans <code>GLApplication</code>).</p><p>Plutôt que d’initialiser la texture <code>_depthTexture</code> avec une image quelconque (jpg ou autre; comme nous l’avons fait à l’exercice précédent avec <code>UL1-IEEA.png</code>), nous allons l’initialiser avec un tracé OpenGL. </p><p>En
+ OpenGL nous pouvons en effet rediriger toutes les commandes de tracé 
+dans une texture (plutôt que dans la fenêtre graphique). Ce principe 
+s’appelle "Render To Texture". Techniquement, la mise en oeuvre s’appuie
+ sur les <span style="font-weight:bold">Frame Buffer Objects</span>. La classe <code>FrameBuffer</code> du squelette permet d’abstraire les détails techniques, et vous disposez d’un membre <code>FrameBuffer _rtt;</code> utilisé ainsi :</p><ul class="itemize"><li class="li-itemize">
+Dans <code>GLApplication::initialize()</code>, on trouve :
+<table class="lstframe" style="padding:1ex;border-style:solid solid double double;"><tbody><tr><td class="lstlisting">  _rtt.create(256,256);       <span style="font-style:italic">// création d'un Frame Buffer de 256x256 pixels</span>
+  _rtt.rtt(&amp;_depthTexture,0); <span style="font-style:italic">// 1er paramètre = Color Buffer des pixels (la texture _depthTexture porte donc mal son nom (pour l'instant !), puisqu'elle va être affectée avec la couleur des pixels tracés),  </span>
+                              <span style="font-style:italic">// 2ième paramètre = Depth Buffer des pixels (0 signifie qu'un depth buffer par défaut est mis en place)</span>
+                              <span style="font-style:italic">// le Color Buffer et le Depth Buffer les dimensions fixées par _rtt.create(256,256)</span></td></tr>
+</tbody></table></li><li class="li-itemize">Notez au tout début du <code>GLApplication::draw()</code> l’appel à la méthode <code>renderToTexture()</code> qui contient : 
+<table class="lstframe" style="padding:1ex;border-style:solid solid double double;"><tbody><tr><td class="lstlisting">  _rtt.begin(); <span style="font-style:italic">// activation : tous les tracés qui suivent seront faits directement dans _rtt</span>
+
+  glViewport(0,0,_rtt.width(),_rtt.height());
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+  _rtt.end(); <span style="font-style:italic">// retour au frame buffer par défaut "normal"</span></td></tr>
+</tbody></table></li></ul><p>Autrement dit tous les pixels de la rtt sont initialisés par le <code>glClear</code> à la couleur blanche (la couleur blanche est fixée par un <code>glClearColor</code> dans <code>initialize</code>).</p><p>Vous pouvez visualiser le contenu de <code>_depthTexture</code>
+ en cliquant sur le bouton "Display depth texture (switch)" (s’incruste 
+en bas à gauche; il s’agit simplement du tracé d’un carré texturé avec <code>_depthTexture</code>). </p><p><span style="font-weight:bold">Testez</span> : pour l’instant l’incrustation est blanche (le tracé dans la texture fait par <code>GLApplication::renderToTexture</code> se contente de faire un <code>glClear</code>).</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/shadowWhite.jpg"><img src="m3ds_lightingShadow_fichiers/shadowWhite.jpg" style="width:20em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;3. </span></span>
+<span style="font-weight:bold">Testez</span> dans <code>GLApplication::renderToTexture</code> le tracé suivant (c’est la scène vue depuis la caméra) :
+</p><table class="lstframe" style="padding:1ex;border-style:solid solid double double;"><tbody><tr><td class="lstlisting">  p3d::projectionMatrix=_camera.projectionMatrix();
+  p3d::modelviewMatrix=_camera.localWorld();
+
+  _currentShader=&amp;_perVertexLighting; <span style="font-style:italic">// les tracés qui suivent se feront avec le shader _perVertexLighting (premier exercice)</span>
+
+  <span style="font-style:italic">// on trace toute la scène dans la rtt sauf le projecteur :</span>
+  lightPosition();
+  drawGround();
+  drawEarth();
+  drawObject();</td></tr>
+</tbody></table><p><span style="font-weight:bold">Comprenez</span> l’incrustation obtenue ainsi que la projection de texture obtenue en cliquant sur "Shadow Map" (ce qui active le shader <code>shadowMap</code>). Cliquez avec la souris pour bouger la scène.</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/projTexture.jpg"><img src="m3ds_lightingShadow_fichiers/projTexture.jpg" style="width:20em"></a>
+
+</div><p><span style="font-weight:bold">Remarque :</span> pour <code>renderToTexture()</code> ni la sphère ni le sol ne sont tracés avec leurs textures (inutile pour l’objectif final).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;4. </span></span>
+Modifiez le point de vue (i.e. modifiez le <code>p3d::projectionMatrix=...</code> et le <code>p3d::modelviewMatrix=...</code> du <code>GLApplication::renderToTexture</code>) pour obtenir une texture correspondant à la scène vue depuis le projecteur. <span style="font-weight:bold">Testez</span> (si vous mettez le même frustum que pour <code>_textureEyeMatrix</code>,
+ la texture doit se calquer sur les objets de la scène : autrement dit 
+les objets de la scène sont "éclairés" avec la projection de la 
+texture). La projection est maintenant fixe lors du déplacement de la 
+caméra.</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/projTextureLight.jpg"><img src="m3ds_lightingShadow_fichiers/projTextureLight.jpg" style="width:20em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;5. </span></span>
+Dans les questions précédentes, la texture <code>_depthTexture</code> a 
+été utilisée en tant que Color Buffer pour le "Render to Texture". Elle 
+peut également servir de Depth Buffer : il suffit de faire <code>_rtt.rtt(0,&amp;_depthTexture)</code> au lieu de <code>_rtt.rtt(&amp;_depthTexture,0);</code> (instruction dans <code>GLApplication::initialize</code>). </p><p>Ainsi, une fois effectué le tracé de <code>GLApplication::renderToTexture()</code>, <code>_depthTexture</code> contiendra les valeurs de profondeur de tous les pixels de la scène (et non plus la couleur). <span style="font-weight:bold">Testez</span>
+ : constatez que l’incrustation et la projection apparaissent blanche. 
+Cela est dû au fait que les valeurs de profondeurs sont stockées dans 
+les composantes rouge/vert/bleu de la texture (valeur identique pour les
+ 3 composantes). Dans l’incrustation, on peut percevoir les objets plus 
+proches en plus sombres (car la profondeur est plus faible).</p><p><span style="font-weight:bold">Remarque :</span>
+ sur certaines configurations l’image peut apparaitre en dégradé rouge 
+plutôt qu’en dégradé de gris (i.e. profondeur stockée sur la composante 
+rouge uniquement).</p><p>Pour avoir des valeurs de profondeur un peu plus visibles effectuez les 2 étapes suivantes :
+</p><ol class="enumerate" type="1"><li class="li-enumerate">
+Pour la projection : dans <code>shadowMap.frag</code> mettez comme couleur de sortie : <code>fragColor=1.0-clamp(50.0*(1.0-fragColor),0,1);</code> (formule empirique : permet d’étaler un peu plus les couleurs sur [0,1] pour qu’elles soient un peu plus visibles).
+</li><li class="li-enumerate">Pour l’incrustation : dans la méthode <code>GLApplication::drawIncrustation()</code>, mettez <code>true</code> en dernier paramètre de <code>p3d::drawTexture</code> (augmentera artificiellement le contraste pour le tracé de l’incrustation).
+</li></ol><p><span style="font-weight:bold">Re-testez</span></p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/projDepthMap.png"><img src="m3ds_lightingShadow_fichiers/projDepthMap.png" style="width:20em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;6. </span></span>
+La texture <code>depthTexture</code> contient donc les valeurs de 
+profondeurs de chaque pixel de la scène vue depuis le projecteur. Il 
+reste à exploiter cette texture pour obtenir les ombres portées : dans <code>shadowMap.frag</code> à quoi correspondent <code>texCoord.z</code> et <code>fragColor.r</code> pour le pixel tracé ?</p><p>Répondre dans le <code>Readme.txt</code>. Vous pouvez vous appuyer sur le schéma suivant (notamment en <span style="font-style:italic">B</span><sub><span style="font-style:italic">D</span></sub> à quoi correspond <code>fragColor.r</code> ? lors du tracé du pixel <span style="font-style:italic">B</span><sub><span style="font-style:italic">E</span></sub> à quoi correspondent <code>fragColor.r</code> et <code>texCoord.z</code> ?).</p><p><span style="font-weight:bold">Attention :</span> la valeur de profondeur stockée dans la texture est dans [0,1] (window coordinate) alors que la valeur calculée dans <code>texCoord.z</code> est dans [−1,1] (coordonnée normalisée).</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/depthMapPrincipe.jpg"><img src="m3ds_lightingShadow_fichiers/depthMapPrincipe.jpg" style="width:20em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;7. </span></span>
+Modifiez alors <code>shadowMap.frag</code> pour que <code>fragColor</code> soit affecté à la couleur noire <code>vec4(0,0,0,1)</code> si le pixel tracé est dans une ombre (pixel non vu depuis le projecteur) <code>vec4(1,1,1,1)</code> si le pixel tracé est eclairé (pixel vu depuis le projecteur). <span style="font-weight:bold">Testez</span>. </p><p>Vous
+ devez constatez l’effet lié aux erreurs de précision (il n’y a pas de 
+correspondance exacte entre 1 pixel projeté sur la texture et 1 pixel de
+ la depth map : il peut donc y avoir un décalage entre les profondeurs 
+calculées et celles stockées).</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/shadowAcne.jpg"><img src="m3ds_lightingShadow_fichiers/shadowAcne.jpg" style="width:20em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;8. </span></span>
+Pour résoudre il suffit de faire le test à une erreur près. Testez par exemple avec <code>texCoord.z-0.001</code>. Vous devez avoir à présent des ombres portées correctes.</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/shadowOk.jpg"><img src="m3ds_lightingShadow_fichiers/shadowOk.jpg" style="width:20em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;9. </span></span>
+Pour mixer l’éclairement avec les ombres, on choisit la démarche 
+suivante : la scène est d’abord tracé avec le shader pour l’éclairement 
+(1ère passe), puis "par dessus" on retrace la scène mais cette fois ci 
+avec le shader <code>shadowMap</code> (2nde passe). Les couleurs doivent
+ être mélangées entre elles (utilisation du "blending"; c’est le même 
+principe que pour la transparence constatée sur le tp des BSP; nous 
+détaillerons le blending lors d’un prochain chapitre). </p><p>Tout est déjà fait dans le squelette (constatez rapidement l’existence des 2 passes dans <code>GLApplication::draw()</code> avec l’activation du blending). Il reste seulement à donner une "transparence" à l’ombre portée : modifiez <code>shadowMap.frag</code> pour que la couleur éclairée soit <code>vec4(0,0,0,0)</code>
+ (alpha =0, c’est-à-dire complètement transparent : la couleur du pixel 
+tracé n’influencera donc pas la couleur finale) et la couleur d’ombre 
+soit <code>vec4(0,0,0,0.6)</code> (couleur noire légèrement transparente). <span style="font-weight:bold">Testez</span></p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/shadowBlend.jpg"><img src="m3ds_lightingShadow_fichiers/shadowBlend.jpg" style="width:20em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;10. </span></span>
+Un dernier détail : les pixels dont les coordonnées de texture calculées
+ sont en dehors de la depth map apparaissent ombrés. Il suffit de forcer
+ une couleur <code>vec4(0,0,0,0)</code> pour toute coordonnée de texture non comprise dans [0,1]. <span style="font-weight:bold">Testez</span>.</p><div class="center">
+<video controls="controls" width="30%">"<source src="m3ds_lightingShadow_fichiers/shadowTotal.webm" type="video/webm"></video>
+</div><p>Quelques remarques pour finir :
+</p><ul class="itemize"><li class="li-itemize">
+On peut gommer la pixelisation de la depth map pour affiner un peu l’ombre (il suffit de mettre <code>_rtt.create(1024,1024)</code> par exemple; mais l’aspect pixelisé apparaitra toujours selon la distance à la source, ou l’ampleur de la scène couverte).
+</li><li class="li-itemize">OpenGL intègre directement la notion de depth map pour les ombres portées avec les <code>sampler2DShadow</code>
+ (permet de rendre plus cohérente l’interprétation de la texture dans le
+ code; un test de visibilité est intégré (retourne 0 ou 1)).
+</li><li class="li-itemize">On peut lisser le contour de l’ombre pour qu’il paraisse moins abrupt (lissage facilité avec les <code>sampler2DShadow</code>).
+</li><li class="li-itemize">La génération de la depth map est, en 
+pratique, générée avec un shader le plus simple possible (seule la 
+profondeur est récupérée; peu importe la couleur).
+</li><li class="li-itemize">Les ombres portées ne sont généralement pas 
+rendues en plusieurs passes comme ici : un seul shader gère 
+l’éclairement et l’ombre portée.
+</li><li class="li-itemize">Si la source lumineuse se trouve au milieu 
+des objets il faut plusieurs depth map (pour projeter sur tous les cotés
+ de la source lumineuse).
+</li><li class="li-itemize"><a href="http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-16-shadow-mapping/">http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-16-shadow-mapping/</a>
+</li><li class="li-itemize"><a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ee416324(v=vs.85).aspx">http://msdn.microsoft.com/en-us/library/windows/desktop/ee416324(v=vs.85).aspx</a>
+</li><li class="li-itemize"><a href="http://http.developer.nvidia.com/GPUGems3/gpugems3_ch08.html">http://http.developer.nvidia.com/GPUGems3/gpugems3_ch08.html</a>
+</li></ul><!--CUT END -->
+<!--HTMLFOOT-->
+<!--ENDHTML-->
+<!--FOOTER-->
+<hr style="height:2"><blockquote class="quote"><em>Ce document a été traduit de L<sup>A</sup>T<sub>E</sub>X par </em><a href="http://hevea.inria.fr/"><em>H</em><em><span style="font-size:small"><sup>E</sup></span></em><em>V</em><em><span style="font-size:small"><sup>E</sup></span></em><em>A</em></a></blockquote>
+
+</body></html>

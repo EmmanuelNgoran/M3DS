@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.32">
+<style type="text/css">
+.li-itemize{margin:1ex 0ex;}
+.li-enumerate{margin:1ex 0ex;}
+.dd-description{margin:0ex 0ex 1ex 4ex;}
+.dt-description{margin:0ex;}
+.toc{list-style:none;}
+.footnotetext{margin:0ex; padding:0ex;}
+div.footnotetext P{margin:0px; text-indent:1em;}
+.thefootnotes{text-align:left;margin:0ex;}
+.dt-thefootnotes{margin:0em;}
+.dd-thefootnotes{margin:0em 0em 0em 2em;}
+.footnoterule{margin:1em auto 1em 0px;width:50%;}
+.caption{padding-left:2ex; padding-right:2ex; margin-left:auto; margin-right:auto}
+.title{margin:2ex auto;text-align:center}
+.titlemain{margin:1ex 2ex 2ex 1ex;}
+.titlerest{margin:0ex 2ex;}
+.center{text-align:center;margin-left:auto;margin-right:auto;}
+.flushleft{text-align:left;margin-left:0ex;margin-right:auto;}
+.flushright{text-align:right;margin-left:auto;margin-right:0ex;}
+div table{margin-left:inherit;margin-right:inherit;margin-bottom:2px;margin-top:2px}
+td table{margin:auto;}
+table{border-collapse:collapse;}
+td{padding:0;}
+.cellpadding0 tr td{padding:0;}
+.cellpadding1 tr td{padding:1px;}
+pre{text-align:left;margin-left:0ex;margin-right:auto;}
+blockquote{margin-left:4ex;margin-right:4ex;text-align:left;}
+td p{margin:0px;}
+.boxed{border:1px solid black}
+.textboxed{border:1px solid black}
+.vbar{border:none;width:2px;background-color:black;}
+.hbar{border:none;height:2px;width:100%;background-color:black;}
+.hfill{border:none;height:1px;width:200%;background-color:black;}
+.vdisplay{border-collapse:separate;border-spacing:2px;width:auto; empty-cells:show; border:2px solid red;}
+.vdcell{white-space:nowrap;padding:0px; border:2px solid green;}
+.display{border-collapse:separate;border-spacing:2px;width:auto; border:none;}
+.dcell{white-space:nowrap;padding:0px; border:none;}
+.dcenter{margin:0ex auto;}
+.vdcenter{border:solid #FF8000 2px; margin:0ex auto;}
+.minipage{text-align:left; margin-left:0em; margin-right:auto;}
+.marginpar{border:solid thin black; width:20%; text-align:left;}
+.marginparleft{float:left; margin-left:0ex; margin-right:1ex;}
+.marginparright{float:right; margin-left:1ex; margin-right:0ex;}
+.theorem{text-align:left;margin:1ex auto 1ex 0ex;}
+.part{margin:2ex auto;text-align:center}
+.lstlisting{font-family:monospace;white-space:pre;margin-right:auto;margin-left:0pt;text-align:left}
+</style>
+
+<link rel="stylesheet" href="m3ds_obb_fichiers/prog3d.css" type="text/css">
+<title>m3ds_obb</title>
+</head>
+<body>
+<!--HEVEA command line is: hevea -entities style.hva m3ds_obb.tex -o m3ds_obb.html -->
+<!--CUT STYLE article--><!--CUT DEF section 1 --><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/logoFST_info.png"><img src="m3ds_obb_fichiers/logoFST_info.png" style="width:30em"></a>
+</div>
+</div>
+ </td></tr>
+<tr><td style="text-align:center;white-space:nowrap"><span style="font-weight:bold">Master Informatique</span> 2018-2019</td></tr>
+</tbody></table><div class="center"><span style="font-weight:bold"><span style="font-size:large">M3DS</span></span></div><p>
+<br>
+<br>
+</p><div class="center"><span style="font-size:x-large"><span style="font-weight:bold">TP 09 : Animation basée physique de boites rigides</span></span></div><p><br>
+
+<span style="color:#004CFF"><span style="font-weight:bold"><u>Exercice&nbsp;1. Introduction</u></span></span><span style="color:#004CFF"><br>
+</span>
+</p><div class="center">
+<video controls="controls" width="30%">"<source src="m3ds_obb_fichiers/obb.webm" type="video/webm"></video>
+</div><ul class="itemize"><li class="li-itemize">
+Reprenez <a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/obb.zip">obb.zip</a> sur le portail.
+</li><li class="li-itemize">L’objectif du tp est d’animer les boites présentes à l’écran :
+<ul class="itemize"><li class="li-itemize">
+interaction avec un ressort en cliquant sur une image
+</li><li class="li-itemize">mouvement généré par le ressort, puis contrôle par frottement
+</li><li class="li-itemize">détection de la collision par axe séparateur
+</li><li class="li-itemize">déterminer les informations nécessaires à la réponse (réponse par impulsion).
+</li></ul>
+</li></ul><div class="center">
+<table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/obb0000.jpg"><img src="m3ds_obb_fichiers/obb0000.jpg" style="width:25em"></a>
+</div>
+</div>
+</td><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/obb0002.jpg"><img src="m3ds_obb_fichiers/obb0002.jpg" style="width:25em"></a>
+</div>
+</div>
+
+</td></tr>
+</tbody></table>
+</div><p>La structure du squelette est assez similaire au tp sur les particules : on travaille principalement avec les classes <code>Box</code>, <code>BoxList</code> et <code>EngineBox</code> (on retrouve dans ce dernier la boucle principale, l’intégration par euler et la gestion des collisions).</p><p>L’origine du repère des boites est le centre de la boite, et les directions <span style="font-style:italic">x</span> et <span style="font-style:italic">y</span> sont respectivement sa largeur et sa hauteur. Les boites sont placées dans le repère de scène <code>World</code> en donnant la position du centre de la boite (<code>b-&gt;position(Vector3)</code> dans le source) et son angle d’orientation (<code>b-&gt;theta(double)</code>).</p><div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/boxrepere.jpg"><img src="m3ds_obb_fichiers/boxrepere.jpg" style="width:25em"></a>
+</div>
+</div><p>Les boites sont initialisées dans le constructeur <code>GLApplication::GLApplication</code>) (donnée des masses, des angles/positions/vitesses initiales, calcul du moment d’inertie déjà effectués).</p><p><span style="font-weight:bold">Remarque :</span> toutes les données sont en 3D, mais on raisonne dans le plan (toutes les coordonnées <span style="font-style:italic">z</span> sont nulles et on se contentera d’appliquer les lois physiques angulaires 2D).</p><p><br>
+
+<span style="color:#004CFF"><span style="font-weight:bold"><u>Exercice&nbsp;2. Intégration du mouvement</u></span></span><span style="color:#004CFF"><br>
+</span>
+</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;1. </span></span>
+Dans <code>EngineBox.cpp</code> (qui gère toute la physique de la scène), il faut calculer les forces qui s’appliquent sur chacune des boites dans la méthode <code>EngineBox::computeForce()</code>. Commencez par mettre une force de gravité vers le bas (i.e. <span style="font-style:italic">y</span>
+ négatif; cf commentaires pour les aspects techniques). Remarque : il 
+n’y a pas de moments pour la gravité, car elle est appliquée uniquement 
+au centre de gravité.</p><p><span style="font-weight:bold">Testez</span> : vous devez avoir les 2 boites qui "tombent".</p><p><span style="font-weight:bold">Remarque :</span></p><p>La
+ méthode de collision avec les bords (les lignes bleues qui représentent
+ des plans orthogonaux à l’écran) est similaire à ce qui a été vu sur 
+les particules et est déjà faite pour vous (dans <code>EngineBox::collisionPlane</code>)
+ : la collision est résolue en déterminant le point de la boite le plus 
+éloigné dans la partie négative du plan, puis on répond à la collision 
+par impulsion (correction en vitesse/en position/en force). Pour 
+déterminer ce point le plus loin, on teste chacun des sommets de la 
+boite (les 4 sommets de la boite sont donnés par <code>une_boite-&gt;vertex(i)</code>). Tous les calculs sont faits dans le repère <code>world</code> de la scène.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;2. </span></span>
+Complétez <code>EngineBox::euler()</code> pour intégrer la vitesse angulaire (i.e. <code>b-&gt;omega(??)</code>) et l’angle de rotation (i.e. <code>b-&gt;theta(??)</code>). Remarque : <code>omega()</code> est un vecteur 3D; pour avoir la vitesse de l’angle <code>theta</code> il suffit de faire <code>b-&gt;omega().z()</code> (le vecteur vitesse angulaire <code>omega</code> est orthogonal au plan).</p><p><span style="font-weight:bold">Testez</span> vous devez constatez à présent un rebond naturel des boites (incluant la rotation)</p><p><br>
+
+<span style="color:#004CFF"><span style="font-weight:bold"><u>Exercice&nbsp;3. Application d’un ressort</u></span></span><span style="color:#004CFF"><br>
+</span>
+</p><p>On souhaite contrôler les boites avec la souris : on clique dans 
+la boite, cela attache un ressort au point cliqué, et lorsqu’on déplace 
+la souris, l’allongement du ressort déplace la boite.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;1. </span></span>
+On doit d’abord localiser la position de la souris dans la boite : lorsqu’on clique, les coordonnées pixels de la souris <span style="font-style:italic">M</span> sont tout d’abord transformées dans le repère de la scène (fait dans <code>GLApplication::update()</code>). </p><p>Ensuite il faut savoir si ce point <span style="font-style:italic">M</span> est interne à une boite <span style="font-style:italic">b</span> : pour cela, on transforme le point <span style="font-style:italic">M</span> dans le repère local à la boite, puis on teste si ses coordonnées sont comprises dans [−<span style="font-style:italic">width</span>()/2.0,<span style="font-style:italic">width</span>()/2.0] et [−<span style="font-style:italic">height</span>()/2.0,<span style="font-style:italic">height</span>()/2.0] (cf schéma du repère de la boite en début de sujet).</p><p>Cette localisation d’un click souris dans une boite est déjà assurée par le squelette (méthodes <code>Box::isInside</code> et <code>Box::toLocal</code>). <span style="font-weight:bold">Remarque :</span> la localisation d’un point dans une boite avait été faite lors du PJE Multi-Touch; elle doit être parfaitement comprise.</p><p><span style="font-weight:bold">Testez</span>
+ : cliquez dans les boites. La boite doit apparaitre avec un contour 
+épais lorsque le click est à l’intérieur (Remarque : bien qu’effectuées 
+par le squelette, les étapes qui passent des coordonnées souris au 
+repère local de la boite pour savoir si le click est à l’intérieur de la
+ boite doivent être comprises). </p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;2. </span></span>
+Lorsque vous déplacez la souris en maintenant le click dans une boite, 
+vous voyez apparaitre un trait : on va interpréter ce trait comme un 
+ressort.</p><p><span style="font-weight:bold">Complétez</span> <code>EngineBox::computeForce()</code> pour insérer la force issue du ressort. Le ressort est actif lorsque <code>_cursorActive==true</code>, et on récupère la boite qui est attachée au ressort par <code>Box *b=_boxList-&gt;selected()</code>.</p><p>Pour calculer la force : l’allongement <span style="font-style:italic">l</span> du ressort est donné par <code>l=_cursor-b-&gt;attachWorld()</code> avec <code>_cursor</code> le point actuel de la souris, et <code>b-&gt;attachWorld()</code>
+ le point d’attache dans la boite (i.e. le click initial); ces deux 
+extrémités du ressort sont déjà exprimées dans le repère de scène. La 
+longueur au repos (quand le ressort ne provoque pas de force) sera 
+l’allongement nul (les boites seront ainsi toujours attirées par la 
+souris, et jamais repoussées). On ajoute une force à la boite <code>b</code> par <code>b-&gt;addForce(la_force);</code></p><p><span style="font-weight:bold">Testez</span> : vous pouvez maintenant contrôler les boites avec ce ressort (testez éventuellement avec différentes raideurs).</p><p><span style="font-weight:bold">Remarquez</span>
+ cependant que la force appliquée ne provoque pas de rotation (testez en
+ attachant le ressort sur une extrémité d’une boite : la boite devrait 
+intuitivement tourner). C’est l’objet de la question suivante.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;3. </span></span>
+<span style="font-weight:bold">Ajoutez</span> dans <code>EngineBox::computeForce</code>, le moment de la force du ressort (cf cours) en utilisant <code>b-&gt;addMoment(un Vector3)</code>.</p><p><span style="font-weight:bold">Testez</span>
+ : vous devez maintenant pouvoir contrôler l’orientation des boites avec
+ le ressort. Dans la suite on va contrôler l’inertie des objets en 
+mouvement (pour l’instant si vous faites tourner un objet, il va tourner
+ indéfiniment).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;4. </span></span>
+<span style="font-weight:bold">Ajoutez</span> une force de frottement à chacune des boites dans <code>EngineBox::computeForce()</code> avec <code>b-&gt;addForce(???)</code>, ainsi qu’un moment de frottement avec <code>b-&gt;addMoment(???)</code> (moment allant dans le sens opposé au vecteur vitesse angulaire).</p><p><span style="font-weight:bold">Testez</span> et choisissez des coefficients qui vous conviennent (ni trop lent, ni trop rapide).</p><p><br>
+
+<span style="color:#004CFF"><span style="font-weight:bold"><u>Exercice&nbsp;4. Détection des collisions entre boites par axes séparateurs</u></span></span><span style="color:#004CFF"><br>
+</span>
+
+On cherche à déterminer si les boites entrent en collision, puis à 
+répondre à cette collision. La collision sera détectée grâce aux axes 
+séparateurs.</p><p>La méthode principale pour la détection est <code>Box::detectCollision(b1,b2,collisionInfo)</code> (méthode de classe). Le paramètre <code>collisionInfo</code>
+ contiendra, en sortie, toutes les informations nécessaires à la 
+réponse. La méthode doit tester l’existence d’un axe séparateur entre <span style="font-style:italic">b</span>1 et <span style="font-style:italic">b</span>2 parmi les 4 possibles. Elle utilise <code>Box::distance(b1,b2,axe,...)</code> qui permet d’avoir la distance de recouvrement entre <code>b1</code> et <code>b2</code> sur l’axe donné. Pour cela, il faut projeter les boites sur l’axe : cela est fait par <code>Box::project(axe,mini,maxi)</code> (le résultat sera donné par l’intervalle [<span style="font-style:italic">mini</span>,<span style="font-style:italic">maxi</span>]).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;1. </span></span>
+<span style="font-weight:bold">Complétez</span> <code>Box::project(...)</code> qui doit projeter tous les sommets de la boite sur le vecteur <code>axe</code>, et donner en retour l’intervalle de projection sur cet axe (2 réels en résultat).</p><p><span style="font-weight:bold">Testez</span>
+ : vous devez voir apparaitre 2 traits qui correspondent aux intervalles
+ de projection des 2 boites sur un des axes (il s’agit de l’axe <span style="font-style:italic">x</span>
+ de la plus petite boite). Vérifiez visuellement que les projections 
+sont correctes, et constatez la séparation/superposition des intervalles
+ (l’axe est séparateur si les 2 intervalles ne se recouvrent pas).</p><div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/obb0003.jpg"><img src="m3ds_obb_fichiers/obb0003.jpg" style="width:25em"></a>
+</div>
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;2. </span></span>
+<span style="font-weight:bold">Complétez</span> à présent <code>Box::distance(...)</code> : elle doit affecter <code>*distance</code>
+ avec la distance de recouvrement des 2 boites selon l’axe donné (par 
+convention la distance doit être négative si les projections se 
+recouvrent et positive sinon). Le résultat <code>direction</code> doit être affecté pour la réponse à la collision qui suivra : Le paramètre <code>direction</code> doit être affecté avec +1 si, pour séparer <span style="font-style:italic">b</span>2 de <span style="font-style:italic">b</span>1, il faut bouger <span style="font-style:italic">b</span>2 dans le même sens que l’<span style="font-style:italic">axe</span> séparateur, et −1 s’il faut aller dans le sens opposé.</p><div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/obbRecouvre.jpg"><img src="m3ds_obb_fichiers/obbRecouvre.jpg" style="width:25em"></a>
+</div>
+</div><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/obbRecouvreMoins.jpg"><img src="m3ds_obb_fichiers/obbRecouvreMoins.jpg" style="width:25em"></a>
+</div>
+</div>
+</td><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/obbRecouvrePlus.jpg"><img src="m3ds_obb_fichiers/obbRecouvrePlus.jpg" style="width:25em"></a>
+</div>
+</div>
+</td><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/obbRecouvreNegate.jpg"><img src="m3ds_obb_fichiers/obbRecouvreNegate.jpg" style="width:25em"></a>
+</div>
+</div>
+ </td></tr>
+<tr><td style="text-align:center;white-space:nowrap">Recouvrement positif</td><td style="text-align:center;white-space:nowrap">Recouvrement négatif</td><td style="text-align:center;white-space:nowrap">Recouvrement négatif </td></tr>
+<tr><td style="text-align:center;white-space:nowrap">&nbsp;</td><td style="text-align:center;white-space:nowrap">(et b2 doit être déplacé dans le sens de <span style="font-style:italic">u</span>)</td><td style="text-align:center;white-space:nowrap">(et b2 doit être déplacé dans le sens de −<span style="font-style:italic">u</span>) 
+</td></tr>
+</tbody></table><p><span style="font-weight:bold">Testez</span> pour voir apparaitre la distance de séparation sur la boite b1.</p><div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/obb0004.jpg"><img src="m3ds_obb_fichiers/obb0004.jpg" style="width:25em"></a>
+</div>
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;3. </span></span>
+Il reste enfin à faire la boucle sur les 4 axes possibles, et retenir la distance minimale ainsi que l’axe correspondant : <span style="font-weight:bold">complétez</span> <code>Box::detectCollision</code> (déterminer les affectations à faire à <code>detect</code>, <code>dist_min</code> et <code>axe_min</code>). <span style="font-weight:bold">Enlevez</span> le <code>detect=false</code> qui apparait avant <code>if (detect)</code> (réponse à la collision).</p><p><span style="font-weight:bold">Testez</span> : la collision doit être maintenant effective entre les boites (<span style="font-weight:bold">Remarque :</span> le calcul de l’impulsion et la correction en vitesse/etc est déjà effectuée dans <code>EngineBox::interCollision</code> : il suffit de décommenter le bloc qui provoque ce calcul dans cette méthode).</p><p><span style="font-weight:bold">Attention</span> : <code>axe_min</code> doit donner la direction de séparation <span style="font-style:italic">u</span>, mais également le sens de séparation : selon la position relative des intervalles de <span style="font-style:italic">b</span>1 et <span style="font-style:italic">b</span>2, la séparation doit se faire en déplaçant <code>b1</code> dans le sens de <span style="font-style:italic">u</span> ou dans le sens opposé (cf schéma). C’est le paramètre <code>direction</code> (qui est soit +1, soit −1) calculé dans la procédure <code>distance</code> qui doit indiquer ce sens (i.e. multiplier la direction choisie par <code>direction</code>; <code>direction</code> doit bien sûr être correctement affecté dans la procédure <code>distance</code>).</p><p>(une fois testé, vous pouvez enlever les tests visuels : commentez l’appel à <code>drawDebugProject</code> dans <code>Box::distance</code> et l’appel à <code>p3d::addDebug</code> dans <code>Box::detectCollision</code>).</p><div class="center">
+<video controls="controls" width="30%">"<source src="m3ds_obb_fichiers/obb.webm" type="video/webm"></video>
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;4. </span></span>
+Créez une scène (si vous souhaitez rajouter des boites, il suffit de copier/coller la création d’une boite dans le constructeur <code>GLApplication::GLApplication()</code>) puis règlez les forces qui conviennent pour avoir une interaction naturelle.</p><!--CUT END -->
+<!--HTMLFOOT-->
+<!--ENDHTML-->
+<!--FOOTER-->
+<hr style="height:2"><blockquote class="quote"><em>Ce document a été traduit de L<sup>A</sup>T<sub>E</sub>X par </em><a href="http://hevea.inria.fr/"><em>H</em><em><span style="font-size:small"><sup>E</sup></span></em><em>V</em><em><span style="font-size:small"><sup>E</sup></span></em><em>A</em></a></blockquote>
+
+</body></html>

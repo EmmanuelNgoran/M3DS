@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.32">
+<style type="text/css">
+.li-itemize{margin:1ex 0ex;}
+.li-enumerate{margin:1ex 0ex;}
+.dd-description{margin:0ex 0ex 1ex 4ex;}
+.dt-description{margin:0ex;}
+.toc{list-style:none;}
+.footnotetext{margin:0ex; padding:0ex;}
+div.footnotetext P{margin:0px; text-indent:1em;}
+.thefootnotes{text-align:left;margin:0ex;}
+.dt-thefootnotes{margin:0em;}
+.dd-thefootnotes{margin:0em 0em 0em 2em;}
+.footnoterule{margin:1em auto 1em 0px;width:50%;}
+.caption{padding-left:2ex; padding-right:2ex; margin-left:auto; margin-right:auto}
+.title{margin:2ex auto;text-align:center}
+.titlemain{margin:1ex 2ex 2ex 1ex;}
+.titlerest{margin:0ex 2ex;}
+.center{text-align:center;margin-left:auto;margin-right:auto;}
+.flushleft{text-align:left;margin-left:0ex;margin-right:auto;}
+.flushright{text-align:right;margin-left:auto;margin-right:0ex;}
+div table{margin-left:inherit;margin-right:inherit;margin-bottom:2px;margin-top:2px}
+td table{margin:auto;}
+table{border-collapse:collapse;}
+td{padding:0;}
+.cellpadding0 tr td{padding:0;}
+.cellpadding1 tr td{padding:1px;}
+pre{text-align:left;margin-left:0ex;margin-right:auto;}
+blockquote{margin-left:4ex;margin-right:4ex;text-align:left;}
+td p{margin:0px;}
+.boxed{border:1px solid black}
+.textboxed{border:1px solid black}
+.vbar{border:none;width:2px;background-color:black;}
+.hbar{border:none;height:2px;width:100%;background-color:black;}
+.hfill{border:none;height:1px;width:200%;background-color:black;}
+.vdisplay{border-collapse:separate;border-spacing:2px;width:auto; empty-cells:show; border:2px solid red;}
+.vdcell{white-space:nowrap;padding:0px; border:2px solid green;}
+.display{border-collapse:separate;border-spacing:2px;width:auto; border:none;}
+.dcell{white-space:nowrap;padding:0px; border:none;}
+.dcenter{margin:0ex auto;}
+.vdcenter{border:solid #FF8000 2px; margin:0ex auto;}
+.minipage{text-align:left; margin-left:0em; margin-right:auto;}
+.marginpar{border:solid thin black; width:20%; text-align:left;}
+.marginparleft{float:left; margin-left:0ex; margin-right:1ex;}
+.marginparright{float:right; margin-left:1ex; margin-right:0ex;}
+.theorem{text-align:left;margin:1ex auto 1ex 0ex;}
+.part{margin:2ex auto;text-align:center}
+.lstlisting{font-family:monospace;white-space:pre;margin-right:auto;margin-left:0pt;text-align:left}
+</style>
+
+<link rel="stylesheet" href="m3ds_modelisation_fichiers/prog3d.css" type="text/css">
+<title>m3ds_modelisation</title>
+</head>
+<body>
+<!--HEVEA command line is: hevea -entities style.hva m3ds_modelisation.tex -o m3ds_modelisation.html -->
+<!--CUT STYLE article--><!--CUT DEF section 1 --><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/logoFST_info.png"><img src="m3ds_modelisation_fichiers/logoFST_info.png" style="width:30em"></a>
+</div>
+</div>
+ </td></tr>
+<tr><td style="text-align:center;white-space:nowrap"><span style="font-weight:bold">Master Informatique</span> 2018-2019</td></tr>
+</tbody></table><div class="center"><span style="font-weight:bold"><span style="font-size:large">M3DS</span></span></div><p>
+<br>
+<br>
+</p><div class="center"><span style="font-size:x-large"><span style="font-weight:bold">TP 05 : Modélisation</span></span></div>
+<!--TOC section id="sec1" Introduction-->
+<h2 id="sec1" class="section">1&nbsp;&nbsp;Introduction</h2><!--SEC END --><p>
+Ce tp permet de pratiquer 2 aspects de la modélisation 3D : les arêtes ailées et les BSP.</p><p>Les 2 parties sont totalement indépendantes (2 squelettes distincts). <span style="font-weight:bold">Attention :</span> la partie "arêtes ailées" est beaucoup plus courte que la partie BSP. </p>
+<!--TOC section id="sec2" Winged-Edges-->
+<h2 id="sec2" class="section">2&nbsp;&nbsp;Winged-Edges</h2><!--SEC END --><p><br>
+
+<span style="color:#004CFF"><span style="font-weight:bold"><u>Exercice&nbsp;1. Introduction</u></span></span><span style="color:#004CFF"><br>
+</span>
+
+</p><ul class="itemize"><li class="li-itemize">
+Reprenez <a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/winged.zip">winged.zip</a> sur le portail.
+</li><li class="li-itemize">Le but du tp est d’effectuer des parcours sur un objet représenté en winged edges pour les opérations suivantes :
+<ul class="itemize"><li class="li-itemize">
+Affichage face par face (parcours des sommets d’une face donnée).
+</li><li class="li-itemize">Calcul des normales aux sommets par moyenne des normales aux faces (parcours des faces incidentes à un sommet donné).
+</li></ul>
+</li></ul><p>Les objets winged-edges manipulés proviennent de fichiers 
+obj. Il y a 3 objets disponibles (cliquez sur "Next Object" pour passer 
+de l’un à l’autre : cube, vache, bonhomme). Le bouton "Draw OBJ" 
+correspond à un affichage direct des données de l’OBJ (similaire au 
+tracé effectué lors du TP02).</p><p>Vous pouvez contrôler le point de 
+vue avec les touches bas/haut/droite/gauche/click gauche+glisser pour 
+tourner/molette pour zoomer.</p><p>Leur construction en winged edges est
+ déjà assurée par le squelette et ont la représentation suivante (cf 
+cours pour la structure d’un winged-edges) :</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/wingedNew.jpg"><img src="m3ds_modelisation_fichiers/wingedNew.jpg" style="width:25em"></a>
+
+</div><ul class="itemize"><li class="li-itemize">
+classe <code>Winged</code> : contient <span style="font-weight:bold">l’ensemble</span> des faces, des arêtes et des sommets d’un objet (container). <span style="font-weight:bold">Remarque : </span> vous <span style="font-weight:bold">ne devez pas</span> utiliser cette classe <code>Winged</code> (puisque les parcours demandés ne doivent pas parcourir l’ensemble des données). Si <code>w</code> est de type <code>Winged *</code> alors :
+<ul class="itemize"><li class="li-itemize">
+<code>w-&gt;face(i)</code> donne la <span style="font-style:italic">i</span> ème face (de type <code>WFace *</code>)
+</li><li class="li-itemize"><code>w-&gt;edge(i)</code> donne la <span style="font-style:italic">i</span> ème arête (de type <code>WEdge *</code>)
+</li><li class="li-itemize"><code>w-&gt;vertex(i)</code> donne la <span style="font-style:italic">i</span> ème sommet (de type <code>WVertex *</code>)
+</li></ul>
+</li><li class="li-itemize">La classe <code>WFace</code> : si <code>f</code> est de type <code>WFace *</code> alors :
+<ul class="itemize"><li class="li-itemize">
+<code>f-&gt;edge()</code> donne l’arête affectée à la face (de type <code>WEdge *</code>). Cette arête peut servir de point de départ lorsqu’on désire parcourir la face <code>f</code>.
+</li><li class="li-itemize"><code>f-&gt;normal()</code> donne la normale à la face (de type <code>Vector3</code>). Elle est déjà calculée pour vous.
+</li></ul>
+</li><li class="li-itemize">La classe <code>WVertex</code> : si <code>v</code> est de type <code>WVertex *</code> alors :
+<ul class="itemize"><li class="li-itemize">
+<code>v-&gt;edge()</code> donne l’arête affectée au sommet (de type <code>WEdge *</code>). Cette arête peut servir de point de départ pour les parcours autour du sommet <code>v</code>.
+</li><li class="li-itemize"><code>v-&gt;normal()</code> donne la normale au sommet (lors du tp vous aurez à la calculer par la méthode des moyennes des normales au sommet).
+</li></ul>
+</li><li class="li-itemize">La classe <code>WEdge</code> : si <code>e</code> est de type <code>WEdge *</code> alors :
+<ul class="itemize"><li class="li-itemize">
+<code>e-&gt;begin()</code> et <code>e-&gt;end()</code> donnent les sommets de l’arête (de type <code>WVertex *</code>).
+</li><li class="li-itemize"><code>e-&gt;left()</code> et <code>e-&gt;right()</code> donnent les faces incidentes de l’arête (de type <code>WFace *</code>).
+</li><li class="li-itemize"><code>e-&gt;succLeft()</code> et <code>e-&gt;predLeft()</code> donnent l’arête (de type <code>WEdge *</code>) précédente et suivante de <code>e</code> dans la face <code>e-&gt;left()</code>.
+</li><li class="li-itemize"><code>e-&gt;succRight()</code> et <code>e-&gt;predRight()</code> donnent l’arête (de type <code>WEdge *</code>) précédente et suivante de <code>e</code> dans la face <code>e-&gt;right()</code>.
+</li></ul>
+</li></ul><p>Pour les parcours demandés, vous utiliserez donc les méthodes des classes <code>WVertex</code>, <code>WFace</code> et <code>WVertex</code> (qui correspondent aux tables des arêtes ailées données en cours).</p><p><br>
+
+<span style="color:#004CFF"><span style="font-weight:bold"><u>Exercice&nbsp;2. Affichage</u></span></span><span style="color:#004CFF"><br>
+</span>
+</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;1. </span></span>
+Complétez <code>WFace::draw(bool withNormal)</code> qui se charge de 
+tracer une face d’un winged edges : il s’agit de parcourir la face 
+sommet par sommet (uniquement les sommets nécessaires) en alimentant le 
+tableau <code>position</code> par des <code>push_back(un_Vector3)</code> (ne vous préoccupez pas du calcul des normales pour l’instant).</p><p>Testez sur les objets disponibles : <span style="font-weight:bold">il faut cliquer</span> sur le bouton "WFace::draw (wire)" pour provoquer l’affichage du winged edges face par face avec cette méthode <code>WFace::draw</code>
+ que vous venez de compléter (on passe d’un objet à l’autre avec le 
+bouton "Next Object"; vous pouvez naviguer dans la scène (touches 
+gauche/droite/haut/bas/click gauche+move pour tourner/molette pour 
+zoomer)).</p><p><span style="font-weight:bold">Remarque :</span> 
+</p><ul class="itemize"><li class="li-itemize">
+l’affichage est très lent car, pour les besoins de l’exercice, les 
+polygones sont affichés 1 par 1 (plutôt que d’afficher le tout par un 
+seul <code>glDraw</code>) <span style="font-weight:bold">et</span> les 
+polygones n’étant pas nécessairement des triangles, ils sont triangulés à
+ la volée lors de chaque affichage de chaque polygone.
+</li><li class="li-itemize">les faces sont visualisées en vue dite 
+"éclatée" (chaque face est réduite à l’affichage pour les désolidariser 
+et ainsi cerner les éventuels problèmes)
+</li></ul><div class="center">
+<table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/face1.jpg"><img src="m3ds_modelisation_fichiers/face1.jpg" style="width:25em"></a>
+</div>
+</div>
+</td><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/face2.jpg"><img src="m3ds_modelisation_fichiers/face2.jpg" style="width:25em"></a>
+</div>
+</div>
+
+</td></tr>
+</tbody></table>
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;2. </span></span>
+On travaille maintenant au niveau du sommet dans <code>WVertex.cpp</code>. Dans <code>WVertex::computeNormal()</code> vous devez calculer la normale <code>average</code> affectée au sommet <code>this</code> en moyennant toutes les normales des faces qui sont incidentes à <code>this</code> (i.e. toutes les faces qui ont le sommet <code>this</code> en commun).</p><p>Pour
+ cela, on parcourt les faces autour du sommet en exploitant la structure
+ du winged-edges (on suppose la surface sans bords pour pouvoir faire le
+ tour complet); on moyenne alors toutes les normales des faces pour 
+l’attribuer au sommet (ne pas oublier de normer à la fin de la 
+procédure). </p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/wingedVertex.jpg"><img src="m3ds_modelisation_fichiers/wingedVertex.jpg" style="width:25em"></a>
+
+</div><p><span style="font-weight:bold">Testez</span> en cliquant sur le bouton "Show/Hide Vertex Normal" qui provoque l’appel à votre <code>WVertex::computeNormal()</code> pour chaque sommet de l’objet et trace des segments rouges pour visualiser chacune de ces normales. </p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/normalVertex.jpg"><img src="m3ds_modelisation_fichiers/normalVertex.jpg" style="width:25em"></a>
+
+</div><p>Notez que sur le personnage, cela ne fonctionne pas (peut être 
+sanctionné par un segmentation fault). Nous étudions ce souci 2 
+questions plus loin.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;3. </span></span>
+Nous exploitons ces normales pour l’éclairage : il suffit de revenir sur <code>WFace::draw(bool withNormal)</code> puis d’affecter le tableau <code>normal</code> avec des <code>push_back</code> comme pour les positions (l’appel à <code>v-&gt;normal()</code> permet de récupérer la normale calculée à la question précédente). </p><p><span style="font-weight:bold">Testez</span> (en cliquant sur "WFace::draw (light)"). Le cas du cube vous parait il correct ? (expliquez en 2 lignes dans le <code>Readme.txt</code>).</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/faceVertex.jpg"><img src="m3ds_modelisation_fichiers/faceVertex.jpg" style="width:25em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;4. </span></span>
+Avec le bonhomme, cela ne fonctionne pas : quel est le problème selon vous ? (dans quel cas votre parcours est incorrect ?). <span style="font-weight:bold">Répondez</span> en 2 lignes dans le <code>Readme.txt</code>.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;5. </span></span>
+<span style="font-weight:bold">Bonus</span> (faites la deuxième partie sur les BSP en priorité avant de répondre à cette question).</p><p>Modifiez alors le parcours pour corriger le problème.</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/alVertex.jpg"><img src="m3ds_modelisation_fichiers/alVertex.jpg" style="width:25em"></a>
+
+</div>
+<!--TOC section id="sec3" BSP-->
+<h2 id="sec3" class="section">3&nbsp;&nbsp;BSP</h2><!--SEC END --><p>Reprenez l’archive <a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/bsp.zip">bsp.zip</a> sur le portail.</p><p>Compilez
+ et exécutez : vous voyez un polygone et un ensemble de points. Vous 
+pouvez naviguer dans la scène (click 
+gauche+glisser/bas/haut/gauche/droite/molette).</p><p><br>
+
+<span style="color:#004CFF"><span style="font-weight:bold"><u>Exercice&nbsp;3. Signe et intersection</u></span></span><span style="color:#004CFF"><br>
+</span>
+</p><p>Le premier objectif est de déterminer de quel coté se trouve un point par rapport à une face de l’objet.</p><p>On commence par travailler dans le fichier <code>FaceBSP.cpp</code>. Cette classe représente une face de la scène par un tableau de sommets (cf attribut <code>vector&lt;VertexBSP *&gt; _tabVertex</code> dans <code>FaceBSP.h</code>). La classe <code>VertexBSP</code> contient les coordonnées de chaque sommet (<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>,<span style="font-style:italic">z</span>) (accessible par la méthode <code>Vector3 VertexBSP::point()</code>).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;1. </span></span>
+Complétez la méthode <code>ESign FaceBSP::sign(const Vector3 &amp;p)</code> qui donne le signe du point <code>p</code> par rapport à la face <code>this</code>
+ (il suffit de faire la localisation d’un point par rapport à un plan 
+par produit scalaire). Les commentaires dans le source vous donnent les 
+méthodes/fonctions qui peuvent être utiles au calcul du résultat. </p><p><span style="font-weight:bold">Testez</span>
+ (click sur "Face Side") : les points sont colorés suivant leur signe : 
+les points doivent apparaitre rouges du coté vert du polygone, et verts 
+du coté rouge (s’ils apparaissent bleus, c’est que l’affectation de 
+signe n’a pas été faite).</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/points.jpg"><img src="m3ds_modelisation_fichiers/points.jpg" style="width:25em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;2. </span></span>
+Complétez <code>Vector3 FaceBSP::intersection(const Vector3 &amp;p1,const Vector3 &amp;p2)</code> qui retourne le point résultant de l’intersection entre le segment [<span style="font-style:italic">p</span><sub>1</sub><span style="font-style:italic">p</span><sub>2</sub>] et le plan porteur de la facette <code>this</code>. Précondition : p1 et p2 sont de part et d’autre de la facette (donc l’intersection existe nécessairement).</p><p><span style="font-weight:bold">Testez</span>
+ en cliquant sur "Segment Intersection" et vérifiez visuellement : vous 
+devez voir apparaître les points d’intersection de chaque segment en 
+bleu au niveau du plan (cela peut "déborder" du polygone : il s’agit 
+d’une intersection du plan du polygone) </p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/segments.jpg"><img src="m3ds_modelisation_fichiers/segments.jpg" style="width:25em"></a>
+
+</div><p><br>
+
+<span style="color:#004CFF"><span style="font-weight:bold"><u>Exercice&nbsp;4. Découpe d’une face</u></span></span><span style="color:#004CFF"><br>
+</span>
+
+
+
+</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;1. </span></span>
+On continue à travailler dans <code>FaceBSP.cpp</code> pour y compléter la méthode <code>FaceBSP::separe</code> : elle coupe la face <code>this</code> par la face <code>f</code> pour construire les faces négatives et positives de <code>this</code> (l’une d’elle peut être vide s’il n’y a pas de découpe). En vous référant aux commentaires du source, <span style="font-weight:bold">complétez</span> cette méthode (appliquez par exemple la technique vue en cours).</p><p><span style="font-weight:bold">Testez</span>
+ en appuyant sur "Face cutting" : vous devez remarquer la découpe sur 
+l’une des deux faces affichées (la plus petite face a coupé la plus 
+grande).</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/decoupe.jpg"><img src="m3ds_modelisation_fichiers/decoupe.jpg" style="width:25em"></a>
+
+</div><p><br>
+
+<span style="color:#004CFF"><span style="font-weight:bold"><u>Exercice&nbsp;5. Création et affichage du BSP</u></span></span><span style="color:#004CFF"><br>
+</span>
+
+On travaille à présent dans <code>ObjectBSP.cpp</code>. Cette classe contient et gère une structure d’arbre binaire de classe <code>TreeBSP</code>. Il reste à implémenter la construction et l’affichage de cet arbre BSP.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;1. </span></span>
+Il faut complêter la méthode statique (i.e. méthode de classe) <code>ObjectBSP::consBSP</code> qui construit récursivement un arbre BSP à partir du tableau de faces <code>tabFace</code>. Les commentaires indiquent les méthodes utiles.</p><p><span style="font-weight:bold">Exécutez</span>
+ : vous pouvez vérifier visuellement la découpe correcte en cliquant sur
+ "Build BSP" (affichage de l’ensemble des faces du BSP, et sans 
+élimination des parties cachées; si vous cliquer sur "BSP Visualisation"
+ vous visualisez les faces avec élimination par depth buffer). Vous 
+devez obtenir 6 faces sur cet exemple.</p><div class="center">
+<table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/bspDecoupe1.jpg"><img src="m3ds_modelisation_fichiers/bspDecoupe1.jpg" style="width:25em"></a>
+</div>
+</div>
+</td><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/bspDecoupe2.jpg"><img src="m3ds_modelisation_fichiers/bspDecoupe2.jpg" style="width:25em"></a>
+</div>
+</div>
+
+</td></tr>
+</tbody></table>
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;2. </span></span>
+Complétez la méthode <code>ObjectBSP::drawBSP(TreeBSP *tree,const Vector3 &amp;eye)</code> qui effectue la méthode du peintre (i.e. afficher les faces de la plus éloignée à la plus proche) récursivement sur <code>tree</code> selon le point d’observation <code>eye</code> (position de la caméra) : il suffit de parcourir l’arbre de manière infixe en testant le signe de <code>eye</code> (cf cours).</p><p><span style="font-weight:bold">Testez</span>
+ en cliquant 2 fois sur "BSP Visualisation" (après avoir fait "Build 
+BSP"). Cela provoque l’affichage en appelant votre méthode du peintre : 
+vous pouvez vérifier la méthode appelée avec le message affiché en bas 
+de fenêtre ("without hidden removal/depth/painter"). Vous devez voir le 
+résultat de la construction BSP avec une élimination des parties cachées
+ correcte (comparez avec l’élimination par depth buffer).</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/bspPeintre.jpg"><img src="m3ds_modelisation_fichiers/bspPeintre.jpg" style="width:25em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;3. </span></span>
+On teste à présent avec un objet plus complexe (modifiez le <code>_bsp3.read("simple_nontri.obj");</code> du constructeur <code>GLApplication::GLApplication()</code> avec <code>"wolf.obj"</code> par exemple). <span style="font-weight:bold">Testez</span> la construction.</p><p><span style="font-weight:bold">Testez</span> la visualisation (cliquer sur "BSP Build" puis "BSP Visualisation").</p><p><span style="font-weight:bold">Il est probable</span> que vous obteniez quelques faces mal construites (problème abordé dans la question suivante).</p><div class="center">
+<table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/bspError.jpg"><img src="m3ds_modelisation_fichiers/bspError.jpg" style="width:25em"></a>
+</div>
+</div>
+</td><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/bspNoError.jpg"><img src="m3ds_modelisation_fichiers/bspNoError.jpg" style="width:25em"></a>
+</div>
+</div>
+ </td></tr>
+<tr><td style="text-align:center;white-space:nowrap">Avec erreurs éventuelles</td><td style="text-align:center;white-space:nowrap">Sans erreurs
+</td></tr>
+</tbody></table>
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;4. </span></span>
+Il faut modifier la méthode <code>FaceBSP::intersection</code> de façon à
+ rendre robuste le calcul d’intersection : cette méthode pré-suppose en 
+effet qu’il y a une intersection lorsque les 2 points <span style="font-style:italic">p</span>1 et <span style="font-style:italic">p</span>2 d’une arête sont de part et d’autre du plan (i.e. de signe distincts); c’est-à-dire lorsqu’on sait que [<span style="font-style:italic">p</span><sub>1</sub><span style="font-style:italic">p</span><sub>2</sub>] intersecte la face avec une intersection entre <span style="font-style:italic">p</span>1 et <span style="font-style:italic">p</span>2. </p><p>Or le calcul numérique peut être instable si <span style="font-style:italic">p</span><sub>1</sub><span style="font-style:italic">p</span><sub>2</sub> est "presque" parallèle au plan. <span style="font-weight:bold">Corrigez</span> alors le calcul pour forcer une intersection entre <span style="font-style:italic">p</span>1 et <span style="font-style:italic">p</span>2
+ (ce principe revient souvent pour rendre robuste/déterministe les 
+algorithmes de programmation 3D : on impose éventuellement le calcul 
+pour contrer les éventuelles erreurs numériques et respecter ainsi les 
+invariants). </p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;5. </span></span>
+Cliquez sur le bouton "Transparency", puis visualisez avec une 
+élimination par depth buffer, puis visualisez avec une élimination par 
+peintre (passez de l’un à l’autre en cliquant plusieurs fois sur "BSP 
+Visualisation"). La transparence est obtenue dans les 2 cas exactement 
+de la même façon : on mélange la couleur du fragment source de chaque 
+pixel tracé avec la couleur du fragment destination (i.e. on "voit" la 
+couleur destination "à travers" la source). <span style="font-weight:bold">Expliquez</span> en 3 lignes maxi dans le <code>Readme.txt</code> d’où provient le défaut pour l’élimination par depth buffer.</p><div class="center">
+<table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/transparencyDepth.jpg"><img src="m3ds_modelisation_fichiers/transparencyDepth.jpg" style="width:25em"></a>
+</div>
+</div>
+</td><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/transparencyPainter.jpg"><img src="m3ds_modelisation_fichiers/transparencyPainter.jpg" style="width:25em"></a>
+</div>
+</div>
+ </td></tr>
+<tr><td style="text-align:center;white-space:nowrap">Transparence avec depth</td><td style="text-align:center;white-space:nowrap">Transparence avec peintre</td></tr>
+</tbody></table>
+</div><!--CUT END -->
+<!--HTMLFOOT-->
+<!--ENDHTML-->
+<!--FOOTER-->
+<hr style="height:2"><blockquote class="quote"><em>Ce document a été traduit de L<sup>A</sup>T<sub>E</sub>X par </em><a href="http://hevea.inria.fr/"><em>H</em><em><span style="font-size:small"><sup>E</sup></span></em><em>V</em><em><span style="font-size:small"><sup>E</sup></span></em><em>A</em></a></blockquote>
+
+</body></html>

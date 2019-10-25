@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.32">
+<style type="text/css">
+.li-itemize{margin:1ex 0ex;}
+.li-enumerate{margin:1ex 0ex;}
+.dd-description{margin:0ex 0ex 1ex 4ex;}
+.dt-description{margin:0ex;}
+.toc{list-style:none;}
+.footnotetext{margin:0ex; padding:0ex;}
+div.footnotetext P{margin:0px; text-indent:1em;}
+.thefootnotes{text-align:left;margin:0ex;}
+.dt-thefootnotes{margin:0em;}
+.dd-thefootnotes{margin:0em 0em 0em 2em;}
+.footnoterule{margin:1em auto 1em 0px;width:50%;}
+.caption{padding-left:2ex; padding-right:2ex; margin-left:auto; margin-right:auto}
+.title{margin:2ex auto;text-align:center}
+.titlemain{margin:1ex 2ex 2ex 1ex;}
+.titlerest{margin:0ex 2ex;}
+.center{text-align:center;margin-left:auto;margin-right:auto;}
+.flushleft{text-align:left;margin-left:0ex;margin-right:auto;}
+.flushright{text-align:right;margin-left:auto;margin-right:0ex;}
+div table{margin-left:inherit;margin-right:inherit;margin-bottom:2px;margin-top:2px}
+td table{margin:auto;}
+table{border-collapse:collapse;}
+td{padding:0;}
+.cellpadding0 tr td{padding:0;}
+.cellpadding1 tr td{padding:1px;}
+pre{text-align:left;margin-left:0ex;margin-right:auto;}
+blockquote{margin-left:4ex;margin-right:4ex;text-align:left;}
+td p{margin:0px;}
+.boxed{border:1px solid black}
+.textboxed{border:1px solid black}
+.vbar{border:none;width:2px;background-color:black;}
+.hbar{border:none;height:2px;width:100%;background-color:black;}
+.hfill{border:none;height:1px;width:200%;background-color:black;}
+.vdisplay{border-collapse:separate;border-spacing:2px;width:auto; empty-cells:show; border:2px solid red;}
+.vdcell{white-space:nowrap;padding:0px; border:2px solid green;}
+.display{border-collapse:separate;border-spacing:2px;width:auto; border:none;}
+.dcell{white-space:nowrap;padding:0px; border:none;}
+.dcenter{margin:0ex auto;}
+.vdcenter{border:solid #FF8000 2px; margin:0ex auto;}
+.minipage{text-align:left; margin-left:0em; margin-right:auto;}
+.marginpar{border:solid thin black; width:20%; text-align:left;}
+.marginparleft{float:left; margin-left:0ex; margin-right:1ex;}
+.marginparright{float:right; margin-left:1ex; margin-right:0ex;}
+.theorem{text-align:left;margin:1ex auto 1ex 0ex;}
+.part{margin:2ex auto;text-align:center}
+.lstlisting{font-family:monospace;white-space:pre;margin-right:auto;margin-left:0pt;text-align:left}
+</style>
+
+<link rel="stylesheet" href="m3ds_introOpenGL_fichiers/prog3d.css" type="text/css">
+<title>m3ds_introOpenGL</title>
+</head>
+<body>
+<!--HEVEA command line is: hevea -entities style.hva m3ds_introOpenGL.tex -o m3ds_introOpenGL.html -->
+<!--CUT STYLE article--><!--CUT DEF section 1 --><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/logoFST_info.png"><img src="m3ds_introOpenGL_fichiers/logoFST_info.png" style="width:30em"></a>
+</div>
+</div>
+ </td></tr>
+<tr><td style="text-align:center;white-space:nowrap"><span style="font-weight:bold">Master Informatique</span> 2018-2019</td></tr>
+</tbody></table><div class="center"><span style="font-weight:bold"><span style="font-size:large">M3DS</span></span></div><p>
+<br>
+<br>
+</p><div class="center"><span style="font-size:x-large"><span style="font-weight:bold">TP 01 : Introduction OpenGL</span></span></div><p><span style="font-weight:bold">Objectifs :
+</span>
+</p><ul class="itemize"><li class="li-itemize">
+comprendre les notions de VBO, VAO, Vertex/Fragment Shaders
+</li><li class="li-itemize">comprendre la notion d’attribut de sommet, d’uniform, de varying
+</li><li class="li-itemize">comprendre les indexed face set (ou indexed vertex array; i.e. tracé avec <code>glDrawElements</code>)
+</li><li class="li-itemize">comprendre le tracé par primitives <code>GL_TRIANGLES</code> et <code>GL_TRIANGLE_STRIP</code>
+</li><li class="li-itemize">comprendre les textures (unité de texture, attribut coordonnées de textures, accès/tracé des pixels de la texture)
+</li></ul>
+<!--TOC section id="sec1" Prise en main et consignes-->
+<h2 id="sec1" class="section">1&nbsp;&nbsp;Prise en main et consignes</h2><!--SEC END --><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;1. </span></span>
+Inscrivez vous sur moodle au cours M3DS : <a href="http://moodle.univ-lille1.fr/course/view.php?id=413">http://moodle.univ-lille1.fr/course/view.php?id=413</a> (demander la clef à l’enseignant).</p><p>Dans cette première partie on se contente de découvrir le squelette des TPs. Cette prise en main sera commune <span style="font-weight:bold">à tous les TPs de M3DS</span>. </p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;2. </span></span>
+Récupérez <a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/introOpenGL.zip">introOpenGL.zip</a>. Décompressez-le pour obtenir <code>introOpenGL_Student1_Student2</code> qui sera votre dossier de travail.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;3. </span></span>
+<span style="font-weight:bold">Sans attendre : </span>
+</p><ol class="enumerate" type="1"><li class="li-enumerate">
+renommez ce dossier en remplaçant <code>Student1_Student2</code> avec votre nom (les 2 noms si vous êtes en binôme). 
+</li><li class="li-enumerate">renommez le fichier <code>.pro</code> sur le même principe.
+</li><li class="li-enumerate">indiquez dès à présent vos noms/prénoms dans le <code>Readme.txt</code>
+</li></ol><p><span style="font-weight:bold">Pour rendre un tp</span>, vous devrez en effet remettre le dossier complet (archive .zip) avec ces renommages.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;4. </span></span>
+Le fichier <code>.pro</code> est la configuration du projet sous le framework <code>Qt</code> :
+</p><ol class="enumerate" type="1"><li class="li-enumerate">
+Dans un terminal, lancez la commande <code>qtcreator</code> et ouvrez le <code>.pro</code> avec le menu <code>Fichier -&gt; Ouvrir un fichier ou un projet</code>. Une fenêtre s’ouvre : cliquez directement sur <code>Terminé</code>. <p>Cette configuration est mémorisée par <code>QtCreator</code> dans le fichier <code>.pro.user...</code> : ne vous en préoccupez pas (l’ouverture du projet se faisant toujours avec le <code>.pro</code>). Lors d’un changement de machine, il faudra regénérer cette configuration (message de confirmation si un <code>.pro.user</code> existe déjà).</p></li><li class="li-enumerate">Vous devez être maintenant sous l’éditeur (avec la liste des fichiers du projet à gauche). <span style="font-weight:bold">Exécutez</span> le projet en appuyant sur <code>&lt;Ctrl&gt;+R</code>
+ (lance également la compilation) : une fois l’application du tp lancée,
+ vous devez voir apparaitre la fenêtre graphique suivante.<div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/triangleInit.jpg"><img src="m3ds_introOpenGL_fichiers/triangleInit.jpg" style="height:20em"></a>
+
+</div></li><li class="li-enumerate">Vous pouvez quitter l’application du tp en appuyant simplement sur la touche <code>&lt;Escape&gt;</code>.
+</li></ol><p><span style="font-weight:bold">Remarque :</span> sous 
+QtCreator, pour avoir directement la référence (très utile !) d’une 
+instruction OpenGL ou C++ en appuyant sur &lt;F1&gt; (aide contextuelle)
+ : récupérez <a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/cppreference-doc-en-cpp.qch">cppreference-doc-en-cpp.qch</a> et <a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/gl42.qch">gl42.qch</a>, puis, sous QtCreator <code>menu outils -&gt; options... -&gt; aide (sous-menu de la fenêtre) -&gt; onglet documentation -&gt; bouton ajouter...</code> et sélectionnez le fichier <code>.qch</code> </p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;5. </span></span>
+Dans la liste à gauche, les fichiers sont organisés selon les <code>En-têtes</code> (les <code>.h</code> qui contiennent la déclaration des classes), les <code>Sources</code> (les <code>.cpp</code> qui contiennent l’implémentation) et... les <code>Autres fichiers</code> (contiendra les médias nécessaires : les shaders, les images,...). Ouvrez la liste <code>Sources</code> : vous voyez le dossier <code>src</code> où se trouvent tous les fichiers. <code>src</code> est organisé en 2 sous dossiers :
+</p><ul class="itemize"><li class="li-itemize">
+<code>application</code> : on trouvera les fichiers qui correspondent spécifiquement au tp (classes à compléter, etc).
+</li><li class="li-itemize"><code>p3d</code> : on trouvera toutes les 
+classes nécessaires aux tps (initialisations Qt, les classes fournies 
+pour représenter les points, les droites, les objets 3D, les VAO, etc.).
+ "Normalement" vous n’aurez pas à intervenir sur les classes se trouvant
+ dans <code>p3d</code>.
+</li></ul><p><span style="font-weight:bold">Ouvrez</span> <code>GLApplication.cpp</code> : repérez les méthodes <code>initialize</code>, <code>resize</code>, <code>update</code>, <code>draw</code>, ainsi que le constructeur <code>GLApplication::GLApplication</code> communs à tous les tps (dont le rôle a été décrit en cours).</p>
+<!--TOC section id="sec2" Tracé simple-->
+<h2 id="sec2" class="section">2&nbsp;&nbsp;Tracé simple</h2><!--SEC END --><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;6. </span></span>
+On rappelle que pour un tracé en OpenGL, il faut réaliser les étapes suivantes :
+</p><ul class="itemize"><li class="li-itemize">
+Phase d’initialisations (voir <code>GLApplication::initialize</code>) :
+<ul class="itemize"><li class="li-itemize">
+Copier les données de l’application (affectées dans le constructeur <code>GLApplication::GLApplication</code> dans des buffers OpenGL (VBO) : cette copie est assuré par la méthode <code>GLApplication::initTriangleBuffer()</code> pour ce tp.
+</li><li class="li-itemize">Mettre en place un program shader (la 
+lecture des fichiers qui contiennent les vertex/fragment shaders, et 
+leur compilation/link, est déjà faite dans la méthode <code>GLApplication::initProgram</code>; les vertex/fragment shaders concernés par ce tp se trouvent dans les fichiers <code>simple.vert</code> et <code>simple.frag</code> que vous pouvez voir dans la liste à gauche de l’éditeur : <code>Autres Fichiers/media</code>)
+</li><li class="li-itemize">Faire un VAO (voir la méthode <code>GLApplication::initTriangleVAO</code>)
+</li></ul>
+</li><li class="li-itemize">Le tracé est assuré dans <code>GLApplication::draw</code> (activation d’un vao, activation d’un program shader, tracé par <code>glDraw...</code>).
+</li></ul><p>Bien que le code est déjà intégré dans le squelette (pour 
+gagner du temps), vous devez parfaitement comprendre toute la démarche 
+(référez vous au cours) ainsi que le code associé à <code>GLApplication::initTriangleBuffer</code>, <code>GLApplication::initTriangleVAO</code>, <code>GLApplication::draw</code> et le code des 2 shaders <code>simple.vert</code> et <code>simple.frag</code> (en sachant où ils interviennent dans le tracé). Pour l’initialisation des shaders (<code>GLApplication::initProgram</code>,
+ comprenez la démarche (création d’un vertex shader, d’un fragment 
+shader, lecture/compilation/link des fichiers GLSL sources), et 
+comprenez bien le <code>glBindAttribLocation</code> qui y apparait (i.e. comprendre le lien entre le VAO et le program shader).</p><p>Vous devrez intervenir dans ces méthodes dans le reste du TP.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;7. </span></span>
+Dans le constructeur <code>GLApplication::GLApplication</code> sont 
+affectées les données de l’application : ce sont 2 tableaux contenant 
+les coordonnées des sommets de 2 triangles d’une part (membre <code>_trianglePosition</code>), et la couleur en chacun des sommets d’autre part (membre <code>_triangleColor</code>; non pris en compte pour l’instant : la couleur est pour l’instant fixée directement dans le fragment shader <code>simple.frag</code>). Remarque : les différents membres sont déclarés dans <code>GLApplication.h</code>.</p><p>Un seul triangle est tracé à l’exécution : pour obtenir les 2 triangles, trouvez et corrigez les erreurs dans les méthodes <code>GLApplication::initTriangleBuffer</code>, <code>GLApplication::initTriangleVAO</code>, <code>GLApplication::draw</code>.</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/triangle0.jpg"><img src="m3ds_introOpenGL_fichiers/triangle0.jpg" style="height:20em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;8. </span></span>
+Assurez vous de pouvoir répondre à : Quel est le rôle d’un VBO ? d’un VAO ? d’un Program Shader ?</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;9. </span></span>
+Sur le résultat, désignez les sommets vertex 0, 1, 2, 3, 4, 5 ? (cf affectation de <code>_trianglePosition</code> dans <code>GLApplication::GLApplication</code>).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;10. </span></span>
+On souhaite que le tableau <code>_triangleColor</code> (affecté dans <code>GLApplication::GLApplication</code>)
+ correspondent à une couleur pour chaque sommet. Le remplissage du 
+triangle se fera alors par interpolation (cf image ci-dessous). Pour en 
+tenir compte il faut : 
+</p><ul class="itemize"><li class="li-itemize">
+modifier <code>initTriangleBuffer</code> (création/copie du buffer <code>_triangleColorBuffer</code>; ce membre est déjà déclaré dans <code>GLApplication.h</code>)
+</li><li class="li-itemize">modifier le fragment et vertex shader (les fichiers sources se trouvent dans <code>Autrees Fichiers/media</code>;
+ il faut ajouter l’attribut des couleurs au vertex shader, et faire un 
+varying avec in/out pour récupérer la couleur interpolée dans le 
+fragment shader)
+</li><li class="li-itemize">initialiser correctement le program shader dans <code>initProgram</code> pour tenir compte du nouvel attribut du vertex shader (i.e. affecter la "location" de l’attribut)
+</li><li class="li-itemize">modifier, enfin, le VAO (indiquer avec quel buffer alimenter l’attribut couleur du vertex shader). 
+</li></ul><p>Appuyez vous, bien sûr, sur ce qui est déjà fait pour la 
+position des sommets (attention, cependant, aux copier-coller trop 
+directs). <span style="font-weight:bold">Testez</span></p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/triangle1.png"><img src="m3ds_introOpenGL_fichiers/triangle1.png" style="height:20em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;11. </span></span>
+Comprenez parfaitement la notion de varying pour passer des valeurs du 
+vertex au fragment shader ainsi que l’interpolation linéaire associée 
+(appuyez vous sur le cours et le résultat du tp).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;12. </span></span>
+Remplacez (quand cela est pertinent, prenez l’habitude de mettre en 
+commentaire l’ancien code plutôt que de le supprimer) l’initialisation 
+de <code>_trianglePosition</code> dans <code>GLApplication::GLApplication</code> par (il s’agit d’une permutation des sommets) :</p><table class="lstframe" style="padding:1ex;border-style:solid solid double double;"><tbody><tr><td class="lstlisting">  _trianglePosition = {
+    -0.8,-0.5,0.0, <span style="font-style:italic">// vertex 0 anciennement vertex 0</span>
+    0.8,0.5,0.0,  <span style="font-style:italic">// 1 anciennement 4</span>
+    -0.5,0.5,0.0,  <span style="font-style:italic">// 2 anciennement 2</span>
+    -0.2,-0.5,0.0, <span style="font-style:italic">// 3 anciennement 1</span>
+    0.5,-0.5,0.0,  <span style="font-style:italic">// 4 anciennement 5</span>
+    0.2,0.5,0.0  <span style="font-style:italic">// 5 anciennement 3</span>
+  };</td></tr>
+</tbody></table><p><span style="font-weight:bold">Testez</span> et comprenez le résultat (comprenez notamment que <code>glDrawArrays</code> trace dans l’ordre des données qui se trouvent dans le buffer). </p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;13. </span></span>
+Pour retrouver nos 2 triangles précédents, sans modifier les données, il
+ faut tracer les sommets selon quel ordre ? (donnez la liste d’indices).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;14. </span></span>
+Pour faire cela, on va indiquer à OpenGL l’ordre dans lequel il faut 
+prendre les sommets avec un tableau d’indices (cf transparent Indexed 
+Face Set dans le cours). </p><ol class="enumerate" type="1"><li class="li-enumerate">
+Il faut d’abord définir le tableau d’indices donnant l’ordre des sommets : déclarez <code>std::vector&lt;unsigned int&gt; _elementData</code> dans <code>GLApplication.h</code> (c’est un tableau d’entiers positifs; remarque : sous QtCreator on passe rapidement du <code>.h</code> au <code>.cpp</code> en appuyant sur &lt;F4&gt;), et affectez le avec les valeurs de la question précédente dans le constructeur <code>GLApplication::GLApplication</code> (appuyez vous sur la syntaxe des autres tableaux).
+</li><li class="li-enumerate">On va recopier ces indices dans un buffer OpenGL : déclarez un <code>GLuint _elementBuffer</code> dans le <code>.h</code> puis dans le <code>GLApplication::initTriangleBuffer</code> on fait la copie comme pour les autres buffers (<span style="font-weight:bold">mais attention !</span> notez bien la cible du bind et du bufferData dans le code ci-dessous : il s’agit de <code>GL_ELEMENT_ARRAY_BUFFER</code>, et non de <code>GL_ARRAY_BUFFER</code>. Cette cible est utilisée spécifiquement lors d’un <code>glDrawElements</code> qui doit exploiter un tableau d’indice pour connaitre l’ordre des sommets) :
+<table class="lstframe" style="padding:1ex;border-style:solid solid double double;"><tbody><tr><td class="lstlisting">  glGenBuffers(1,&amp;_elementBuffer);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,_elementBuffer);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER,_elementData.size()*sizeof(unsigned <span style="font-weight:bold">int</span>),_elementData.data(),GL_STATIC_DRAW);</td></tr>
+</tbody></table></li><li class="li-enumerate">Il faut ajouter au VAO (dans <code>GLApplication::initVAO</code>) l’ordre des indices de sommets lors du tracé. Il suffit de faire un <code>glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,...)</code> lorsque le VAO souhaité est actif (<span style="font-weight:bold">donc encore attention à la cible du bind !</span>; notez bien également que <code>_elementBuffer</code> n’a aucun rapport avec les attributs de sommet : il n’y a donc pas de <code>glVertexAttribPointer/glEnableVertexAttribArray</code> associé).
+</li><li class="li-enumerate">Enfin, la commande de tracé devient <code>glDrawElements</code> au lieu de <code>glDrawArrays</code> : <code>glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,0);</code> (cf doc pour le détail des paramètres).
+</li></ol><p><span style="font-weight:bold">Testez</span> </p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/triangle2.jpg"><img src="m3ds_introOpenGL_fichiers/triangle2.jpg" style="height:20em"></a>
+
+</div><p>Le fait de spécifier ainsi l’ordre avec un tableau d’indice s’appelle <span style="font-weight:bold">Indexed Vertex Arrays</span> ou <span style="font-weight:bold">Indexed Face Set</span>.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;15. </span></span>
+On retrouve bien nos 2 triangles, mais vous devez constater une 
+différence par rapport au résultat précédent (cf image Question 8). 
+Expliquez (Sur quels attributs s’appliquent l’ordre des indices de <code>GL_ELEMENT_ARRAY_BUFFER</code> ?).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;16. </span></span>
+Changez les coordonnées des sommets avec :
+</p><table class="lstframe" style="padding:1ex;border-style:solid solid double double;"><tbody><tr><td class="lstlisting">  _trianglePosition = {
+    -0.8,-0.8,0.0,
+    0.8,0.8,0.0,
+    0.0,0.2,0.0,
+    -0.8,0.8,0.0,
+    0.8,-0.8,0.0,
+    0.0,0.2,0.0
+  };</td></tr>
+</tbody></table><p><span style="font-weight:bold">Testez</span>.</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/triangle3.png"><img src="m3ds_introOpenGL_fichiers/triangle3.png" style="height:20em"></a>
+
+</div><p>Constatez qu’on a 2 sommets qui ont les mêmes coordonnées (repérez le dans <code>_trianglePosition</code>).
+ On peut éviter cette redondance avec les indexed vertex arrays : il 
+suffit de répéter l’indice lors de la succession des sommets. Ainsi, les
+ indices (0,3,2,2,1,4) donneront bien les 2 triangles souhaités (et le 
+dernier sommet de <code>_trianglePosition</code> devient inexploité).</p><p><span style="font-weight:bold">Modifiez</span> le programme pour avoir ces indices (et supprimez le sommet redondant de <code>_trianglePosition</code>) (notez qu’il n’y a plus que 5 positions de sommets à recopier dans le VBO correspondant !).</p><p><span style="font-weight:bold">Testez</span>. Comparez avec l’image précédente. <span style="font-weight:bold">Expliquez</span> : d’où proviennent les couleurs ?</p><p><span style="font-weight:bold">Comprenez bien</span>
+ que les attributs (position et couleur ici) d’un sommet ne sont pas 
+dissociables. Un indice donné correspond à l’indice pour chaque 
+attribut. <span style="font-weight:bold">La conséquence est</span> que 
+si on souhaite 1 sommet avec 2 couleurs distinctes, on est obligé, pour 
+OpenGL, de dupliquer la position (c’est à dire d’avoir 2 sommets 
+distincts). Cf cours et le transparent "Sommet = tous ses attributs".</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;17. </span></span>
+Modifiez à nouveau :
+</p><table class="lstframe" style="padding:1ex;border-style:solid solid double double;"><tbody><tr><td class="lstlisting">  _trianglePosition = {
+    -0.8,-0.8,0.0,
+    -0.6,0.8,0.0,
+    -0.4,-0.6,0.0,
+    -0.2,0.6,0.0,
+    0.0,-0.8,0.0,
+    0.2,0.8,0.0,
+    0.4,-0.6,0.0,
+    0.6,0.6,0.0,
+    0.8,-0.8,0.0
+  };
+  <span style="font-style:italic">// tous les sommets à rouge :</span>
+  _triangleColor.clear();
+  <span style="font-weight:bold">for</span>(unsigned <span style="font-weight:bold">int</span> i=0;i&lt;9;++i) {
+    _triangleColor.push_back(1);_triangleColor.push_back(0);_triangleColor.push_back(0);_triangleColor.push_back(1);
+  }</td></tr>
+</tbody></table><p>et testez en remplaçant le <code>glDrawElements</code> par un <code>glDrawArrays(GL_TRIANGLES,0,9);</code>. <span style="font-weight:bold">Constatez</span> les 3 triangles (cf image question suivante pour la disposition). Remarque : notez que les indices du <code>GL_ELEMENT_ARRAY_BUFFER</code> sont maintenant ignorés car l’instruction <code>glDrawArrays</code> ne l’exploite pas (trace en prenant simplement les sommets dans l’ordre du buffer).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;18. </span></span>
+Pour mieux voir ce qui suit, mettez un <code>GL_LINE</code> au lieu de <code>GL_FILL</code> pour l’instruction <code>glPolygonMode(GL_FRONT_AND_BACK,GL_FILL)</code> (se trouve dans <code>GLApplication::initialize</code>).
+ Tous les tracés se feront alors sans remplissage des triangles (seuls 
+les pixels du "bord" des triangles sont tracés; ils subissent bien sûr 
+le fragment shader). La notion de <code>FRONT</code> et <code>BACK</code> sera vue plus tard en cours. <span style="font-weight:bold">Testez</span>.</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/triangle4.jpg"><img src="m3ds_introOpenGL_fichiers/triangle4.jpg" style="height:20em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;19. </span></span>
+Remplacez à présent le <code>glDrawArrays(GL_TRIANGLES,0,9)</code> par <code>glDrawArrays(GL_TRIANGLE_STRIP,0,9)</code>. Testez. Comprenez alors le résultat d’un tracé avec <code>GL_TRIANGLE_STRIP</code> en essayant <code>glDrawArrays(GL_TRIANGLE_STRIP,0,3)</code>,
+ puis ensuite 4, puis 5, ... etc. (constatez que chaque sommet trace un 
+nouveau triangle à partir des 2 sommets précédents). Ceci est souvent 
+utilisé pour faire des bandes de triangles.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;20. </span></span>
+Modifiez <code>_trianglePosition</code> et le nombre de sommets de <code>glDrawArrays(GL_TRIANGLE_STRIP,...)</code> pour obtenir (en exploitant impérativement <code>GL_TRIANGLE_STRIP</code>) :</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/bande0.png"><img src="m3ds_introOpenGL_fichiers/bande0.png" style="height:20em"></a>
+
+</div><p><span style="font-weight:bold">Prenez</span> un snapshot de votre résultat (click sur le bouton de l’interface;les captures d’écran vont dans <code>media/snapshot</code>).</p><p><span style="font-weight:bold">Pensez</span> à prendre des snapshots pour illustrer les différentes questions du TP ! (de même que pour les TPs suivants).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;21. </span></span>
+Ajoutez une méthode <code>GLApplication::initStrip(int nbSlice,float xmin,float xmax,float ymin,float ymax)</code> dans <code>GLApplication.cpp</code> (en C++, il faut également faire la déclaration dans le <code>GLApplication.h</code>) qui initialise <code>_trianglePosition</code> pour faire une bande similaire à l’exercice précédent (donc en exploitant <code>GL_TRIANGLE_STRIP)</code> mais avec <code>nbSlice</code> lignes verticales (il y en avait 4 à l’exercice précédent). Les paramètres <code>xmin</code>, <code>xmax</code>, <code>ymin</code> et <code>ymax</code> définissent les extrémités de la bande. Remarque : pour ajouter un <code>float</code> au tableau <code>_trianglePosition</code> il suffit de faire un <code>_trianglePosition.push_back(valeur)</code> (faire un <code>_trianglePosition.clear()</code> pour faire un tableau vide au début de la méthode). Pour un sommet, il faut donc faire 3 <code>push_back</code> (pour x, y et z=0). </p><p>Pour l’attribut de couleur, faire également une boucle en mettant tous les sommets avec une couleur identique.</p><p>Pour le nombre de sommets à donner au <code>glDrawArrays</code> on peut le déduire du nombre d’éléments dans le tableau : <code>_trianglePosition.size()</code>. Faut il modifier la copie des VBO (méthode <code>initTriangleBuffer()</code>) ? l’initialisation du VAO (méthode <code>initTriangleVAO()</code>) ? le program shader (<code>initProgram()</code>) ? </p><p>Comprenez les conséquences de la modification du nombre de sommets dans <code>_trianglePosition, _triangleColor</code>, etc, sur le reste du code.</p><p><span style="font-weight:bold">Testez</span> (n’oubliez pas bien sûr d’appeler <code>initStrip</code> depuis le constructeur <code>GLApplication::GLApplication</code>).</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/bande1.png"><img src="m3ds_introOpenGL_fichiers/bande1.png" style="height:20em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;22. </span></span>
+Passez en <code>GL_FILL</code> et modifiez l’affectation de <code>_triangleColor</code> de <code>GLApplication::initStrip</code> pour obtenir :</p><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:center;white-space:nowrap">
+<div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/bande2.png"><img src="m3ds_introOpenGL_fichiers/bande2.png" style="height:20em"></a>
+
+</div>
+</td><td style="text-align:center;white-space:nowrap">
+<div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/bande3.png"><img src="m3ds_introOpenGL_fichiers/bande3.png" style="height:20em"></a>
+
+</div>
+</td></tr>
+<tr><td style="text-align:center;white-space:nowrap"><code>GL_FILL</code></td><td style="text-align:center;white-space:nowrap"><code>GL_LINE</code></td></tr>
+</tbody></table><p>(sommets du "haut" sont en dégradés de bleu, c’est à 
+dire que la composante bleu varie entre 1 et 0; les sommets du "bas" 
+sont en vert variant de 0 à 1).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;23. </span></span>
+Faire une méthode <code>GLApplication::initRing(int nbSlice,float r0,float r1)</code> qui permet d’obtenir :</p><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:center;white-space:nowrap">
+<div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/ring0.jpg"><img src="m3ds_introOpenGL_fichiers/ring0.jpg" style="height:20em"></a>
+
+</div>
+</td><td style="text-align:center;white-space:nowrap">
+<div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/ring1.png"><img src="m3ds_introOpenGL_fichiers/ring1.png" style="height:20em"></a>
+
+</div>
+</td></tr>
+</tbody></table><p>Indications : remarquez qu’il s’agit exactement de la même configuration que pour <code>initStrip</code>
+ (il s’agit également d’une bande de triangle). Il faut seulement 
+modifier le calcul des coordonnées (i.e. faire nbSlice*2 sommets en 
+faisant varier un angle de 0 à 2π plutôt que de faire varier un x de 
+xmin à xmax). <code>r0</code> correspond au rayon intérieur, et <code>r1</code> correspond au rayon extérieur. On répartit les sommets sur un tour complet en faisant varier un angle <code>theta</code>
+ entre 0 et 2π (prendre 3.14159 pour π). L’angle 0 correspond à 
+l’horizontale (là où il y a la discontinuité des couleurs). Pour obtenir
+ le sommet du cercle intérieur qui se trouve à l’angle <code>theta</code>, il suffit de calculer (idem pour les sommets extérieurs, mais avec <span style="font-style:italic">r</span><sub>1</sub>) :</p><table class="display dcenter"><tbody><tr style="vertical-align:middle"><td class="dcell">⎧<br>
+⎨<br>
+⎩</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:center;white-space:nowrap"><span style="font-style:italic">x</span>&nbsp;=&nbsp;<span style="font-style:italic">r</span><sub>0</sub>cos(θ)</td></tr>
+<tr><td style="text-align:center;white-space:nowrap"><span style="font-style:italic">y</span>&nbsp;=&nbsp;<span style="font-style:italic">r</span><sub>0</sub>sin(θ)
+</td></tr>
+</tbody></table></td></tr>
+</tbody></table><p>(équation paramétrique d’un cercle).</p><p><span style="font-weight:bold">Testez</span></p>
+<!--TOC section id="sec3" Uniform-->
+<h2 id="sec3" class="section">3&nbsp;&nbsp;Uniform</h2><!--SEC END --><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;24. </span></span>
+L’objectif est d’obtenir la variation du rayon comme sur cette vidéo :</p><div class="center">
+<video controls="controls" width="40%">"<source src="m3ds_introOpenGL_fichiers/video1.webm" type="video/webm"></video>
+</div><p>(sur la vidéo il s’agit d’une valeur de couleur constante pour 
+les sommets intérieurs et extérieurs; ne vous en préoccupez pas et 
+conservez la visualisation que vous avez actuellement).</p><p>Pour obtenir cela il suffit de modifier les coordonnées des sommets en les multipliant par un certain facteur <code>coeff</code>
+ (i.e changement d’échelle par rapport à l’origine). Mais plutôt que de 
+modifier les données entre chaque image (i.e. modifier tout le tableau <code>_trianglePosition</code>
+ par l’application), nous allons dédier cette tâche au vertex shader 
+(i.e. exécuté par OpenGL/la carte graphique; les données de 
+l’application C++ restant inchangées). </p><p><span style="font-weight:bold">Modifiez</span> le vertex shader pour qu’il prenne en paramètre un uniform <code>float coeff</code>. Déclarez alors une variable locale dans le main du vertex shader <code>vec3 newPosition=position</code> (nécessaire car on ne peut pas modifier <code>position</code> qui est un attribut). Il reste à multiplier <code>newPosition</code> par le coefficient. Notez la souplesse du type vec3 en GLSL : on peut manipuler les coordonnées dans leur ensemble : <code>newPosition=position*coeff</code>
+ fonctionne (multiplie chaque coordonnée par coeff). Pour information, 
+on peut également sélectionner des groupes de coordonnées : par exemple <code>newPosition.xy=position.xy*coeff</code>; <code>newPosition.xz=position.xz*coeff</code>, etc.</p><p>L’application C++ doit se charger de passer la valeur <code>coeff</code> souhaitée au shader avant chaque <code>glDraw</code> (le program shader a pour identifiant <code>_shader0</code>). Par exemple :
+</p><table class="lstframe" style="padding:1ex;border-style:solid solid double double;"><tbody><tr><td class="lstlisting">  glUniform1f(glGetUniformLocation(_shader0,"coeff"),_coeff);</td></tr>
+</tbody></table><p>Vous ferez évoluer le membre <code>float _coeff</code> (qu’il faut déclarer dans <code>GLApplication.h</code>) dans <code>GLApplication::update</code> pour qu’il varie entre 0 et 1 (puis de 1 à 0, etc). Rappel : <code>update()</code> est appelée constamment par Qt avant un appel à <code>draw()</code> (toutes les 20ms environ). Le rôle du <code>update</code>
+ est de mettre à jour les données de l’application entre chaque image; 
+on s’interdit, par convention, d’y placer du code OpenGL (tout comme on 
+s’interdit de faire évoluer les données de l’application dans le <code>GLApplication::draw</code>).</p><p><span style="font-weight:bold">Testez</span>. (vous devez obtenir un résultat similaire à la vidéo)</p>
+<!--TOC section id="sec4" Texture-->
+<h2 id="sec4" class="section">4&nbsp;&nbsp;Texture</h2><!--SEC END --><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;25. </span></span>
+(vous pouvez désactiver l’animation pour la suite, en passant, par exemple une valeur constante pour <code>_coeff</code>)</p><p>Nous
+ ajoutons à présent une texture. Tout d’abord le chargement de l’image 
+de texture en mémoire OpenGL est déjà assuré par le squelette (i.e. cf <code>GLApplication::initTexture</code>).</p><p>On
+ commence par affecter les coordonnées de textures en chaque sommet (on 
+ajoute donc un attribut à chaque sommet : les coordonnées de texture). </p><p>Pour
+ la mise en place, et la compréhension, on revient, pour le moment, à un
+ objet simple : ajoutez à la fin de votre constructeur <code>GLApplication::GLApplication</code> (ne modifiez pas le reste de vos initialisations de <code>GLApplication::GLApplication</code>) :</p><table class="lstframe" style="padding:1ex;border-style:solid solid double double;"><tbody><tr><td class="lstlisting">  _trianglePosition = { <span style="font-style:italic">// rectangle tracé avec TRIANGLE_STRIP</span>
+    -0.6,-0.8,0,
+    -0.6,0.8,0,
+    0.6,-0.8,0,
+    0.6,0.8,0
+  };
+  _triangleColor = { <span style="font-style:italic">// tous les sommets en rouge</span>
+    1,0,0,1,
+    1,0,0,1,
+    1,0,0,1,
+    1,0,0,1,
+  };
+  _triangleTexCoord = { <span style="font-style:italic">// coordonnées de texture en chaque sommet</span>
+    0,1,
+    0,0,
+    1,1,
+    1,0
+  };</td></tr>
+</tbody></table><p>(testez pour vérifier que vous obtenez bien un rectangle rouge).</p><p>Il faut tenir compte de ces coordonnées de texture <code>_triangleTexCoord</code> dans le vertex shader. On procède exactement comme pour les autres attributs (i.e. <code>position</code> et <code>color</code>): </p><ul class="itemize"><li class="li-itemize">
+initialisez le buffer recevant ces coordonnées de texture (membre <code>_triangleTexCoordBuffer</code> déjà déclaré) dans <code>GLApplication::initTriangleBuffer</code>; 
+</li><li class="li-itemize">modifiez le vertex shader pour prendre un nouvel attribut (par exemple <code>in vec2 texCoord</code>;
+ laissez intact le reste : la couleur, la position, etc). Pour avoir des
+ coordonnées de texture en chaque pixel des triangles, il faut passer 
+ces coordonnées de texture interpolées au fragment shader (i.e. <code>out vec2 fTexCoord</code> dans le vertex, et <code>in vec2 fTexCoord</code> dans le fragment par exemple). 
+</li><li class="li-itemize">Il faut modifier le VAO <code>GLApplication::initTriangleVAO</code> pour alimenter l’attribut <code>texCoord</code> (prenez 2 comme numéro d’attribut par exemple), ainsi que fixer le <code>glBindAttribLocation</code> dans <code>GLApplication::initProgram</code> (laissez intact l’alimentation des autres attributs).
+</li></ul><p><span style="font-weight:bold">Testez</span> : cela ne doit
+ rien changer pour l’instant (on n’a pas encore affecté la couleur des 
+pixels dans le fragment shader pour tenir compte de la texture; vous 
+devez donc toujours avoir un rectangle), mais cela permet de vérifier 
+que vos modifications ne génèrent pas d’erreurs...</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;26. </span></span>
+Il faut à présent affecter la couleur du pixel (i.e. <code>fragColor</code> du fragment shader) avec la couleur du pixel de la texture (appelé texel) qui se trouve aux coordonnées <code>fTexCoord</code>. Pour cela, il faut, dans le fragment shader, définir un uniform (<code>uniform sampler2D textureUnit</code> par exemple) pour faire référence à l’unité de texture souhaitée. Puis il suffit de faire <code>fragColor=texture(textureUnit,fTexCoord);</code> pour lire la valeur du texel et l’affecter à <code>fragColor</code>.</p><p><span style="font-weight:bold">Enfin (!)</span>, dans <code>GLApplication::draw</code>, il faut indiquer quelle est la valeur du <code>uniform sampler2D textureUnit</code> (<span style="font-weight:bold">assurez vous impérativement</span>
+ de comprendre le code que vous êtes en train de copier/coller, 
+notamment le rôle et le lien entre identifiant de texture et unité de 
+texture) :</p><table class="lstframe" style="padding:1ex;border-style:solid solid double double;"><tbody><tr><td class="lstlisting">  glActiveTexture(GL_TEXTURE0); <span style="font-style:italic">// on travaille avec l'unité de texture 0</span>
+  <span style="font-style:italic">// dans l'instruction suivante, _textureId correspond à l'image "lagoon.jpg"; cf GLApplication::initTexture pour l'initialisation de _textureId</span>
+  glBindTexture(GL_TEXTURE_2D,_textureId); <span style="font-style:italic">// l'unité de texture 0 correspond à la texture _textureId </span>
+  <span style="font-style:italic">// (le fragment shader manipule des unités de textures et non les identifiants de texture directement)</span>
+  glUniform1f(glGetUniformLocation(_shader0,"textureUnit"),0); <span style="font-style:italic">// on affecte la valeur du sampler2D du fragment shader à l'unité de texture 0.</span>
+
+  glDrawArrays(GL_TRIANGLE_STRIP,0,_trianglePosition.size()/3);</td></tr>
+</tbody></table><p><span style="font-weight:bold">Testez</span> : vous devez voir maintenant le rectangle (avec une texture "à l’envers") :</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/texture0.png"><img src="m3ds_introOpenGL_fichiers/texture0.png" style="height:20em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;27. </span></span>
+Modifiez (uniquement) les coordonnées de texture du tableau <code>_triangleTexCoord</code> de l’application pour avoir l’image "à l’endroit". <span style="font-weight:bold">Testez et assurez vous</span> que vous comprenez le rôle des coordonnées de texture attribuées à chaque sommet.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;28. </span></span>
+Puis, modifiez à nouveau les coordonnées de texture pour n’avoir que la 
+moitié de l’image sur l’ensemble du rectangle (n’hésitez pas, bien sûr, à
+ tester d’autres valeurs de coordonnées de texture jusqu’à compréhension
+ parfaite).</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/demiTexCoord.jpg"><img src="m3ds_introOpenGL_fichiers/demiTexCoord.jpg" style="height:20em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;29. </span></span>
+<span style="font-weight:bold">Assurez vous</span> que toute la démarche
+ pour la mise en place des textures est claire : coordonnées de textures
+ au sommet (nouvel attribut du vertex shader); à quoi correspondent les 
+valeurs de coordonnées de texture par rapport à l’image de texture; 
+comprendre l’interpolation des coordonnées de textures pour chaque 
+pixel; l’accès aux valeurs de la texture par <code>texture(textureUnit,fTexCoord)</code> dans le fragment; la notion d’unité de texture et son lien avec un identifiant de texture.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;30. </span></span>
+Revenez avec l’initialisation de l’anneau et modifiez <code>GLApplication::initRing</code> en initialisant <code>_triangleTexCoord</code> pour obtenir (i.e. toute l’image est plaquée sur l’ensemble de l’anneau) :</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/textureRing.png"><img src="m3ds_introOpenGL_fichiers/textureRing.png" style="height:20em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;31. </span></span>
+Changez maintenant les coordonnées de texture pour obtenir (<span style="font-weight:bold">indications :</span> les coordonnées de texture dépendent directement des coordonnées (<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>) des sommets; attention cependant à bien reporter les coordonnées de texture entre 0 et 1) :</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/ring4.jpg"><img src="m3ds_introOpenGL_fichiers/ring4.jpg" style="height:20em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;32. </span></span>
+Dans le fragment shader, on peut calculer la couleur finale (i.e. <code>fragColor</code>) de manière très souple. Essayez par exemple :</p><table class="lstframe" style="padding:1ex;border-style:solid solid double double;"><tbody><tr><td class="lstlisting">  <span style="font-style:italic">// rouge de la texture multiplié par le rouge de fColor, idem pour green, et blue.</span>
+  fragColor=texture(textureUnit,fTexCoord)*fColor; <span style="font-style:italic">// fColor étant la couleur interpolée aux sommets(questions précédentes)</span></td></tr>
+</tbody></table><p><span style="font-weight:bold">Constatez</span> alors le résultat (mélange des couleurs entre la texture et le <code>fColor</code>).</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/textureRing2.jpg"><img src="m3ds_introOpenGL_fichiers/textureRing2.jpg" style="height:20em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;33. </span></span>
+Enfin, testez et comprenez (réactivez l’évolution de coeff, mais 
+désactivez le changement d’échelle par coeff dans le vertex shader pour 
+voir l’effet uniquement sur les couleurs) :</p><table class="lstframe" style="padding:1ex;border-style:solid solid double double;"><tbody><tr><td class="lstlisting">  fragColor=texture(textureUnit,fTexCoord)*fColor.b;
+ <span style="font-style:italic">// coeff = uniform passée par l'application (questions précédentes).</span>
+  fragColor.g*=(1.0-coeff);</td></tr>
+</tbody></table><p>Notez qu’il faut redéclarer <code>uniform float coeff;</code>
+ pour le fragment (aura la même valeur que celle du vertex shader; ce 
+n’est pas un varying et n’est donc pas interpolé : coeff est donc 
+identique pour tous les pixels).</p><!--CUT END -->
+<!--HTMLFOOT-->
+<!--ENDHTML-->
+<!--FOOTER-->
+<hr style="height:2"><blockquote class="quote"><em>Ce document a été traduit de L<sup>A</sup>T<sub>E</sub>X par </em><a href="http://hevea.inria.fr/"><em>H</em><em><span style="font-size:small"><sup>E</sup></span></em><em>V</em><em><span style="font-size:small"><sup>E</sup></span></em><em>A</em></a></blockquote>
+
+</body></html>

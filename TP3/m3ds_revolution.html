@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.32">
+<style type="text/css">
+.li-itemize{margin:1ex 0ex;}
+.li-enumerate{margin:1ex 0ex;}
+.dd-description{margin:0ex 0ex 1ex 4ex;}
+.dt-description{margin:0ex;}
+.toc{list-style:none;}
+.footnotetext{margin:0ex; padding:0ex;}
+div.footnotetext P{margin:0px; text-indent:1em;}
+.thefootnotes{text-align:left;margin:0ex;}
+.dt-thefootnotes{margin:0em;}
+.dd-thefootnotes{margin:0em 0em 0em 2em;}
+.footnoterule{margin:1em auto 1em 0px;width:50%;}
+.caption{padding-left:2ex; padding-right:2ex; margin-left:auto; margin-right:auto}
+.title{margin:2ex auto;text-align:center}
+.titlemain{margin:1ex 2ex 2ex 1ex;}
+.titlerest{margin:0ex 2ex;}
+.center{text-align:center;margin-left:auto;margin-right:auto;}
+.flushleft{text-align:left;margin-left:0ex;margin-right:auto;}
+.flushright{text-align:right;margin-left:auto;margin-right:0ex;}
+div table{margin-left:inherit;margin-right:inherit;margin-bottom:2px;margin-top:2px}
+td table{margin:auto;}
+table{border-collapse:collapse;}
+td{padding:0;}
+.cellpadding0 tr td{padding:0;}
+.cellpadding1 tr td{padding:1px;}
+pre{text-align:left;margin-left:0ex;margin-right:auto;}
+blockquote{margin-left:4ex;margin-right:4ex;text-align:left;}
+td p{margin:0px;}
+.boxed{border:1px solid black}
+.textboxed{border:1px solid black}
+.vbar{border:none;width:2px;background-color:black;}
+.hbar{border:none;height:2px;width:100%;background-color:black;}
+.hfill{border:none;height:1px;width:200%;background-color:black;}
+.vdisplay{border-collapse:separate;border-spacing:2px;width:auto; empty-cells:show; border:2px solid red;}
+.vdcell{white-space:nowrap;padding:0px; border:2px solid green;}
+.display{border-collapse:separate;border-spacing:2px;width:auto; border:none;}
+.dcell{white-space:nowrap;padding:0px; border:none;}
+.dcenter{margin:0ex auto;}
+.vdcenter{border:solid #FF8000 2px; margin:0ex auto;}
+.minipage{text-align:left; margin-left:0em; margin-right:auto;}
+.marginpar{border:solid thin black; width:20%; text-align:left;}
+.marginparleft{float:left; margin-left:0ex; margin-right:1ex;}
+.marginparright{float:right; margin-left:1ex; margin-right:0ex;}
+.theorem{text-align:left;margin:1ex auto 1ex 0ex;}
+.part{margin:2ex auto;text-align:center}
+.lstlisting{font-family:monospace;white-space:pre;margin-right:auto;margin-left:0pt;text-align:left}
+</style>
+
+<link rel="stylesheet" href="m3ds_revolution_fichiers/prog3d.css" type="text/css">
+<title>m3ds_revolution</title>
+</head>
+<body>
+<!--HEVEA command line is: hevea -entities style.hva m3ds_revolution.tex -o m3ds_revolution.html -->
+<!--CUT STYLE article--><!--CUT DEF section 1 --><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/logoFST_info.png"><img src="m3ds_revolution_fichiers/logoFST_info.png" style="width:30em"></a>
+</div>
+</div>
+ </td></tr>
+<tr><td style="text-align:center;white-space:nowrap"><span style="font-weight:bold">Master Informatique</span> 2018-2019</td></tr>
+</tbody></table><div class="center"><span style="font-weight:bold"><span style="font-size:large">M3DS</span></span></div><p>
+<br>
+<br>
+</p><div class="center"><span style="font-size:x-large"><span style="font-weight:bold">TP 03 : Révolution</span></span></div><div class="center">
+<table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/rev01.png"><img src="m3ds_revolution_fichiers/rev01.png" style="width:15em"></a>
+</div>
+</div>
+</td><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/rev02.png"><img src="m3ds_revolution_fichiers/rev02.png" style="width:15em"></a>
+</div>
+</div>
+</td><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/rev03.png"><img src="m3ds_revolution_fichiers/rev03.png" style="width:15em"></a>
+</div>
+</div>
+
+</td></tr>
+</tbody></table>
+</div><p><br>
+
+<span style="color:#004CFF"><span style="font-weight:bold"><u>Exercice&nbsp;1. Introduction</u></span></span><span style="color:#004CFF"><br>
+</span>
+
+</p><ul class="itemize"><li class="li-itemize">
+Reprenez <a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/revolution.zip">revolution.zip</a> sur le portail.
+</li><li class="li-itemize">L’objectif du tp est de générer les positions, normales et coordonnées de textures pour des objets usuels :
+<ul class="itemize"><li class="li-itemize">
+la sphère
+</li><li class="li-itemize">un objet de révolution
+</li><li class="li-itemize">le cube
+</li></ul>
+</li></ul><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;1. </span></span>
+Nous travaillerons principalement dans <code>Revolution.cpp</code>. Tous
+ les aspects techniques bas-niveau sont offerts par le squelette 
+(aspects déjà abordés dans les 2 premiers tp) : shaders, vao, vbo, 
+commandes de tracé. On se concentre ici sur la création des tableaux qui
+ permettront d’initialiser les vao/vbo (comme ce qui était fait pour le 
+tétraèdre du tp "OpenGL3D"). Ainsi le squelette offre la méthode :</p><table class="lstframe" style="padding:1ex;border-style:solid solid double double;"><tbody><tr><td class="lstlisting"><span style="font-weight:bold">void</span> Revolution::initVao(index,position,normal,texCoord)</td></tr>
+</tbody></table><p>Il faudra appeler cette méthode de la façon suivante :
+</p><ul class="itemize"><li class="li-itemize">
+<code>index</code> est le tableau d’indices (des entiers) décrivant les triangles sous la forme <code>{a0,b0,c0,a1,b1,c1,...}</code> (i.e. premier triangle constitué des sommets d’indices <code>a0,b0,c0</code>, deuxième triangle constitué des sommets d’indices <code>a1,b1,c1</code>, etc). Ce tableau correspond au <code>ARRAY_ELEMENT_BUFFER</code> avec un tracé par <code>glDrawElements(GL_TRIANGLES,...)</code>.
+</li><li class="li-itemize"><code>position</code> est le tableau des positions de chaque sommet sous la forme <code>{x0,y0,z0,x1,y1,z1,x2,y2,z2,...}</code> (i.e. 3 coordonnées par position).
+</li><li class="li-itemize"><code>normal</code> est le tableau des normales de chaque sommet, utilisées pour l’éventuel calcul d’éclairage dans les shaders, sous la forme <code>{x0,y0,z0,x1,y1,z1,...}</code> (i.e. 3 coordonnées par normale).
+</li><li class="li-itemize"><code>texCoord</code> est le tableau des coordonnées de texture de chaque sommet sous la forme <code>{s0,t0,s1,t1,s2,t2,...}</code> (i.e. 2 coordonnées par coordonnées de texture).
+</li></ul><p><br>
+
+<span style="color:#004CFF"><span style="font-weight:bold"><u>Exercice&nbsp;2. Sphère</u></span></span><span style="color:#004CFF"><br>
+</span>
+
+Rendez vous dans <code>Revolution::initSphere()</code> qui se charge d’initialiser les données d’une sphère. Constatez l’appel à <code>initVAO</code> décrite précédemment. Nous commençons par construire les positions des sommets d’une sphère.</p><p>Il
+ existe de nombreuses façons de constuire une (approximation de) sphère 
+avec des polygones. Ici, nous nous appuyons sur une construction par 
+slices/stacks (cf figure). Par analogie avec une planète, les slices 
+correspondent aux méridiens alors que les stacks correspondront aux 
+parallèles. </p><div class="center">
+<table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/gridRevolution.jpg"><img src="m3ds_revolution_fichiers/gridRevolution.jpg" style="width:20em"></a>
+</div>
+</div>
+</td><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/sphereGrid.jpg"><img src="m3ds_revolution_fichiers/sphereGrid.jpg" style="width:20em"></a>
+</div>
+</div>
+
+</td></tr>
+</tbody></table>
+</div><p>Autrement dit une sphère est une grille de points dont il faut 
+calculer la position correcte de chaque sommet (remarque : la première 
+et la dernière ligne de stack correspondent aux pôles : les points de 
+chacune de ces lignes sont confondus). </p><p>Pour générer/tracer cette 
+grille de nombreuses approches peuvent être adoptées. Dans les questions
+ qui suivent nous choisissons de donner le tableau des positions 
+correspondant aux coordonnées <code>p[0], p[1], p[2], ...</code> de la 
+figure, puis de fournir les indices de chaque triangle de cette grille 
+(sur la figure, par exemple, le premier quadrilatère correspond aux 
+indices de 2 triangles <code>{6,0,1,1,7,6}</code>). Ainsi la commande de tracé du squelette est un <code>glDrawElements(GL_TRIANGLES,...</code> (vous pouvez le vérifier dans <code>Revolution::draw</code>).</p><p><span style="font-weight:bold">Remarque :</span> parmi les autres approches qui auraient pu être entreprises, citons principalement :
+</p><ul class="itemize"><li class="li-itemize">
+Donner directement les coordonnées de tous les sommets de chaque 
+triangle dans le tableau des positions (i.e. le tableau d’indices 
+devient inutile, mais on obtient une forte redondance sur les 
+coordonnées des sommets; par exemple les coordonnées <code>p[7]</code> de la figure apparaitraient 8 fois, c’est à dire 2 fois par quadrilatère).
+</li><li class="li-itemize">Exploiter <code>GL_TRIANGLE_STRIP</code> (2 
+lignes de stacks successives formant un strip); il faut cependant 
+commencer un nouveau strip pour chaque stack (par primitive restart à 
+partir d’OpenGL 3.1 <a href="https://www.opengl.org/wiki/Vertex_Rendering#">https://www.opengl.org/wiki/Vertex_Rendering</a>, ou par triangles dégénérés avant 3.1).
+</li></ul><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;1. </span></span>
+Commençons par initialiser le tableau p de <code>Revolution::initSphere</code> avec les x,y,z de chaque <code>p[0], p[1], ...</code> de la figure. Pour la sphère (de rayon 1 et de centre l’origine), chaque point p est donné par :</p><table class="display dcenter"><tbody><tr style="vertical-align:middle"><td class="dcell"><span style="font-style:italic">P</span>=</td><td class="dcell">⎧<br>
+⎪<br>
+⎨<br>
+⎪<br>
+⎩</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:left;white-space:nowrap"><span style="font-style:italic">x</span></td><td style="text-align:center;white-space:nowrap">=</td><td style="text-align:left;white-space:nowrap"><span style="font-style:italic">cos</span>(θ)<span style="font-style:italic">sin</span>(φ)&nbsp;</td></tr>
+<tr><td style="text-align:left;white-space:nowrap"><span style="font-style:italic">y</span></td><td style="text-align:center;white-space:nowrap">=</td><td style="text-align:left;white-space:nowrap"><span style="font-style:italic">cos</span>(φ)&nbsp;</td></tr>
+<tr><td style="text-align:left;white-space:nowrap"><span style="font-style:italic">z</span></td><td style="text-align:center;white-space:nowrap">=</td><td style="text-align:left;white-space:nowrap"><span style="font-style:italic">sin</span>(θ)<span style="font-style:italic">sin</span>(φ)&nbsp;</td></tr>
+</tbody></table></td><td class="dcell"> avec &nbsp;</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:left;white-space:nowrap">θ&nbsp;∈&nbsp;[0,2π]&nbsp;</td></tr>
+<tr><td style="text-align:left;white-space:nowrap">φ&nbsp;∈&nbsp;[0,π]
+</td></tr>
+</tbody></table></td></tr>
+</tbody></table><p>La direction des stacks étant ici l’axe Y; l’angle θ 
+varie dans le sens des slices; l’angle φ varie dans le sens des stacks. 
+La constante π est obtenue avec <code>M_PI</code>.</p><p>Une fois fait, 
+il faut initialiser le tableau d’indices : il suffit de donner les 
+indices des triangles pour chaque quadrilatère d’un stack et faire de 
+même pour tous les slices (boucles imbriquées). Ainsi les premiers 
+indices qu’on peut retrouver dans le tableau avec la grille de la figure
+ est, par exemple, <code>{6,0,1,1,7,6,...}</code>.</p><p><span style="font-weight:bold">Pour tester</span> votre construction il suffit de cliquer sur le bouton <code>Sphere</code>
+ de l’application (inutile d’initialiser les normales et les coordonnées
+ de textures pour tester les positions/indices en visualisation "fil de 
+fer" comme proposé par le squelette; les normales et textures concernent
+ les questions suivantes). Vous pouvez tourner autour de l’objet en 
+maintenant bouton gauche+glisser.</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/sphereWire.png"><img src="m3ds_revolution_fichiers/sphereWire.png" style="width:15em"></a>
+
+</div><p>Remarquez que les triangles peuvent être verts ou rouges : le vert correspond aux faces <code>FRONT</code> et le rouge aux faces <code>BACK</code>
+ (si vous obtenez une alternance rouge/vert, ou bien une orientation 
+inverse de l’image ci-dessus, vous pouvez attendre la question suivante 
+pour corriger et ainsi constater la conséquence).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;2. </span></span>
+Passons aux normales pour avoir une visualisation avec éclairage. Il suffit d’affecter le tableau <code>n</code> dans <code>Revolution::initSphere</code>. En chaque sommet <span style="font-style:italic">P</span>(<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>,<span style="font-style:italic">z</span>) de la sphère quel est un vecteur normal à la sphère ? Affectez le tableau puis <span style="font-weight:bold">Testez</span> (il suffit d’appuyer sur le bouton <code>Light</code> pour activer le tracé avec le shader qui applique l’éclairage).</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/sphereLight.png"><img src="m3ds_revolution_fichiers/sphereLight.png" style="width:20em"></a>
+
+</div><p><span style="font-weight:bold">Si vous</span> constatez des 
+triangles noirs (ou tout noir), ou bien des triangles rouges alternés 
+avec des triangles verts il faut vérifier l’orientation de vos triangles
+ : tous les triangles doivent être orientés directs vers l’extérieur 
+(cette contrainte sera justifiée lors du chapitre sur l’éclairage, mais 
+sachez que c’est une contrainte très souvent requise pour avoir une 
+visualisation correcte d’un objet 3D). Pour corriger l’orientation, il 
+suffit de changer le sens des sommets des triangles, c’est à dire le 
+sens de certains indices du tableau <code>index</code> que vous avez affectés à la question précédente. <span style="font-weight:bold">Effectuez</span> cette correction éventuelle.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;3. </span></span>
+Passons à présent au placage de texture. Il faut donner les coordonnées de textures (tableau <code>t</code>) pour plaquer l’image suivante sur la sphère. </p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/textureEarth.jpg"><img src="m3ds_revolution_fichiers/textureEarth.jpg" style="width:25em"></a>
+
+</div><p>Il suffit d’attribuer "régulièrement" (i.e. interpolation linéaire) pour chaque sommet les coordonnées (<span style="font-style:italic">s</span>,<span style="font-style:italic">t</span>)
+ en convertissant les angles (θ, φ) dans l’intervalle [0,1] (notez que 
+l’image est déjà déformée pour avoir un placage naturel sur la sphère, 
+i.e. par exemple les pôles s’étendent sur toute la première et dernière 
+ligne de l’image). </p><p>Les coordonnées de texture seront alors données pour un sommet correspondant à θ et φ par :
+</p><table class="display dcenter"><tbody><tr style="vertical-align:middle"><td class="dcell">⎧<br>
+⎪<br>
+⎪<br>
+⎪<br>
+⎨<br>
+⎪<br>
+⎪<br>
+⎪<br>
+⎩</td><td class="dcell"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:left;white-space:nowrap"><span style="font-style:italic">s</span></td><td style="text-align:center;white-space:nowrap">=</td><td style="text-align:left;white-space:nowrap"><table class="display"><tbody><tr style="vertical-align:middle"><td class="dcell"><table class="display"><tbody><tr><td class="dcell" style="text-align:center">θ</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">2π</td></tr>
+</tbody></table></td><td class="dcell">&nbsp;</td></tr>
+</tbody></table></td></tr>
+<tr><td style="text-align:left;white-space:nowrap"><span style="font-style:italic">t</span></td><td style="text-align:center;white-space:nowrap">=</td><td style="text-align:left;white-space:nowrap"><table class="display"><tbody><tr><td class="dcell" style="text-align:center">φ</td></tr>
+<tr><td class="hbar"></td></tr>
+<tr><td class="dcell" style="text-align:center">π</td></tr>
+</tbody></table></td></tr>
+</tbody></table></td></tr>
+</tbody></table><p><span style="font-weight:bold">Testez</span> (il suffit de cliquer sur le bouton "Texture")</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/sphereTexture.png"><img src="m3ds_revolution_fichiers/sphereTexture.png" style="width:20em"></a>
+
+</div><p><br>
+
+<span style="color:#004CFF"><span style="font-weight:bold"><u>Exercice&nbsp;3. Revolution</u></span></span><span style="color:#004CFF"><br>
+</span>
+</p><p>Un objet de révolution est construit à partir d’une courbe 2D 
+(appelé profil ou "cross section") qui est reproduite par rotation 
+autour d’un axe.</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/revolution01.jpg"><img src="m3ds_revolution_fichiers/revolution01.jpg" style="width:50em"></a>
+
+</div><p>
+.</p><p>Sur l’image de gauche, on voit le profil qui sera tourné autour 
+de l’axe représenté par le segment rouge (à droite du segment rouge est 
+affiché le profil en miroir pour mieux appréhender le résultat final).</p><p>Le
+ maillage de l’objet résultant est obtenu avec exactement le même 
+principe que pour la sphère : il s’agit d’une grille décomposée en 
+slices/stacks. La seule différence est que les coordonnées des points de
+ chaque slice correspondent aux points du profil qui subit une rotation.</p><p>Le
+ squelette offre la saisie d’un profil (il suffit d’appuyer sur le 
+bouton "input profile"). Un profil par défaut apparait (pour éviter de 
+resaisir un profil lors de chacun de vos tests). Vous pouvez appuyer sur
+ la touche <code>&lt;c&gt;</code> pour effacer le profil et saisir les points avec click droit. Le click gauche maintenu sur un point permet de le déplacer.</p><p>Pour la construction, on suit la même démarche que pour la sphère dans les questions qui suivent.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;1. </span></span>
+Dans <code>Revolution::initRevolution</code> il faut affecter <code>p</code> et <code>index</code>. Pour chaque slice, les points du profil sont obtenus dans le membre <code>_profile[i]</code>
+ (i correspondant à un indice de stack; notez que le nombre de stacks de
+ l’objet de révolution correspond aux nombres de points du profil). </p><p>Dans le squelette chaque <code>_profile[i]</code> est un <code>Vector3</code> (avec une coordonnée <span style="font-style:italic">z</span>=0; cela aurait pu être un simple <code>Vector2</code> puisque le profil est en 2D mais le fait d’être en 3D simplifie le squelette). </p><p>Pour pouvoir tourner les points du profil autour de l’axe <span style="font-style:italic">Y</span> à chaque slice, il suffit d’appliquer la fonction <code>A=unVector3.rotationY(unAngle)</code> (<code>unAngle</code> étant en radian). Par exemple <code>A=_profile[0].rotationY(0.5)</code> (ne modifie pas <code>_profile[0]</code>).</p><p>Affectez également correctement le tableau <code>index</code>
+ ("normalement" il s’agit d’un copier-coller de ce qui a été fait pour 
+la sphère; comprenez bien qu’il s’agit exactement de la même 
+structuration des triangles que pour la sphère).</p><p><span style="font-weight:bold">Testez</span> (il faut cliquer sur le bouton "Revolution" pour générer l’objet; vous pouvez bien sûr tester avec un autre profil saisi).</p><p>Remarque
+ : pour éviter de devoir cliquer sur le bouton "Revolution" à chaque 
+fois que vous lancez le programme, vous pouvez changer la ligne <code>ERequestInit _requestInit=Init_Sphere;</code> avec <code>Init_Revolution</code> dans <code>GLApplication.h</code>.</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/revolutionGrid.png"><img src="m3ds_revolution_fichiers/revolutionGrid.png" style="width:20em"></a>
+
+</div><p>Vous pouvez vous préoccuper d’ores et déjà de l’orientation 
+correcte des triangles (tous les triangles doivent être orientés 
+identiquement; i.e. il ne doit pas y avoir d’alternance rouge/vert entre
+ 2 triangles successifs).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;2. </span></span>
+Passons aux normales pour l’éclairage. Ici contrairement à la sphère 
+nous ne connaissons pas à priori le vecteur orthogonal en chacun des 
+points. Nous allons la déterminer par moyenne aux sommets. Il suffit de 
+raisonner sur le profil.</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/normaleProfile.jpg"><img src="m3ds_revolution_fichiers/normaleProfile.jpg" style="width:30em"></a>
+
+</div><p>Un exemple de comment procéder : 
+</p><ol class="enumerate" type="1"><li class="li-enumerate">
+La direction de chaque segment est donnée par <code>dir=_profile[i+1]-_profile[i]</code>.
+</li><li class="li-enumerate">Pour obtenir un vecteur orthogonal à ce segment (qui est, rappelons le, en 2D car z=0), il suffit de prendre <code>(-dir.y(),dir.x(),0)</code> (faire le produit scalaire avec <code>dir</code> pour vérifier).
+</li><li class="li-enumerate">Une fois calculé chaque normale aux 
+segments, on calcule la normale en chaque sommet du profil par moyenne 
+des normales aux 2 segments adjacents (attention aux cas particuliers du
+ premier et dernier sommet du profil).
+</li><li class="li-enumerate">Pour obtenir la normale d’un sommet de l’objet de révolution il suffit alors d’appliquer la même rotation que pour le sommet.
+</li></ol><p><span style="font-weight:bold">Testez</span></p><div class="center">
+<table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/revProfile.png"><img src="m3ds_revolution_fichiers/revProfile.png" style="width:20em"></a>
+</div>
+</div>
+</td><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/revLight.png"><img src="m3ds_revolution_fichiers/revLight.png" style="width:20em"></a>
+</div>
+</div>
+</td></tr>
+<tr><td style="text-align:center;white-space:nowrap">profil</td><td style="text-align:center;white-space:nowrap">revolution avec éclairage
+</td></tr>
+</tbody></table>
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;3. </span></span>
+Passons aux coordonnées de textures. Il s’agit de la même démarche que 
+pour la sphère. Pour les slices (coordonnée s) on procède de la même 
+façon que pour la sphère (i.e. angle de rotation reporté sur <code>[0,1]</code>). Pour la coordonnée <span style="font-style:italic">t</span>, nous proposons d’aller au plus simple : chaque sommet de stack <span style="font-style:italic">i</span> aura pour coordonnée <span style="font-style:italic">t</span>=<span style="font-style:italic">i</span>/<code>\_profile.size</code> (i.e. on plaque régulièrement la texture le long des sommets).</p><p><span style="font-weight:bold">Testez</span></p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/revTexture.png"><img src="m3ds_revolution_fichiers/revTexture.png" style="width:25em"></a>
+
+</div><p>Remarques :
+</p><ul class="itemize"><li class="li-itemize">
+Vous pouvez être confrontés à des problèmes d’orientation de la texture 
+(bas/haut, miroir) : dans la construction de la révolution qu’est ce qui
+ influence le sens de la texture ?
+</li><li class="li-itemize">La texture se trouve souvent déformée en <span style="font-style:italic">t</span>
+ du fait du placage simple (plus la distance entre 2 points successif du
+ profil est grande, plus la texture sera dilatée). Pour éviter cela, il 
+faudrait calculer la coordonnée <span style="font-style:italic">t</span> en fonction de la longueur de chaque segment du profil (opération d’uniformisation).
+</li><li class="li-itemize">La construction d’objets basée sur la 
+structuration en grille se retrouve très fréquemment. Cependant la 
+décomposition d’un rectangle en 2 triangles suivant la diagonale 
+(nécessaire en OpenGL) peut insèrer une discontinuité due à 
+l’interpolation (vous pouvez le constater sur les résultats obtenus avec
+ l’éclairage où on peut deviner les triangles du fait de ce défaut). Il 
+faudrait régulariser en décomposant avec des triangles plus uniformes, 
+en s’appuyant par exemple sur une structuration telle que (hors sujet du
+ tp) :
+
+<div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/gridSeamless.png"><img src="m3ds_revolution_fichiers/gridSeamless.png" style="width:15em"></a>
+
+</div>
+
+</li><li class="li-itemize">Les normales par moyenne aux sommets ne sont
+ pas toujours souhaitables. Par exemple lorsqu’une arête est vive (ou 
+cut edge : angle entre 2 faces trop important) on ne veut justement pas 
+un effet lisse. Il faut alors deux normales différentes pour un même 
+sommet d’une arête vive. Ce qui imposerait de dupliquer les positions de
+ tels sommets de la révolution pour les tracer en OpenGL, et 
+complexifierait ainsi un peu la construction (hors sujet du tp).
+</li></ul><p><br>
+
+<span style="color:#004CFF"><span style="font-weight:bold"><u>Exercice&nbsp;4. Cube</u></span></span><span style="color:#004CFF"><br>
+</span>
+
+Cet exercice permet de bien comprendre le problèmes des arêtes vives et 
+de la nécessaire duplication des sommets lors de la spécification des 
+normales et/ou des coordonnées de textures.</p><p>On travaille dans <code>Revolution::initCube</code>.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;1. </span></span>
+On se préoccupe uniquement des positions et des indices pour cette question. Initialisez le tableau <span style="font-style:italic">p</span>
+ avec les 8 sommets d’un cube d’arête de longueur 2 et centré sur 
+l’origine (autrement dit les coordonnées sont soit -1 soit 1 pour x, y 
+et z).</p><p>Initialisez alors index. <span style="font-weight:bold">Testez</span></p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/cubeWire.png"><img src="m3ds_revolution_fichiers/cubeWire.png" style="width:25em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;2. </span></span>
+Pour les normales, il faut traduire le fait que les arêtes du cube sont 
+vives. Il faut donc prendre comme normale les normales aux faces (et 
+non, par exemple, la moyenne des normales au sommet dont le but est de 
+traduire une surface lisse). Ainsi, un sommet du cube possède 3 normales
+ différentes selon la face qu’on considère. Autrement dit, 1 sommet du 
+cube correspond en fait à 3 sommets distincts (ensemble des attributs 
+distincts).</p><p>Pour spécifier les normales il faut donc dupliquer 
+chaque position 3 fois (donc 24 positions en tout), et pour chacun 
+spécifier la normale. Il faut également corriger le tableau index 
+(plutôt que de faire des copier coller hasardeux, il est conseillé de 
+reprendre complètement depuis le début la création des tableaux p, index
+ et n, en raisonnant face par face en les spécifiant les unes après les 
+autres).</p><p>N’oubliez pas également l’importance de l’ordre des 
+sommets pour la cohérence de l’éclairage (comme déjà indiqué pour la 
+sphère) : les faces doivent être orientées directes vers l’extérieur et 
+leur normale dirigée vers l’extérieur. C’est à dire que lorsque vous 
+regardez une face du cube : la normale est dirigée vers vous et les 
+sommets "tournent" dans le sens contraire des aiguilles d’une montre.</p><p><span style="font-weight:bold">Testez</span> </p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/cubeLight.png"><img src="m3ds_revolution_fichiers/cubeLight.png" style="width:25em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;3. </span></span>
+On souhaite plaquer la texture d’un dé à jouer sur le cube. L’image à plaquer est <code>dice.png</code>.</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/dice.png"><img src="m3ds_revolution_fichiers/dice.png" style="width:25em"></a>
+
+</div><p>Il suffit de spécifier chacune des coordonnées de texture dans le tableau <code>t</code> (respectez une des contraintes d’un dé qui est que la somme de 2 faces opposées est 7).</p><p><span style="font-weight:bold">Testez</span></p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/cubeTexture.png"><img src="m3ds_revolution_fichiers/cubeTexture.png" style="width:25em"></a>
+
+</div><!--CUT END -->
+<!--HTMLFOOT-->
+<!--ENDHTML-->
+<!--FOOTER-->
+<hr style="height:2"><blockquote class="quote"><em>Ce document a été traduit de L<sup>A</sup>T<sub>E</sub>X par </em><a href="http://hevea.inria.fr/"><em>H</em><em><span style="font-size:small"><sup>E</sup></span></em><em>V</em><em><span style="font-size:small"><sup>E</sup></span></em><em>A</em></a></blockquote>
+
+</body></html>

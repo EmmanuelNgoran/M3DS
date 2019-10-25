@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.32">
+<style type="text/css">
+.li-itemize{margin:1ex 0ex;}
+.li-enumerate{margin:1ex 0ex;}
+.dd-description{margin:0ex 0ex 1ex 4ex;}
+.dt-description{margin:0ex;}
+.toc{list-style:none;}
+.footnotetext{margin:0ex; padding:0ex;}
+div.footnotetext P{margin:0px; text-indent:1em;}
+.thefootnotes{text-align:left;margin:0ex;}
+.dt-thefootnotes{margin:0em;}
+.dd-thefootnotes{margin:0em 0em 0em 2em;}
+.footnoterule{margin:1em auto 1em 0px;width:50%;}
+.caption{padding-left:2ex; padding-right:2ex; margin-left:auto; margin-right:auto}
+.title{margin:2ex auto;text-align:center}
+.titlemain{margin:1ex 2ex 2ex 1ex;}
+.titlerest{margin:0ex 2ex;}
+.center{text-align:center;margin-left:auto;margin-right:auto;}
+.flushleft{text-align:left;margin-left:0ex;margin-right:auto;}
+.flushright{text-align:right;margin-left:auto;margin-right:0ex;}
+div table{margin-left:inherit;margin-right:inherit;margin-bottom:2px;margin-top:2px}
+td table{margin:auto;}
+table{border-collapse:collapse;}
+td{padding:0;}
+.cellpadding0 tr td{padding:0;}
+.cellpadding1 tr td{padding:1px;}
+pre{text-align:left;margin-left:0ex;margin-right:auto;}
+blockquote{margin-left:4ex;margin-right:4ex;text-align:left;}
+td p{margin:0px;}
+.boxed{border:1px solid black}
+.textboxed{border:1px solid black}
+.vbar{border:none;width:2px;background-color:black;}
+.hbar{border:none;height:2px;width:100%;background-color:black;}
+.hfill{border:none;height:1px;width:200%;background-color:black;}
+.vdisplay{border-collapse:separate;border-spacing:2px;width:auto; empty-cells:show; border:2px solid red;}
+.vdcell{white-space:nowrap;padding:0px; border:2px solid green;}
+.display{border-collapse:separate;border-spacing:2px;width:auto; border:none;}
+.dcell{white-space:nowrap;padding:0px; border:none;}
+.dcenter{margin:0ex auto;}
+.vdcenter{border:solid #FF8000 2px; margin:0ex auto;}
+.minipage{text-align:left; margin-left:0em; margin-right:auto;}
+.marginpar{border:solid thin black; width:20%; text-align:left;}
+.marginparleft{float:left; margin-left:0ex; margin-right:1ex;}
+.marginparright{float:right; margin-left:1ex; margin-right:0ex;}
+.theorem{text-align:left;margin:1ex auto 1ex 0ex;}
+.part{margin:2ex auto;text-align:center}
+.lstlisting{font-family:monospace;white-space:pre;margin-right:auto;margin-left:0pt;text-align:left}
+</style>
+
+<link rel="stylesheet" href="m3ds_openGL3D_fichiers/prog3d.css" type="text/css">
+<title>m3ds_openGL3D</title>
+</head>
+<body>
+<!--HEVEA command line is: hevea -entities style.hva m3ds_openGL3D.tex -o m3ds_openGL3D.html -->
+<!--CUT STYLE article--><!--CUT DEF section 1 --><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/logoFST_info.png"><img src="m3ds_openGL3D_fichiers/logoFST_info.png" style="width:30em"></a>
+</div>
+</div>
+ </td></tr>
+<tr><td style="text-align:center;white-space:nowrap"><span style="font-weight:bold">Master Informatique</span> 2018-2019</td></tr>
+</tbody></table><div class="center"><span style="font-weight:bold"><span style="font-size:large">M3DS</span></span></div><p>
+<br>
+<br>
+</p><div class="center"><span style="font-size:x-large"><span style="font-weight:bold">TP 02 : Projection/Depth/Eclairement</span></span></div><div class="center">
+<table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:center;white-space:nowrap">
+<div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/cowEclaire.jpg"><img src="m3ds_openGL3D_fichiers/cowEclaire.jpg" style="height:30em"></a>
+
+</div>
+</td><td style="text-align:center;white-space:nowrap">
+<div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/cowRotate.jpg"><img src="m3ds_openGL3D_fichiers/cowRotate.jpg" style="height:30em"></a>
+
+</div>
+
+</td></tr>
+</tbody></table>
+</div><p><span style="font-weight:bold">Objectifs :
+</span>
+</p><ul class="itemize"><li class="li-itemize">
+comprendre le Depth Buffer
+</li><li class="li-itemize">assimiler les systèmes de coordonnées : Eye Coordinates, Clip Coordinates, Normalized Device Coordinates, Window Coordinates 
+</li><li class="li-itemize">assimiler le volume de visualisation
+</li><li class="li-itemize">tracer en OpenGL des objets 3D "structurés" (provenant de fichiers .obj)
+</li><li class="li-itemize">mise en place de l’éclairage
+</li></ul><p><span style="font-weight:bold">Attention :</span> ce tp est
+ très dirigiste (beaucoup de questions se résument à des copier-coller 
+pour gagner du temps sur les aspects techniques). Il faut comprendre 
+impérativement ce qui est fait ainsi que les différentes notions qui 
+apparaissent.</p>
+<!--TOC section id="sec1" Prise en main-->
+<h2 id="sec1" class="section">1&nbsp;&nbsp;Prise en main</h2><!--SEC END --><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;1. </span></span>
+Reprenez <a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/openGL3D.zip">openGL3D.zip</a> sur le portail.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;2. </span></span>
+</p><ol class="enumerate" type="1"><li class="li-enumerate">
+renommez ce dossier en remplaçant <code>Student1_Student2</code> avec votre nom (les 2 noms si vous êtes en binôme). 
+</li><li class="li-enumerate">renommez le fichier <code>.pro</code> sur le même principe.
+</li><li class="li-enumerate">indiquez dès à présent vos noms/prénoms dans le <code>Readme.txt</code>
+</li></ol><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;3. </span></span>
+Dans le dossier <code>application</code>, vous avez 2 fichiers : <code>GLApplication.cpp</code> (dont l’organisation est commune à tous les tps et similaire au premier TP), et <code>BasicMesh.cpp</code> qui assurera les opérations de tracé d’objets 3D de ce TP (initialisation des données de l’application/buffers/vao/etc). </p><p>Constatez que dans le dossier <code>p3d</code> sont présentes plusieurs classes utilitaires (<code>Shader</code> pour abstraire les aspects techniques liés aux shaders, <code>Vector3</code> pour manipuler les coordonnées (<span style="font-style:italic">x</span>,<span style="font-style:italic">y</span>,<span style="font-style:italic">z</span>), etc).</p><p>Enfin constatez que la présence du shader, pour l’instant rudimentaire, utilisé pour ce TP (<code>openGL3D.vert</code> et <code>openGL3D.frag</code>). Ces shaders sont déjà intégrés par le squelette (cf l’affectation de <code>_shader</code> dans <code>GLApplication::initialize</code>) gràce à la classe <code>Shader</code> (lecture fichiers sources/compilation/link/etc).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;4. </span></span>
+<span style="font-weight:bold">Allez</span> dans <code>BasicMesh::initTetrahedron</code> et constatez l’organisation des données :</p><ul class="itemize"><li class="li-itemize">
+Initialisation des positions et couleurs de l’objet ainsi que la succession des indices dans les variables <code>position</code>, <code>color</code> et <code>_element</code> (organisation des triangles par Indexed Face Set)
+</li><li class="li-itemize">Tous les attributs dans un unique tableau <code>_attribute</code>
+ (les positions et les couleurs sont entrelacées : cf la boucle 
+effectuée). C’est ce tableau qui sera recopié dans un VBO OpenGL. (<span style="font-weight:bold">Notez la démarche</span> différente du tp précédent dans lequel on avait un VBO par attribut. On utilise, ici, un unique VBO pour tous les attributs.
+</li><li class="li-itemize">Constatez que le VBO <code>_attributeBuffer</code> ainsi que le buffer des indices <code>_elementBuffer</code> sont déjà initialisés dans <code>BasicMesh::initBuffer</code>.
+</li></ul><p><span style="font-weight:bold">Complétez</span> <code>BasicMesh::initVAO</code> pour avoir en attribut 0 les données de positions et en attribut 1 les données de couleurs depuis l’unique buffer <code>_attributeBuffer</code> (il faut donc exploiter tous les paramètres de <code>glVertexAttribPointer</code>; cf cours pour un exemple).</p><p><span style="font-weight:bold">Testez</span> :</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/start.jpg"><img src="m3ds_openGL3D_fichiers/start.jpg" style="height:20em"></a>
+
+</div>
+<!--TOC section id="sec2" Depth Buffer-->
+<h2 id="sec2" class="section">2&nbsp;&nbsp;Depth Buffer</h2><!--SEC END --><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;5. </span></span>
+Schématisez, à main levée sur un brouillon, l’objet construit dans <code>BasicMesh::initTetrahedron</code> en reportant les coordonnées de <code>position</code> et en reliant selon <code>_element</code>.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;6. </span></span>
+Pour mieux comprendre la visualisation obtenue, et en modifiant <span style="font-weight:bold">uniquement</span> les données <code>position</code>, <code>color</code>, <code>_element</code>,
+ affectez une couleur par face : le premier triangle tracé (0,1,2) en 
+rouge, le deuxième (0,2,3) en vert, le troisième (0,1,3) en bleu et le 
+dernier (1,2,3) en cyan (indication : vous <span style="font-weight:bold">devez dupliquer</span> les positions dans le tableau position; le tableau <code>_element</code>
+ se trouve, par conséquent, également modifié : du fait de la 
+duplication des sommets, vous devez avoir à présent 12 indices dans <code>_element</code>). En suivant ces consignes, vous devez obtenir : </p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/colorPerFace.jpg"><img src="m3ds_openGL3D_fichiers/colorPerFace.jpg" style="height:20em"></a>
+
+</div><p><span style="font-weight:bold">Comprenez impérativement</span> 
+la nécessité de dupliquer les coordonnées des sommets (cela est résumé 
+dans le premier cours sur le transparent "1 sommet = tous ses 
+attributs").</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;7. </span></span>
+Prenez à présent les tableaux suivants pour <code>BasicMesh::initTetrahedron</code> :
+</p><table class="lstframe" style="padding:1ex;border-style:solid solid double double;"><tbody><tr><td class="lstlisting">  position={
+    -1,0,-1, <span style="font-style:italic">// V0</span>
+    1,0,-1,  <span style="font-style:italic">// V1</span>
+    0,1,1,  <span style="font-style:italic">// V2</span>
+
+    -1,0,-1, <span style="font-style:italic">// V0</span>
+    0,1,1,  <span style="font-style:italic">// V2</span>
+    0,-1,1,  <span style="font-style:italic">// V3</span>
+
+    -1,0,-1, <span style="font-style:italic">// V0</span>
+    1,0,-1,  <span style="font-style:italic">// V1</span>
+    0,-1,1,  <span style="font-style:italic">// V3</span>
+
+    1,0,-1,  <span style="font-style:italic">// V1</span>
+    0,1,1,  <span style="font-style:italic">// V2</span>
+    0,-1,1  <span style="font-style:italic">// V3</span>
+  };
+
+
+  color={
+    1,0,0,
+    1,0,0,
+    1,0,0,
+    0,1,0,
+    0,1,0,
+    0,1,0,
+    0,0,1,
+    0,0,1,
+    0,0,1,
+    0,1,1,
+    0,1,1,
+    0,1,1
+  };
+
+  _element={
+    0,1,2,3,4,5,6,7,8,9,10,11
+  };</td></tr>
+</tbody></table><p><span style="font-weight:bold">Expliquez</span>, dans le <span style="font-weight:bold">Readme.txt</span>,
+ le résultat obtenu (en vous appuyant sur l’ordre de tracé des triangles
+ sachant qu’il n’y a pas d’élimination des parties cachées).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;8. </span></span>
+Activez l’élimination des parties cachées par depth buffer :
+</p><ol class="enumerate" type="1"><li class="li-enumerate">
+Dans <code>GLApplication::initialize</code> :
+<table class="lstframe" style="padding:1ex;border-style:solid solid double double;"><tbody><tr><td class="lstlisting">  glEnable(GL_DEPTH_TEST); <span style="font-style:italic">// activation Depth Buffer (opérations écriture/tests)</span>
+  glDepthFunc(GL_LESS);  <span style="font-style:italic">// le test passe si depth(src) &lt; depth(dst)</span>
+  glClearDepth(1); <span style="font-style:italic">// valeur d'initialisation du depth destination de tous les pixels lors d'un glClear</span></td></tr>
+</tbody></table></li><li class="li-enumerate">Dans <code>GLApplication::draw</code> :
+<table class="lstframe" style="padding:1ex;border-style:solid solid double double;"><tbody><tr><td class="lstlisting">  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); <span style="font-style:italic">// affecte tous les pixels du color buffer et du depth buffer avec les valeurs d'initialisation</span></td></tr>
+</tbody></table></li></ol><p><span style="font-weight:bold">Testez et comprenez la conséquence</span> :</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/depth1.jpg"><img src="m3ds_openGL3D_fichiers/depth1.jpg" style="height:20em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;9. </span></span>
+</p><ol class="enumerate" type="1"><li class="li-enumerate">
+Changez le test du depth buffer en <code>GL_GREATER</code> au lieu de <code>GL_LESS</code> : testez/expliquez (écran blanc). 
+</li><li class="li-enumerate">Changez à présent le <code>glClearDepth</code> avec la valeur 0 : testez/expliquez (triangles cyan et vert). <span style="font-weight:bold">Attention :</span>
+ on rappelle que la valeur de profondeur manipulée par le depth buffer 
+sont en Window Coordinates dans l’intervalle [0,1]; c’est à dire que les
+ coordonnées [−1,1] en z que vous donnez en Normalized Device 
+Coordinates sont reportées sur [0,1].
+</li><li class="li-enumerate">Testez avec un <code>glClearDepth(0.5)</code> : expliquez le résultat.
+</li><li class="li-enumerate"><span style="font-weight:bold">Revenez</span> avec un depth test à <code>GL_LESS</code> et un <code>glClearDepth(1.0)</code> (valeurs "traditionnelles").
+</li></ol>
+<!--TOC section id="sec3" Volume de visualisation-->
+<h2 id="sec3" class="section">3&nbsp;&nbsp;Volume de visualisation</h2><!--SEC END --><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;10. </span></span>
+Prenez les données suivantes pour cette partie (i.e. modifiez <code>BasicMesh::initTetrahedron</code>) : </p><table class="lstframe" style="padding:1ex;border-style:solid solid double double;"><tbody><tr><td class="lstlisting">  position={
+    -20,0,-10, <span style="font-style:italic">// V0</span>
+    10,0,-10,  <span style="font-style:italic">// V1</span>
+    0,10,-30,  <span style="font-style:italic">// V2</span>
+    0,-20,-30  <span style="font-style:italic">// V3</span>
+  };
+
+  color={
+    1,0,0, <span style="font-style:italic">// rouge</span>
+    0,1,0, <span style="font-style:italic">// vert</span>
+    0,0,1, <span style="font-style:italic">// bleu</span>
+    0,1,1  <span style="font-style:italic">// cyan</span>
+  };
+
+  <span style="font-style:italic">// index for 4 triangles</span>
+  _element={
+    0,1,2,0,2,3,0,1,3,1,2,3
+  };</td></tr>
+</tbody></table><p>(si vous testez, vous aurez une fenêtre blanche, 
+puisque tous les triangles du tétraèdre sont hors volume de 
+visualisation (les coordonnées sont effectivement hors [−1,1])).</p><p>—</p><p>Nous
+ souhaitons un volume de visualisation plus souples que les coordonnées 
+normalisées NDC. Nous allons donc redéfinir complêtement le volume de 
+visualisation (se référer également au cours) avec :</p><ul class="itemize"><li class="li-itemize">
+Dimension de l’écran : par exemple on souhaite que l’extrémité 
+bas/gauche de la fenêtre OpenGL corresponde aux coordonnées (-20,-20) et
+ l’extrémité haut/droit corresponde à (20,20) (et non plus aux (-1,-1) 
+et (1,1) des coordonnées normalisées).
+</li><li class="li-itemize">Position du volume par rapport à 
+l’observateur : on souhaite indiquer que l’écran (i.e. le "début" du 
+volume de visualisation) se trouve à une certaine distance de 
+l’observateur (repère appelé traditionnellement <code>Eye</code>). On indique alors une distance noté <code>near</code>. On indique également une distance maximale à laquelle on peut voir (le volume de visualisation n’est pas infini) : on la note <code>far</code>.
+</li><li class="li-itemize">Repère <code>Eye</code> : l’observateur 
+devra constituer le repère de référence pour les coordonnées (et non 
+plus le centre du volume de visualisation; l’origine sera sur 
+l’observateur). Ce repère <code>Eye</code> sera de plus, 
+conventionnellement, direct (i.e. x dans la direction gauche -&gt; 
+droite, y dans la direction bas -&gt; haut et donc z dans la direction 
+devant -&gt; derrière). En conséquence, l’écran se trouve donc en <span style="font-style:italic">z</span>=−<span style="font-style:italic">near</span>; les coordonnées du point (0,0,0) correspondent à l’observateur.
+</li></ul><p>Nous raisonnerons donc maintenant dans le système de coordonnées <code>Eye</code> (i.e. les positions passées au vertex shader seront des coordonnées dans le repère <code>Eye</code>). </p><p>Or
+ à la sortie du vertex shader, il faut nécessairement des coordonnées en
+ Clip Coordinates (coordonnées normalisées en homogènes affectées à <code>gl_Position</code>).
+ Toutes les coordonnées doivent donc subir une 
+«&nbsp;conversion&nbsp;»dans le vertex shader pour traduire les 
+coordonnées données dans le repère <code>Eye</code> vers le repère <code>Clip Coordinates</code>.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;11. </span></span>
+On convertit les coordonnées <code>Eye</code> en <code>Clip Coordinates</code>, en transformant la position du sommet passé au vertex shader. Cette transformation peut se traduire par une matrice homogène <code>projection</code> (cf cours). </p><ol class="enumerate" type="1"><li class="li-enumerate">
+<span style="font-weight:bold">Modifiez</span> le vertex shader pour avoir (<span style="font-weight:bold">bien comprendre</span> l’intégration et l’utilisation de la matrice <code>projection</code> dans le code qui suit) :<table class="lstframe" style="padding:1ex;border-style:solid solid double double;"><tbody><tr><td class="lstlisting">#version 130
+
+in vec3 position; <span style="font-style:italic">// Eye Coordinates</span>
+in vec3 color;
+
+out vec3 fColor;
+
+uniform mat4 projection;
+
+<span style="font-weight:bold">void</span> main() {
+  vec4 eyePosition=vec4(position,1); <span style="font-style:italic">// passage en coordonnées homogènes</span>
+
+  vec4 clipPosition=projection*eyePosition; <span style="font-style:italic">// transformation par la matrice de projection</span>
+
+  fColor=color;
+
+  gl_Position=clipPosition; <span style="font-style:italic">// gl_Position doit être donné en clip coordinates</span>
+}</td></tr>
+</tbody></table></li><li class="li-enumerate">il reste à passer la valeur de la matrice <code>projection</code> au vertex shader (uniform). Tout d’abord nous utilisons la classe <code>Matrix4</code> offerte par le squelette pour calculer la matrice de projection. Dans le constructeur <code>GLApplication::GLApplication</code> :
+<table class="lstframe" style="padding:1ex;border-style:solid solid double double;"><tbody><tr><td class="lstlisting">   <span style="font-style:italic">// _projection de classe Matrix4 (déclaré dans GLApplication.h)</span>
+  _projection.setOrtho(-20,20,-20,20,5,100); <span style="font-style:italic">// cf calcul de la matrice dans le cours</span></td></tr>
+</tbody></table></li><li class="li-enumerate">Il reste à passer cette matrice au vertex shader. Dans <code>GLApplication::draw</code> :
+<table class="lstframe" style="padding:1ex;border-style:solid solid double double;"><tbody><tr><td class="lstlisting">    _shader.uniform("projection",_projection); <span style="font-style:italic">// utilisation de la classe shader </span>
+                                               <span style="font-style:italic">// qui permet d'alléger la syntaxe OpenGL</span></td></tr>
+</tbody></table></li><li class="li-enumerate">Testez (il s’agit toujours du tétraèdre avec élimination des parties cachées et des coordonnées différentes).
+</li></ol><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/depth3.jpg"><img src="m3ds_openGL3D_fichiers/depth3.jpg" style="height:20em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;12. </span></span>
+Comprenez bien l’intérêt : on definit les données 3D (le tétraèdre ici) 
+par rapport à un repère plus "intuitif" (l’observateur) et 
+«&nbsp;usuel»(le repère est direct : z négatif = devant l’observateur). 
+Le volume de visualisation (i.e. l’écran et le champ de vision) est 
+alors défini par rapport à cet observateur de manière souple et libre.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;13. </span></span>
+Testez et comprenez :
+</p><ol class="enumerate" type="1"><li class="li-enumerate">
+<code>_projection.setOrtho(-18,22,-10,30,5,100);</code>
+</li><li class="li-enumerate"><code>_projection.setOrtho(-5,2,-10,10,5,100);</code>
+</li></ol><p>Comprenez l’interprétation de ces modifications par rapport
+ au résultat : on ne «&nbsp;bouge»pas les points de la "scène", mais 
+seulement "l’écran" (i.e. le volume de visualisation) par rapport à 
+l’observateur.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;14. </span></span>
+Il peut être tentant de se débarasser de la contrainte du far pour 
+visualiser les objets devant l’observateur quelque soit leur distance 
+(un paysage étendu, une ville, etc) en mettant une valeur très grande : <span style="font-weight:bold">testez</span> <code>_projection.setOrtho(-20,20,-20,20,5,1e8);</code>
+ (remarque : le résultat peut dépendre du matériel selon que la valeur 
+du depth buffer est stockée sur 16 ou 24 bits : mettez éventuellement 
+une valeur encore plus grande pour far pour constater un effet similaire
+ à l’image suivante).</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/depthPrecision.jpg"><img src="m3ds_openGL3D_fichiers/depthPrecision.jpg" style="height:20em"></a>
+
+</div><p>Pour expliquer ce résultat, <span style="font-weight:bold">comprenez</span>
+ que les valeurs de profondeur sont converties dans [0,1] (Window 
+Coordinates) avec une certaine précision : ici l’imprécision des valeurs
+ obtenues met en défaut le depth buffer (les valeurs de profondeur 
+deviennent égales même pour des points relativement éloignés les uns des
+ autres).</p><p><span style="font-weight:bold">Revenez</span> à un far raisonnable (100 par exemple).</p>
+<!--TOC section id="sec4" Un peu d’animation-->
+<h2 id="sec4" class="section">4&nbsp;&nbsp;Un peu d’animation</h2><!--SEC END --><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;15. </span></span>
+Outre le calcul de la projection, on peut appliquer à la position passée
+ au vertex shader n’importe quelle transformation. Nous allons tourner 
+le tétraèdre en appliquant une matrice <code>_transform</code> dans le 
+vertex shader (cette matrice est déjà définie et calculée par le 
+squelette pour qu’elle corresponde à une matrice de rotation; nous 
+verrons les détails sur les transformations en cours; l’angle de 
+rotation évolue dans <code>GLApplication::update</code> pour obtenir une rotation animée). Modifiez alors le vertex shader pour intégrer :
+</p><table class="lstframe" style="padding:1ex;border-style:solid solid double double;"><tbody><tr><td class="lstlisting">...
+  eyePosition=transform*eyePosition; <span style="font-style:italic">// application de la rotation</span>
+  clipPosition=projection*eyePosition; <span style="font-style:italic">// puis application de la matrice de projection</span>
+...
+  <span style="font-style:italic">// ou bien plus directement clipPosition = projection*transform*eyePosition;</span></td></tr>
+</tbody></table><p><span style="font-weight:bold">Affectez</span> le uniform correspondant (comme pour la projection) dans <code>GLApplication::draw</code>. <span style="font-weight:bold">Testez</span> : le tétraèdre doit tourner (vous pouvez régler la vitesse en changeant le pas de l’angle dans <code>GLApplication::update</code>). Nous généraliserons ce principe avec n’importe quelle transformation lors du cours sur les changements de repères.</p>
+<!--TOC section id="sec5" Objets plus complexes-->
+<h2 id="sec5" class="section">5&nbsp;&nbsp;Objets plus complexes</h2><!--SEC END --><p>
+On peut, bien sûr, construire des objets plus complexes que le tétraèdre
+ sur le même principe : par exemple, pour un cube, avec une couleur par 
+face, combien faudrait-il de sommets ? On peut également générer, 
+algorithmiquement un cylindre, une sphère, un tore, etc. On peut 
+également lire les données depuis un fichier (fichier issu d’un logiciel
+ de modélisation par exemple).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;16. </span></span>
+Ouvrez <code>cube.obj</code> avec un éditeur de texte : la position des 
+sommets est donnée par ’v’ (8 sommets pour un cube). Les normales (i.e. 
+les vecteurs orthogonaux à l’objet : nous verrons leur utilité dans la 
+partie "éclairement" du cours) sont donnés par vn. <span style="font-weight:bold">Nous interpréterons</span>
+ pour l’instant ces normales comme des valeurs de couleurs. Puis sont 
+décrites les faces de l’objet par ’f’ (il y a bien 6 faces pour un 
+cube). Les entiers suivants ’f’ sont les indices des positions ’v’ et 
+’vn’ (le premier ’v’ du fichier correspond à l’indice 1). Par exemple :
+</p><table class="lstframe" style="padding:1ex;border-style:solid solid double double;"><tbody><tr><td class="lstlisting">f 1<span style="font-style:italic">//1 2//1 3//1 4//1</span></td></tr>
+</tbody></table><p>est le polygone constitué des positions (1,2,3,4) (1 =
+ premier ’v’ dans le fichier, 2 = deuxième ’v’, etc), et des normales 
+pour chaque sommet (ici la même normale numéro 1 pour chaque sommet). 
+Autrement dit chaque sommet de la face est spécifié par <code>numéro v//numéro vn</code>.</p><p><span style="font-weight:bold">Constatez</span> que ces données nécessitent un traitement pour correspondre aux contraintes de tracé d’OpenGL : 
+</p><ol class="enumerate" type="1"><li class="li-enumerate">
+Les faces dans le fichier ne sont pas nécessairement des triangles (il 
+faut donc les transformer en triangles pour les tracer avec OpenGL : 
+OpenGL ne sait tracer que des triangles)
+</li><li class="li-enumerate">Les attributs position/normale pour chaque
+ sommet sont sans redondance (i.e. une même position peut être associée à
+ différentes normales alors que pour OpenGL il s’agit nécessairement de 2
+ sommets distincts).
+</li></ol><p>Une classe du squelette <code>ObjLoader</code> (dans le répertoire <code>p3d/scene</code>) permet de lire ces fichiers <code>.obj</code> en effectuant les traitements nécessaires : triangulation et création des sommets (1 sommet = tous ses attributs).</p><p>Pour lire un <code>.obj</code>, dans le squelette, il suffit de faire (dans le constructeur <code>GLApplication::GLApplication</code>) :
+</p><table class="lstframe" style="padding:1ex;border-style:solid solid double double;"><tbody><tr><td class="lstlisting">  <span style="font-style:italic">// _obj déjà déclaré en ObjLoader</span>
+  _obj.readInit("cube.obj",Vector3(-10,-10,-30),Vector3(10,10,-10)); <span style="font-style:italic">// reporte l'objet dans la boite d'extémités (-10,-10,-30) et (10,10,-10)</span>
+  _basicMesh.initObj(_obj); <span style="font-style:italic">// pour remplacer l'initialisation du tétraèdre</span></td></tr>
+</tbody></table><p>Il reste à compléter <code>BasicMesh::initObj</code> dans la question qui suit.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;17. </span></span>
+Dans <code>BasicMesh::initObj</code> il s’agit d’affecter <code>_attribute</code> (comme dans <code>initTetrahedron</code>) mais en prenant les données dans <code>obj</code> (voir les commentaires pour la description des accesseurs nécessaires). </p><p><code>obj</code>
+ contient la liste de tous les triangles et pour chaque triangle, on 
+connait tous les attributs de chaque sommet : pour affecter <code>_attribute</code>
+ on parcourt donc simplement tous les sommets de tous les triangles. Il 
+n’y a donc plus besoin de la notion d’Indexed Face Set et <code>_element</code> devient donc inutile (on tracera donc en <code>glDrawArrays</code> et non en <code>glDrawElements</code>). </p><p><span style="font-weight:bold">Complétez</span> <code>BasicMesh::initObj</code>, et passez en <code>glDrawArrays</code> dans <code>BasicMesh::draw</code>
+ : vous devez voir le cube tourner (remarque : les normales sont 
+interprétées comme des valeurs de couleurs, puisqu’on n’a rien changé au
+ niveau du vertex/fragment shader; des faces apparaissent donc noires 
+car les normales peuvent avoir des coordonnées négatives : pour une 
+composante de couleur, toute valeur négative est interprétée comme la 
+valeur 0).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;18. </span></span>
+Les normales ont des coordonnées dans [−1,1]. Comme on les interprète 
+comme des couleurs, on va les reporter dans [0,1]. Reportez les 
+coordonnées des normales dans [0,1] (i.e. -1 doit correspondre à 0 et 1 à
+ 1) dans <code>BasicMesh::initObj</code>.</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/cubeColor.jpg"><img src="m3ds_openGL3D_fichiers/cubeColor.jpg" style="height:20em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;19. </span></span>
+Changez <code>cube.obj</code> par <code>cow.obj</code>. <span style="font-weight:bold">Testez</span></p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/cowColor.jpg"><img src="m3ds_openGL3D_fichiers/cowColor.jpg" style="height:20em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;20. </span></span>
+Il s’agit dans cette question de réfléchir sur les Indexed Face Set (i.e. faire un <code>glDrawArrays</code> ou un <code>glDrawElements</code> ?) :
+</p><ul class="itemize"><li class="li-itemize">
+Observez les données de la question 7 : remarquez que chaque sommet à 
+tracer pour chaque triangle diffère soit par la position, soit par la 
+couleur. Dans ce cas le <code>glDrawElements</code> s’avère inutile (remarquez d’ailleurs que <code>_element</code> décrit tous les sommets dans l’ordre).
+</li><li class="li-itemize">Pour les objets obj, il en est de même pour 
+le cube : le choix de la représentation des données (i.e. tous les 
+sommets sont distincts) et le passage en <code>glDrawArrays</code> est pertinent.
+</li><li class="li-itemize">On peut se poser la question sur d’autres 
+objets : par exemple, sur la vache, de nombreux sommets sont communs à 
+différents triangles (même position <span style="font-weight:bold">et</span> même normale). Il serait donc pertinent de passer en <code>glDrawElements</code>
+ pour éviter la redondance en mémoire OpenGL. La lecture du fichier s’en
+ trouve cependant compléxifiée (détection des sommets identiques en 
+numéro de position et numéro de normale; duplication des sommets si le 
+numéro de la normale ou le numéro de la position est différente).
+</li></ul><p>Il s’agit d’un excellent exercice de faire une version de 
+loader permettant d’exploiter l’indexed face set en OpenGL (hors sujet 
+du tp). En pratique, dans les librairies haut niveau, on retrouve les 2 
+approches; le critère de choix s’appuie entre optimisation mémoire 
+OpenGL et complexité de la représentation/manipulation des données. Il 
+est cependant souvent admis qu’il ne faut pas chercher à optimiser la 
+mémoire des tracés en OpenGL (faire du <code>glDrawArrays</code> même 
+s’il y a de nombreuses redondances) : le gain apparent risque d’être 
+perdu sur le traitement des données pour alimenter OpenGL (préparation 
+des données effectués par le CPU)... </p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;21. </span></span>
+<span style="font-weight:bold">Avant de passer à l’exercice suivant</span> <span style="font-weight:bold">immobilisez</span> la vache en forçant <code>_angle=0.0</code> dans <code>GLApplication::update</code> (nous ne tiendrons pas compte des transformations pour le calcul d’éclairement). <span style="font-weight:bold">Si vous oubliez</span> de désactiver la rotation de la vache votre résultat sera faussé.</p>
+<!--TOC section id="sec6" Eclairement-->
+<h2 id="sec6" class="section">6&nbsp;&nbsp;Eclairement</h2><!--SEC END --><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;22. </span></span>
+Nous allons interpréter les normales en tant que telles pour faire un 
+calcul d’éclairement. Tout d’abord, pour que le code soit plus lisible, 
+changez le nom du <code>in vec3 color</code> en <code>in vec3 normal</code> (pensez à modifier le <code>_shader.attribute("normal",1)</code> en conséquence dans <code>GLApplication::initialize</code>). <span style="font-weight:bold">Testez</span> pour d’éventuelles erreurs (ne doit rien changer au résultat obtenu). <span style="font-weight:bold">Enlevez</span> également le report dans <code>[0,1]</code> des valeurs dans <code>BasicMesh::initObj</code> (i.e. faire directement <code>_attribute.push_back(obj.normal(i,j).x());</code>, etc).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;23. </span></span>
+On rappelle que l’intensité d’éclairement (un nombre compris entre 0 et 1) diffus est donné par <span style="font-style:italic">N</span> · <span style="font-style:italic">L</span> où <span style="font-style:italic">N</span> est la normale au point à éclairer, et <span style="font-style:italic">L</span>
+ est la direction d’éclairement (cf cours). Nous allons calculer 
+l’intensité d’éclairement en chaque sommet dans le vertex shader. La 
+normale <span style="font-style:italic">N</span> est déjà donnée (c’est l’attribut <code>normal</code>). La direction d’éclairement correspond au vecteur <span style="font-style:italic">PS</span> où <span style="font-style:italic">P</span> est la position du sommet (attribut <code>position</code>) et <span style="font-style:italic">S</span> est la position de la source lumineuse. Réalisez l’éclairement des sommets avec les étapes suivantes :</p><ol class="enumerate" type="1"><li class="li-enumerate">
+Un membre <code>Vector3 _lightPosition</code> est déclaré dans le 
+squelette pour représenter la position de la source. La position de la 
+source sera interprétée dans le repère <code>Eye</code> : fixez la pour l’instant à <code>Vector3(0,0,0)</code> (i.e. sur l’observateur). Il faut passer la position de cette source au shader par uniform. <span style="font-weight:bold">Faites-le</span> (un uniform <code>lightPosition</code> dans le vertex shader et affectation par <code>_shader.uniform("lightPosition",lightPosition)</code>.
+</li><li class="li-enumerate">Dans le vertex shader définissez, localement au <code>void main()</code>, un <code>vec3 N</code> (pour la normale) et un <code>vec3 L</code> (pour la direction d’éclairement) et affectez les (remarque : d’après le calcul vu en cours, il faut assurer que les vecteurs <span style="font-style:italic">N</span> et <span style="font-style:italic">L</span> soient de norme 1 : vous pouvez directement faire <code>N=normalize(N);</code> en GLSL).
+</li><li class="li-enumerate">Il reste à calculer <code>float intensity = max(dot(N,L),0.0)</code> (le <code>max</code> force l’intensité à 0 si le produit scalaire est négatif).
+</li><li class="li-enumerate">Enfin attribuez à <code>fColor</code> la couleur <code>vec3(intensity,intensity,intensity)</code> (donnera une couleur en nuance de gris selon la valeur de <code>intensity</code>).
+</li></ol><p><span style="font-weight:bold">Testez !</span> </p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/cowEclaire.jpg"><img src="m3ds_openGL3D_fichiers/cowEclaire.jpg" style="height:20em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;24. </span></span>
+Testez avec une autre position pour la source lumineuse (constatez la différence sur les ombrages).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;25. </span></span>
+Ajoutez un uniform au vertex shader pour paramétrer la couleur de l’objet (i.e. <code>fColor=intensity*diffuseColor</code>). Remarque : vous pouvez directement affecter un uniform de la manière suivante : <code>_shader.uniform("diffuseColor",Vector3(0.2,0.8,0.2));</code> (i.e. sans définir nécessairement une variable dans l’application). Ce paramètre <code>diffuseColor</code> correspond au coefficient de réflexion diffuse (spécifie la couleur mat d’un matériel).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;26. </span></span>
+<span style="font-weight:bold">Bonus</span>. Réactivez l’animation (i.e. <code>_angle+=2</code>). Si la visualisation ne semble pas correcte, vérifiez que vous avez appliqué l’éclairement avec les positions <span style="font-weight:bold">et les normales transformées</span> par la matrice <code>transform</code>.</p><div class="center">
+<video controls="controls" width="40%">"<source src="m3ds_openGL3D_fichiers/cow.webm" type="video/webm"></video>
+</div><!--CUT END -->
+<!--HTMLFOOT-->
+<!--ENDHTML-->
+<!--FOOTER-->
+<hr style="height:2"><blockquote class="quote"><em>Ce document a été traduit de L<sup>A</sup>T<sub>E</sub>X par </em><a href="http://hevea.inria.fr/"><em>H</em><em><span style="font-size:small"><sup>E</sup></span></em><em>V</em><em><span style="font-size:small"><sup>E</sup></span></em><em>A</em></a></blockquote>
+
+</body></html>

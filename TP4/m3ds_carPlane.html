@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.32">
+<style type="text/css">
+.li-itemize{margin:1ex 0ex;}
+.li-enumerate{margin:1ex 0ex;}
+.dd-description{margin:0ex 0ex 1ex 4ex;}
+.dt-description{margin:0ex;}
+.toc{list-style:none;}
+.footnotetext{margin:0ex; padding:0ex;}
+div.footnotetext P{margin:0px; text-indent:1em;}
+.thefootnotes{text-align:left;margin:0ex;}
+.dt-thefootnotes{margin:0em;}
+.dd-thefootnotes{margin:0em 0em 0em 2em;}
+.footnoterule{margin:1em auto 1em 0px;width:50%;}
+.caption{padding-left:2ex; padding-right:2ex; margin-left:auto; margin-right:auto}
+.title{margin:2ex auto;text-align:center}
+.titlemain{margin:1ex 2ex 2ex 1ex;}
+.titlerest{margin:0ex 2ex;}
+.center{text-align:center;margin-left:auto;margin-right:auto;}
+.flushleft{text-align:left;margin-left:0ex;margin-right:auto;}
+.flushright{text-align:right;margin-left:auto;margin-right:0ex;}
+div table{margin-left:inherit;margin-right:inherit;margin-bottom:2px;margin-top:2px}
+td table{margin:auto;}
+table{border-collapse:collapse;}
+td{padding:0;}
+.cellpadding0 tr td{padding:0;}
+.cellpadding1 tr td{padding:1px;}
+pre{text-align:left;margin-left:0ex;margin-right:auto;}
+blockquote{margin-left:4ex;margin-right:4ex;text-align:left;}
+td p{margin:0px;}
+.boxed{border:1px solid black}
+.textboxed{border:1px solid black}
+.vbar{border:none;width:2px;background-color:black;}
+.hbar{border:none;height:2px;width:100%;background-color:black;}
+.hfill{border:none;height:1px;width:200%;background-color:black;}
+.vdisplay{border-collapse:separate;border-spacing:2px;width:auto; empty-cells:show; border:2px solid red;}
+.vdcell{white-space:nowrap;padding:0px; border:2px solid green;}
+.display{border-collapse:separate;border-spacing:2px;width:auto; border:none;}
+.dcell{white-space:nowrap;padding:0px; border:none;}
+.dcenter{margin:0ex auto;}
+.vdcenter{border:solid #FF8000 2px; margin:0ex auto;}
+.minipage{text-align:left; margin-left:0em; margin-right:auto;}
+.marginpar{border:solid thin black; width:20%; text-align:left;}
+.marginparleft{float:left; margin-left:0ex; margin-right:1ex;}
+.marginparright{float:right; margin-left:1ex; margin-right:0ex;}
+.theorem{text-align:left;margin:1ex auto 1ex 0ex;}
+.part{margin:2ex auto;text-align:center}
+.lstlisting{font-family:monospace;white-space:pre;margin-right:auto;margin-left:0pt;text-align:left}
+</style>
+
+<link rel="stylesheet" href="m3ds_carPlane_fichiers/prog3d.css" type="text/css">
+<title>m3ds_carPlane</title>
+</head>
+<body>
+<!--HEVEA command line is: hevea -entities style.hva m3ds_carPlane.tex -o m3ds_carPlane.html -->
+<!--CUT STYLE article--><!--CUT DEF section 1 --><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/logoFST_info.png"><img src="m3ds_carPlane_fichiers/logoFST_info.png" style="width:30em"></a>
+</div>
+</div>
+ </td></tr>
+<tr><td style="text-align:center;white-space:nowrap"><span style="font-weight:bold">Master Informatique</span> 2018-2019</td></tr>
+</tbody></table><div class="center"><span style="font-weight:bold"><span style="font-size:large">M3DS</span></span></div><p>
+<br>
+<br>
+</p><div class="center"><span style="font-size:x-large"><span style="font-weight:bold">TP 04 : Conception hiérarchique Changements de repères</span></span></div><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/voiture.jpg"><img src="m3ds_carPlane_fichiers/voiture.jpg" style="height:15em"></a>
+
+</div>
+<!--TOC section id="sec1" Prise en main-->
+<h2 id="sec1" class="section">1&nbsp;&nbsp;Prise en main</h2><!--SEC END --><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;1. </span></span>
+Reprenez <a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/carPlane.zip">carPlane.zip</a> sur le portail : 
+</p><ul class="itemize"><li class="li-itemize">
+renommez, sans attendre, le répertoire, le .pro et indiquez vos noms dans le readme
+</li><li class="li-itemize">testez : vous devez voir un avion (provient d’un fichier obj), et un cube.
+</li><li class="li-itemize">vous pouvez tourner autour du cube avec click gauche de la souris (mouvement de la caméra). 
+</li></ul>
+<!--TOC section id="sec2" Conception hiérarchique-->
+<h2 id="sec2" class="section">2&nbsp;&nbsp;Conception hiérarchique</h2><!--SEC END --><p>
+Dans cette partie on trace un objet par conception hiérarchique. Le but est de visualiser une voiture (simple) en utilisant <span style="font-weight:bold">uniquement</span>
+ les primitives géométriques suivantes qui sont offertes par le 
+squelette. Ces primitives sont définies dans leur repère local comme 
+suit :</p><div class="center">
+<table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/torusunit.jpg"><img src="m3ds_carPlane_fichiers/torusunit.jpg" style="width:30em"></a>
+</div>
+</div>
+</td><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/cubeunit.jpg"><img src="m3ds_carPlane_fichiers/cubeunit.jpg" style="width:30em"></a>
+</div>
+</div>
+ </td></tr>
+<tr><td style="text-align:center;white-space:nowrap"><div class="minipage"><code>drawTorus()</code> vous donne un tore de grande section 1 (petite section est 0.2)</div></td><td style="text-align:center;white-space:nowrap"><div class="minipage"><code>drawCube()</code> vous donne un cube centré d’arête 2 </div> </td></tr>
+</tbody></table>
+</div><div class="center">
+<table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/cylinderunit.jpg"><img src="m3ds_carPlane_fichiers/cylinderunit.jpg" style="width:30em"></a>
+</div>
+</div>
+</td></tr>
+<tr><td style="text-align:center;white-space:nowrap"><div class="minipage"><code>drawCylinder()</code> vous donne un cylindre d’axe <span style="font-style:italic">z</span>, de hauteur 1, et de rayon 1 (origine à la base du cylindre)</div> </td></tr>
+</tbody></table>
+</div><p>Les questions qui suivent permettront d’obtenir progressivement (aux nuances artistiques près) :</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/voiture.jpg"><img src="m3ds_carPlane_fichiers/voiture.jpg" style="height:15em"></a>
+
+</div><p>La voiture sera décomposée hiérarchiquement (elle est 
+constituée d’une carrosserie, de 2 essieux, chaque essieu étant 
+constitué de 2 roues, et chaque roue constituée d’un pneu et d’une 
+jante) : les différents éléments seront positionnés les uns par rapport 
+aux autres en modifiant <code>p3d::modelviewMatrix</code>. Les méthodes utiles sur cette matrice <code>p3d::modelviewMatrix</code> (de classe <code>Matrix4</code>) sont :
+</p><table class="lstframe" style="padding:1ex;border-style:solid solid double double;"><tbody><tr><td class="lstlisting">.push()
+ : mémorise dans la pile
+.pop() : récupère la valeur sur la pile et dépile
+.rotate(angle,ax,ay,az) : cumule la matrice (i.e. {\bf modifie} le 
+repère) avec une rotation autour de l'axe (ax,ay,az) (l'angle est en 
+degré)
+.translate(x,y,z) : cumule la matrice avec la translation de direction 
+(x,y,z)
+.scale(x,y,z) : cumule la matrice avec un changement d'échelle (permet 
+notamment de tracer les primitives à la dimension souhaitée).</td></tr>
+</tbody></table><p>Vous n’avez pas à vous préoccupez des aspects OpenGL 
+dans la suite : les VBO/VAO des primitives cube, cylindre et tore sont 
+déjà initialisés par le squelette. Un <code>drawCube</code> (ou <code>drawCylinder</code> ou <code>drawTorus</code>) active un shader en lui passant la matrice <code>p3d::modelviewMatrix</code> et effectue le tracé OpenGL. Ce shader assure également un éclairage diffus et la variable <code>p3d::diffuseColor</code> lui est passée : pour changer la couleur courante de tracé il suffira de faire un <code>p3d::diffuseColor=Vector3(rouge,vert,bleu)</code> (avant le tracé <code>drawCube</code> ou <code>drawCylinder</code> ou <code>drawTorus</code>).</p><p><span style="font-weight:bold">La notion importante à acquérir</span> pour ce tp est la décomposition hiérarchique et la manipulation des repères.</p><p>–</p><p>On travaille dans la classe <code>Car</code>. La méthode <code>Car::draw</code>
+ correspond à tracer une voiture dans son repère local. Constatez que 
+cette méthode est constituée, pour le moment, uniquement du tracé d’un 
+cube (il s’agit du cube que vous voyez à l’écran). </p><p>Remarque : la voiture est tracée depuis <code>GLApplication::draw()</code> : elle appelle <code>Car::drawWorld()</code> (positionne la voiture dans le repère du monde; aucun positionnement pour le moment) qui, elle même, appelle <code>Car::draw()</code> pour tracer dans le repère local.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;2. </span></span>
+Faire la carrosserie dans <code>Car::drawBody()</code> avec 2 <span style="font-weight:bold">cubes</span> (donc tracés par <code>drawCube()</code>)
+ positionnés l’un par rapport à l’autre pour obtenir quelque chose qui 
+ressemble à la figure suivante. Il faut "bien sûr" modifier <code>p3d::modelviewMatrix</code> pour positionner les 2 cubes et leur donner la bonne dimension (avec <code>p3d::modelviewMatrix.scale(...)</code>). Veillez à ne pas faire d’effet de bord sur le repère courant (i.e. par push et pop sur <code>p3d::modelviewMatrix</code>).</p><p><span style="font-weight:bold">Pour tester</span> : remplacez le <code>drawCube()</code> par <code>drawBody()</code> dans <code>Car::draw()</code>.</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/carrosserie.jpg"><img src="m3ds_carPlane_fichiers/carrosserie.jpg" style="height:15em"></a>
+
+</div><p><span style="font-weight:bold">Remarque :</span> vous pouvez contrôler le point de vue en faisant click gauche+glisser (tourne la caméra autour du repère du monde).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;3. </span></span>
+Faire <code>drawRim()</code> avec 4 diamètres (par exemple). Chaque 
+diamètre est composé d’un cylindre "allongé" (attention : l’origine du 
+cylindre est sur sa base, et non sur son centre). <span style="font-weight:bold">Testez</span> (appelez <code>drawRim()</code> au lieu de <code>drawBody()</code>).</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/jante.jpg"><img src="m3ds_carPlane_fichiers/jante.jpg" style="height:15em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;4. </span></span>
+Faire <code>drawWheel()</code> (un <code>drawTorus()</code> pour le pneu, et <code>drawRim()</code> pour la jante; c’est <code>drawWheel()</code> qui doit positionner la jante avant l’appel à <code>drawRim()</code> : i.e. <code>drawRim</code> doit rester intact). <span style="font-weight:bold">Testez</span></p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/roue.jpg"><img src="m3ds_carPlane_fichiers/roue.jpg" style="height:15em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;5. </span></span>
+Faire <code>drawAxle()</code> (avec, par exemple, un <code>drawCylinder()</code>
+ pour l’essieu et tracer les 2 roues par rapport au centre de l’essieu; 
+n’oubliez pas, encore une fois, de respecter la conception hiérarchique :
+ c’est <code>drawAxle()</code> qui positionne les roues).</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/essieu.jpg"><img src="m3ds_carPlane_fichiers/essieu.jpg" style="height:15em"></a>
+
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;6. </span></span>
+Et la voiture complête que vous finaliserez dans <code>Car::draw()</code> : c’est-à-dire le tracé de 2 essieux et d’une carrosserie. <span style="font-weight:bold">Testez</span>.</p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/voiture.jpg"><img src="m3ds_carPlane_fichiers/voiture.jpg" style="height:15em"></a>
+
+</div>
+<!--TOC section id="sec3" Animation-->
+<h2 id="sec3" class="section">3&nbsp;&nbsp;Animation</h2><!--SEC END --><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;7. </span></span>
+On souhaite faire tourner les roues (roulement des roues) de la voiture lorsqu’on "accélère" (appui sur la touche "z"). </p><p>Le squelette se charge déjà d’affecter le membre <code>Car::_rotateWheel</code> avec l’angle de rotation des roues souhaité (l’appui sur "z" provoque l’appel à <code>Car::accelerate</code> qui fixe l’accélération; la méthode <code>Car::move()</code>,
+ qui est appelée avant chaque tracé, permet de calculer un angle de 
+rotation des roues à partir de cette accélération : la vitesse de 
+rotation augmente ou diminue selon l’appui sur "z")</p><p><span style="font-weight:bold">Modifiez</span> le tracé effectué dans <code>Car::draw()</code> pour que les roues tournent sur leur axe de rotation suivant cet angle <code>_rotateWheel</code> (sans modifier le positionnement hiérarchique, <code>drawWheel</code> ne doit pas être modifié : soit c’est <code>drawAxle</code> qui positionne les 2 roues en tenant compte de l’angle, soit c’est <code>Car::draw</code> qui tourne tout l’axe). <span style="font-weight:bold">Testez</span> : les roues doivent rouler quand vous appuyez sur ’z’/’s’ (réglez éventuellement l’incrémentation et la décrémentation de <code>_rotateWheel</code> dans <code>Car::move</code> pour avoir une vitesse des roues qui vous semble "convenable").</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;8. </span></span>
+Intégrez enfin la prise en compte de l’attribut <code>_steering</code> (braquage des roues) qui doit être interprété comme la rotation de tout l’essieu avant par rapport à son centre. <span style="font-weight:bold">Testez</span>
+ : l’essieu avant doit tourner selon l’appui des touches ’q’/’d’ 
+(inutile de vous préoccuper des intersections éventuelles des roues avec
+ la voiture). <span style="font-weight:bold">Remarque :</span> comme vous pouvez le constater dans <code>Car::move()</code> l’angle <code>_steering</code>
+ est diminué selon la vitesse et l’essieu tendra donc à se remettre 
+"droit" tout seul : cela est fait pour "simuler" très empiriquement 
+l’adhérence des roues sur le sol. </p><div class="center">
+
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/braquage.jpg"><img src="m3ds_carPlane_fichiers/braquage.jpg" style="height:15em"></a>
+
+</div>
+<!--TOC section id="sec4" Faire rouler la voiture-->
+<h2 id="sec4" class="section">4&nbsp;&nbsp;Faire rouler la voiture</h2><!--SEC END --><p>
+Nous avons à présent une voiture, tracée dans son repère local : nous 
+avons directement manipuler la modelview pour traduire les différents 
+positionnements. </p><p>Pour positionner la voiture dans la scène (repère <code>World</code>), nous allons manipuler 2 attributs de la classe <code>Car</code> :</p><table class="lstframe" style="padding:1ex;border-style:solid solid double double;"><tbody><tr><td class="lstlisting"><span style="font-weight:bold">class</span> Voiture {
+  Vector3 _position;         <span style="font-style:italic">// la position de l'origine de la voiture (par rapport au repère du monde)</span>
+  Quaternion _orientation;   <span style="font-style:italic">// et son orientation (par rapport au repère du monde)</span>
+  ...</td></tr>
+</tbody></table><p>Pour tracer la voiture dans le monde, on affecte la <code>modelview</code> lors du tracé <code>Car::drawWorld</code> en tenant compte de ces 2 champs <code>_position</code> et <code>_orientation</code>.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;9. </span></span>
+<span style="font-weight:bold">Faites le</span> dans <code>Car::drawWorld</code> (les surcharges existantes de <code>.translate</code> et <code>.rotate</code> vous permettent de passer directement un <code>Quaternion</code> à <code>p3d::modelviewMatrix.rotate(a_Quaternion)</code> et un <code>Vector3</code> pour <code>p3d::modelviewMatrix.translate(a_Vector3)</code>). <span style="font-weight:bold">Testez</span>
+ : la voiture doit tourner sur elle-même lorsque vous appuyez sur les 
+touches ’z’ et ’q’/’d’ (la rotation de la voiture n’a pas une vitesse 
+constante car elle dépend du braquage des roues, qui lui même dépend de 
+la vitesse; l’attribut <code>_orientation</code> est mis à jour en fonction du braquage dans <code>Car::move</code>). Le champ <code>_position</code>
+ semble inutile (i.e. la voiture tourne sur place) car ce champ n’est 
+pas modifié par le squelette (sujet des questions suivantes).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;10. </span></span>
+Il reste à faire avancer la voiture. Il suffit de modifier <code>_position</code> dans <code>Car::move</code>
+ (pour le moment seule l’orientation est gérée): la difficulté est 
+qu’elle doit avancer dans sa direction arrière/avant. Autrement dit, il 
+suffit de faire un <code>_position = _position+uneDirection</code> avec <code>uneDirection</code> exprimée dans <span style="font-weight:bold">le repère du monde</span> (<code>_position</code>
+ est en effet exprimée dans le repère du monde). On connait la direction
+ arrière/avant de la voiture dans son repère local (quelle est elle ?). 
+Il reste donc à faire un changement de repère à <code>uneDirection</code>. </p><p><span style="font-weight:bold">Affectez</span> correctement <code>_position</code> dans <code>Car::move</code> (remarque : la classe <code>Quaternion</code> offre l’opérateur <code>*</code> pour les transformations : <code>a=q*b</code> transforme le <code>Vector3 b</code> par la rotation représentée par le <code>Quaternion q</code>). Une fois fait, pour régler l’amplitude de <code>uneDirection</code> vous pouvez utiliser la vitesse <code>_velocity</code> avec éventuellement un coefficient multiplicateur pour régler la vitesse de déplacement de la voiture. </p><p><span style="font-weight:bold">Testez</span> la voiture doit avancer correctement (on peut éventuellement régler les coefficients dans <code>Car::move</code> pour obtenir un "meilleur" résultat)</p><div class="center">
+<video controls="controls" width="40%">"<source src="m3ds_carPlane_fichiers/carMove.webm" type="video/webm"></video>
+</div>
+<!--TOC section id="sec5" Avion-->
+<h2 id="sec5" class="section">5&nbsp;&nbsp;Avion</h2><!--SEC END --><p>
+Cliquez sur le bouton "Follow Plane" (ou sur la touche ’g’ du clavier) :
+ la caméra est repositionnée pour avoir l’avion face à vous (remarque : 
+le placement de la caméra est simplement une modification de <code>p3d::modelviewMatrix</code> que vous n’avez pas à gérer pour ce tp). L’avion est géré dans la classe <code>Airplane</code>. L’avion est positionné par rapport à la scène avec un attribut <code>_position</code> et son orientation est controlée par angles d’Euler (3 attributs : <code>_angleX</code>, <code>_angleY</code>, <code>_angleZ</code>) : vous pouvez le vérifier dans <code>Airplane::drawWorld()</code> (ordre des axes de rotations : Y-X-Z).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;11. </span></span>
+Ces angles sont modifiés au clavier simplement en les incrémentant ou en
+ les décrémentant (’q’/’d’ pour le roll, ’z’/’s’ pour le pitch et 
+’a’/’e’ pour le yaw) : <span style="font-weight:bold">Testez</span>. 
+Mettez l’avion dans une orientation quelconque en jouant aléatoirement 
+avec toutes ces touches. Essayer alors de prévoir comment va tourner 
+l’avion en appuyant sur ’z’/’s’ (tangage). <span style="font-weight:bold">Constatez</span>
+ alors que ’z’/’s’ peut ne plus correspondre au tangage de l’avion 
+(l’interaction de l’avion devient alors difficilement intuitive). </p><p><span style="font-weight:bold">Constatez</span>
+ également le gimbal-lock : mettez l’avion à la verticale, puis essayez 
+d’interagir sur les 2 autres axes (’q’/’d’ et ’a’/’e’); ils 
+correspondent tous les deux au même axe de rotation (l’avion tourne 
+autour de la verticale : impossible alors de faire un lacet par rapport à
+ l’avion).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;12. </span></span>
+<span style="font-weight:bold">Comprenez</span> la composition des rotations par angles d’Euler effectuées dans le <code>Airplane::drawWorld</code> et l’effet qu’elles provoquent sur l’interaction.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;13. </span></span>
+Pour avoir une interaction un peu plus intuitive, il serait préférable 
+que les touches correspondent à une rotation autour d’un axe <span style="font-weight:bold">local</span> de l’avion (par exemple ’z’/’s’ doit faire un tangage de l’avion <span style="font-weight:bold">quelque soit</span> son orientation). Autrement dit, il faut composer la rotation souhaitée avec l’orientation <span style="font-weight:bold">courante</span>
+ de l’avion. Difficile d’obtenir cette propriété directement avec les 
+angles d’Euler (essayez !), et il est préférable de représenter 
+l’orientation de l’avion par un quaternion (ou par une matrice de 
+rotation) :</p><ol class="enumerate" type="1"><li class="li-enumerate">
+Changez le <code>Airplane::drawWorld</code> pour tenir compte de l’attribut <code>Quaternion _orientation</code> (déjà déclaré) à la place des 3 rotates selon les axes x,y,z.
+</li><li class="li-enumerate">Changez le <code>Airplane::pitchDown</code> (qui est appelé lors de l’appui sur ’z’) pour remplacer <code>_angleX+=_increment</code> par :
+<table class="lstframe" style="padding:1ex;border-style:solid solid double double;"><tbody><tr><td class="lstlisting">  _orientation.rotate(_increment,Vector3(1,0,0)); <span style="font-style:italic">// on cumule l'orientation courante avec une rotation (et non plus l'angle autour de X).</span></td></tr>
+</tbody></table></li><li class="li-enumerate">De manière analogue, changez également <code>Airplane::pitchDown</code>, <code>rollLeft</code>, <code>rollRight</code>, <code>yawLeft</code>, <code>yawRight</code>.
+</li></ol><p><span style="font-weight:bold">Testez</span> (constatez et 
+comprenez la différence d’interactivité obtenue : chaque modification de
+ l’orientation est maintenant faite par rapport à l’orientation courante
+ de l’avion). Vérifiez également que le gimbal-lock n’existe plus. <span style="font-weight:bold">Assurez vous de comprendre l’ensemble</span>.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;14. </span></span>
+Dans <code>Airplane::move</code> on veut que l’avion avance de la valeur <code>_velocity</code> (cet attribut <code>_velocity</code> est modifié avec la molette de la souris) dans sa direction arrière/avant. Il faut donc modifier correctement <code>_position</code> (c’est la même chose que pour la voiture, sauf que l’axe arrière/avant local n’est pas nécessairement le même). <span style="font-weight:bold">Testez</span></p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;15. </span></span>
+On souhaite que la caméra soit toujours placée à l’arrière de l’avion. Rendez vous dans <code>GLApplication::updateCamera()</code> (dans le <code>case Camera_Follow_Plane</code>).
+ Pour le moment la caméra est bien placée en tenant compte de la 
+position de l’avion, mais elle n’est pas placée à l’arrière de l’avion 
+de manière fixe). Réalisez ce positionnement : vous pouvez utiliser <code>_camera.position(Vector3)</code>, <code>_camera.orientation(Quaternion)</code>. Pour transformer une direction par une rotation, il suffit de faire <code>a=q*b</code> où <code>q</code> est un quaternion représentant la rotation, <code>b</code> un <code>Vector3</code> et <code>a</code> le <code>Vector3</code> transformé. Pour modifier un quaternion <code>q</code>, il suffit de faire <code>q.rotate(angle,ax,ay,az)</code>. La position et l’orientation de l’avion (par rapport au monde) sont obtenues par <code>_airplane.orientation()</code> (Quaternion) et <code>_airplane.position()</code>
+ (Vector3). Il faut donc affecter correctement la position/orientation 
+de la caméra en fonction de la position/orientation de l’avion. </p><p><span style="font-weight:bold">Testez</span> : </p><div class="center">
+<video controls="controls" width="40%">"<source src="m3ds_carPlane_fichiers/planeFollow.webm" type="video/webm"></video>
+</div>
+<!--TOC section id="sec6" Voiture/Avion-->
+<h2 id="sec6" class="section">6&nbsp;&nbsp;Voiture/Avion</h2><!--SEC END --><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;16. </span></span>
+Faire de même pour la voiture (dans <code>GLApplication::updateCamera</code>, dans le <code>case Camera_Follow_Car</code>) pour que la caméra suive toujours la voiture (raisonnement identique à celui pour l’avion : <code>_car.position()</code> et <code>_car.orientation()</code>
+ vous donne la position et l’orientation de la voiture). Pour tester il 
+faut cliquer sur "Follow Car" (le squelette affecte alors la variable 
+nécessaire pour être dans le cas <code>Camera_Follow_Car</code>). </p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;17. </span></span>
+On souhaite faire une transition plus douce entre les positions des 
+caméras lorsqu’on clique successivement sur les boutons "Follow Car" 
+(derrière la voiture) et "Follow Plane" (derrière l’avion). Nous allons 
+effectuer une interpolation linéaire entre les positions et orientations
+ de ces 2 caméras. On dispose de 2 variables <code>_cameraStart</code> et <code>_cameraStop</code>. La <code>_cameraStart</code> est affectée, par le squelette, lors du click (cf <code>GLApplication::leftPanel</code>) : elle prend simplement la valeur de la caméra courante (i.e. <code>_camera</code>). Il reste à affecter <code>_cameraStop</code> à la position/orientation à atteindre. On peut le faire, par exemple, dans <code>GLApplication::updateCamera</code> : au lieu d’affecter <code>_camera</code> (question précédente), on affecte <code>_cameraStop</code> (donc <code>_cameraStop</code> sera, soit à "derrière l’avion", soit à "derrière la voiture"). </p><p>Il reste à affecter <code>_camera</code> (la caméra courante) avec une interpolation linéaire entre <code>_cameraStart</code> et <code>_cameraStop</code> en position et en orientation : une valeur <code>_lambda</code> évolue déjà dans le squelette entre 0 (au moment du <code>_cameraStart</code>) et 1 (cf début de <code>GLApplication::updateCamera()</code>).</p><p>Réalisez cette interpolation dans <code>updateCamera</code> (l’interpolation sera constamment faites le <code>_lambda</code> restant fixe une fois qu’il atteint 1; vous pouvez directement multiplié un Vector3 ou un Quaternion par un réel; par exemple <code>q1=q2*_lambda</code>). <span style="font-weight:bold">Testez</span> :</p><div class="center">
+<video controls="controls" width="40%">"<source src="m3ds_carPlane_fichiers/cameraSwitch.webm" type="video/webm"></video>
+</div><!--CUT END -->
+<!--HTMLFOOT-->
+<!--ENDHTML-->
+<!--FOOTER-->
+<hr style="height:2"><blockquote class="quote"><em>Ce document a été traduit de L<sup>A</sup>T<sub>E</sub>X par </em><a href="http://hevea.inria.fr/"><em>H</em><em><span style="font-size:small"><sup>E</sup></span></em><em>V</em><em><span style="font-size:small"><sup>E</sup></span></em><em>A</em></a></blockquote>
+
+</body></html>

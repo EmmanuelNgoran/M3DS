@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.32">
+<style type="text/css">
+.li-itemize{margin:1ex 0ex;}
+.li-enumerate{margin:1ex 0ex;}
+.dd-description{margin:0ex 0ex 1ex 4ex;}
+.dt-description{margin:0ex;}
+.toc{list-style:none;}
+.footnotetext{margin:0ex; padding:0ex;}
+div.footnotetext P{margin:0px; text-indent:1em;}
+.thefootnotes{text-align:left;margin:0ex;}
+.dt-thefootnotes{margin:0em;}
+.dd-thefootnotes{margin:0em 0em 0em 2em;}
+.footnoterule{margin:1em auto 1em 0px;width:50%;}
+.caption{padding-left:2ex; padding-right:2ex; margin-left:auto; margin-right:auto}
+.title{margin:2ex auto;text-align:center}
+.titlemain{margin:1ex 2ex 2ex 1ex;}
+.titlerest{margin:0ex 2ex;}
+.center{text-align:center;margin-left:auto;margin-right:auto;}
+.flushleft{text-align:left;margin-left:0ex;margin-right:auto;}
+.flushright{text-align:right;margin-left:auto;margin-right:0ex;}
+div table{margin-left:inherit;margin-right:inherit;margin-bottom:2px;margin-top:2px}
+td table{margin:auto;}
+table{border-collapse:collapse;}
+td{padding:0;}
+.cellpadding0 tr td{padding:0;}
+.cellpadding1 tr td{padding:1px;}
+pre{text-align:left;margin-left:0ex;margin-right:auto;}
+blockquote{margin-left:4ex;margin-right:4ex;text-align:left;}
+td p{margin:0px;}
+.boxed{border:1px solid black}
+.textboxed{border:1px solid black}
+.vbar{border:none;width:2px;background-color:black;}
+.hbar{border:none;height:2px;width:100%;background-color:black;}
+.hfill{border:none;height:1px;width:200%;background-color:black;}
+.vdisplay{border-collapse:separate;border-spacing:2px;width:auto; empty-cells:show; border:2px solid red;}
+.vdcell{white-space:nowrap;padding:0px; border:2px solid green;}
+.display{border-collapse:separate;border-spacing:2px;width:auto; border:none;}
+.dcell{white-space:nowrap;padding:0px; border:none;}
+.dcenter{margin:0ex auto;}
+.vdcenter{border:solid #FF8000 2px; margin:0ex auto;}
+.minipage{text-align:left; margin-left:0em; margin-right:auto;}
+.marginpar{border:solid thin black; width:20%; text-align:left;}
+.marginparleft{float:left; margin-left:0ex; margin-right:1ex;}
+.marginparright{float:right; margin-left:1ex; margin-right:0ex;}
+.theorem{text-align:left;margin:1ex auto 1ex 0ex;}
+.part{margin:2ex auto;text-align:center}
+.lstlisting{font-family:monospace;white-space:pre;margin-right:auto;margin-left:0pt;text-align:left}
+</style>
+
+<link rel="stylesheet" href="m3ds_particle_fichiers/prog3d.css" type="text/css">
+<title>m3ds_particle</title>
+</head>
+<body>
+<!--HEVEA command line is: hevea -entities style.hva m3ds_particle.tex -o m3ds_particle.html -->
+<!--CUT STYLE article--><!--CUT DEF section 1 --><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/logoFST_info.png"><img src="m3ds_particle_fichiers/logoFST_info.png" style="width:30em"></a>
+</div>
+</div>
+ </td></tr>
+<tr><td style="text-align:center;white-space:nowrap"><span style="font-weight:bold">Master Informatique</span> 2018-2019</td></tr>
+</tbody></table><div class="center"><span style="font-weight:bold"><span style="font-size:large">M3DS</span></span></div><p>
+<br>
+<br>
+</p><div class="center"><span style="font-size:x-large"><span style="font-weight:bold">TP 08 : Particules/Collisions</span></span></div><p><br>
+
+<span style="color:#004CFF"><span style="font-weight:bold"><u>Exercice&nbsp;1. Introduction</u></span></span><span style="color:#004CFF"><br>
+</span>
+
+</p><ul class="itemize"><li class="li-itemize">
+Reprenez <a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/particle.zip">particle.zip</a> sur le portail.
+</li><li class="li-itemize">L’objectif du tp est d’animer des particules avec :
+<ul class="itemize"><li class="li-itemize">
+l’intégration du mouvement par Euler.
+</li><li class="li-itemize">la force de gravité
+</li><li class="li-itemize">la collision avec des plans (infinis).
+</li><li class="li-itemize">la collision entre particules (lorsqu’elles seront considérées comme des sphères).
+</li></ul>
+</li></ul><div class="center">
+<table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/anime0001.jpg"><img src="m3ds_particle_fichiers/anime0001.jpg" style="width:30em"></a>
+</div>
+</div>
+</td><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/anime0002.jpg"><img src="m3ds_particle_fichiers/anime0002.jpg" style="width:30em"></a>
+</div>
+</div>
+
+</td></tr>
+</tbody></table>
+</div><p><br>
+
+<span style="color:#004CFF"><span style="font-weight:bold"><u>Exercice&nbsp;2. Particules</u></span></span><span style="color:#004CFF"><br>
+</span>
+
+Les particules sont simplement des points 3D générés au cours du temps 
+selon un taux de naissance (nombre de particules qui naissent par 
+seconde). Pour avoir un flot continu de particules, sans dépasser un 
+nombre de particules maximum, chaque particule a une durée de vie finie 
+(elle disparait après un certain temps donné).</p><p>La naissance et l’extinction des particules sont déjà gérées par le squelette (principalement par la méthode <code>ParticleList::updateLife</code> : nous ne nous préoccuperons pas de cela dans le TP). </p><p>Le taux de naissance est initialisé dans la méthode <code>GLApplication::initParticle</code> par, par exemple, <code>_particleList.birthRate(10)</code> (naissance de 10 particules par seconde; vous pourrez changer cette valeur bien sûr).</p><p>Lorsqu’une particule nait, ses données initiales (position, vitesse, durée de vie, ...) sont fixées dans la méthode <code>ParticleList::initState</code> qui est appelée à chaque naissance. Vous pourrez modifier les valeurs qui s’y trouve selon la "scène" souhaitée.</p><p>Pour mettre en mouvement les particules, à chaque image est appelée la méthode <code>Engine::update()</code> de <code>Engine.cpp</code>. On y trouve le calcul des forces (méthode <code>computeForce</code>), les collisions (méthodes <code>collisionPlane</code> et <code>interCollision</code>), et l’intégration du mouvement (méthode <code>euler</code>).
+ Pour le moment, chacune de ces méthodes ne fait rien et seront à 
+compléter au fur et à mesure des questions du TP (seules l’apparition 
+aléatoire et la disparition des particules est pour l’instant 
+visualisable à l’exécution du squelette : constatez le en exécutant le 
+squelette).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;1. </span></span>
+Complétez la méthode <code>Engine::euler(double dt)</code> qui met à jour la vitesse et la position de chaque particule dans l’intervalle de temps <code>dt</code> donné, selon la méthode d’Euler (cf cours et les commentaires de la méthode).</p><p><span style="font-weight:bold">Testez</span>
+ : vous devez voir les particules aller en ligne droite (il n’y a encore
+ aucune force : l’accélération est donc nulle, et la vitesse est par 
+conséquent constante).</p><p>La vitesse et la position initiales sont données aléatoirement dans <code>ParticleList::initState</code> : vous pouvez bien sûr modifier à loisir ces données (donnez par exemple une vitesse initiale vers le haut).</p><p>Vous pouvez également réduire ou augmenter le taux de natalité des particules en modifiant le 10 de <code>_particleList.birthRate(10)</code> dans <code>GLApplication::initParticle()</code>.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;2. </span></span>
+Nous souhaitons faire subir la force de gravité aux particules : <span style="font-weight:bold">complétez</span> <code>Engine::computeForce</code> (qui est appelée depuis <code>Engine::update</code> à chaque image).</p><p><span style="font-weight:bold">Testez</span>
+ : à présent les particules doivent subir la gravité (elles traversent 
+le sol car il n’y a pas encore de gestion des collisions).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;3. </span></span>
+Nous souhaitons maintenant que les particules subissent la collision 
+avec le sol : on commence par la détection. Dans la méthode <code>Engine::collisionPlane()</code>, chaque plan est donné par sa normale <code>plane-&gt;normal()</code> et un point <code>plane-&gt;point()</code>
+ : nous considérons ici qu’une particule est en collision avec le plan 
+si elle le "traverse" : on suppose qu’initialement toutes les particules
+ sont du coté positif du plan, et doivent le rester. Donc si on trouve à
+ un instant une particule du coté négatif du plan, il y a collision.</p><p><span style="font-weight:bold">Effectuez ce test de signe</span> dans <code>Engine::collisionPlane</code> et imposez une vitesse nulle en cas de collision (en faisant simplement <code>p-&gt;velocity(Vector3(0,0,0))</code>), et imposez une position de la particule pour qu’elle soit sur le plan (on calcule le point <span style="font-style:italic">H</span> projeté orthogonal de <code>p-&gt;position()</code> sur le plan <code>plane</code>, puis on affecte <code>p-&gt;position(H)</code>) (<span style="font-weight:bold">ne tenez pas compte, pour l’instant</span>, des <code>posCorrection</code>, <code>velCorrection</code>, <code>addPositionCorrec</code> et <code>addVelocityCorrec</code> qui apparaissent dans le squelette).</p><p><span style="font-weight:bold">Testez</span>
+ : les particules doivent "coller" au sol lorsqu’elles l’atteignent 
+(elles paraissent "enfoncées" dans le plan, car la position testée 
+correspond au centre de la particule; nous accepterons cela et nous 
+reviendrons sur ce problème dans l’exercice sur les sphères).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;4. </span></span>
+Pendant toute la résolution des collisions, il ne faut pas modifier 
+immédiatement la position et la vitesse des objets car la résolution de 
+chaque collision doit se faire dans l’état courant de chaque particule à
+ l’instant <span style="font-style:italic">t</span> (cf cours, notamment pour les collisions multiples). </p><p>On raisonne donc par "correction" qui seront appliquées qu’à la fin de la résolution de toutes les collisions (voir l’appel à <code>updatePositionVelocity</code> <span style="font-weight:bold">après</span> le traitement des collisions dans <code>Engine::update</code>) : pour cela on cumule pour chaque collision de particule des corrections (avec <code>p-&gt;addVelocityCorrec(...)</code> et <code>p-&gt;addPositionCorrec(...)</code>) qui seront appliquées une fois que toutes les collisions auront été effectuées.</p><p>Modifiez <code>Engine::collisionPlane</code> pour affecter les variables <code>velCorrection</code> et <code>posCorrection</code>
+ (ce sont des corrections, c’est à dire qu’il s’agit de la différence 
+entre les valeurs souhaitées et les valeurs actuelles). Vous devez 
+obtenir le même résultat qu’à la question précédente (il faut bien sûr 
+maintenant enlever les affectations directes <code>p-&gt;position(...)</code> et <code>p-&gt;velocity(...)</code>). <span style="font-weight:bold">Testez</span></p><p><span style="font-weight:bold">Remarque :</span>
+ cette approche par correction n’a pas d’impact tant qu’il n’y a pas de 
+multi-collisions sur une particule (ce qui sera le cas lors de 
+l’exercice sur les sphères). </p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;5. </span></span>
+On souhaite que les particules rebondissent sur le plan lors d’une collision. Il faut donc modifier la méthode <code>Engine::collisionPlane()</code> précédente pour intégrer la réponse à la collision. On applique le principe d’impulsion (cf cours) :</p><ul class="itemize"><li class="li-itemize">
+Pour connaitre la correction de vitesse <span style="font-style:italic">v</span><sub><span style="font-style:italic">correction</span></sub>,
+ l’impulsion consiste à opposer la vitesse normale (en appliquant un 
+facteur de restitution). Calculez cette vitesse normale, et en déduire 
+la correction à effectuer.
+</li><li class="li-itemize">Pour la position, il faut déplacer la particule symétriquement par rapport au plan (au facteur de restitution près).
+</li></ul><p><span style="font-weight:bold">Testez</span>. Vous devez 
+constatez un rebond naturel des particules sur le sol (testez plusieurs 
+restitutions : avec 0 les particules s’"écrasent" sur le sol sans 
+rebond, avec 1 les particules rebondissent infiniment à la même hauteur à
+ chaque rebond).</p><div class="center">
+<video controls="controls" width="30%">"<source src="m3ds_particle_fichiers/particle.webm" type="video/webm"></video>
+</div><p><br>
+
+<span style="color:#004CFF"><span style="font-weight:bold"><u>Exercice&nbsp;3. Sphères</u></span></span><span style="color:#004CFF"><br>
+</span>
+
+Dans l’exercice précédent, les particules ne rentrent pas en collision 
+les unes avec les autres (particules considérées comme des points sans 
+volume). Dans cet exercice, nous modifions ce comportement en 
+considérant les particules comme des sphères : elles peuvent rentrer en 
+collision les unes avec les autres (nous conservons cependant la 
+mécanique du point et non la mécanique du solide : les sphères ne 
+peuvent pas "rouler" par exemple).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;1. </span></span>
+Il faut cliquer sur "Sphere" pour afficher des sphères au lieu des 
+particules et cela activera également l’appel à la gestion des 
+collisions entre sphères (cf appel à <code>Engine::interCollision</code> depuis <code>Engine::update</code>).</p><p><span style="font-weight:bold">Modifiez</span> <code>ParticleList::initState</code>, dans la partie <code>if... ==PARTICLE_SPHERE)</code> pour que les sphères partent toutes de la position <span style="font-style:italic">y</span>=5 (faire un random en x), et avec une vitesse nulle (les sphères vont donc normalement tomber une à une). Donnez également le <code>birthrate</code> dans <code>GLApplication::initParticle</code> (à 5 par exemple) pour avoir peu de sphères.</p><p><span style="font-weight:bold">Testez</span>
+ : notez que les sphères se superposent les unes aux autres (il n’y a 
+pas encore de collisions entre elles), et qu’elles s’enfoncent également
+ dans le plan, puisque la détection (faite à l’exercice précédent) se 
+fait par rapport au centre de la sphère.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;2. </span></span>
+<span style="font-weight:bold">Corrigez</span> la détection de collision avec les plans dans <code>Engine::collisionPlane()</code>
+ pour que la collision soit détectée correctement en tenant compte du 
+rayon de la sphère. Le rayon de chaque particule est donné par <code>p-&gt;radius()</code>. Le point à tester n’est donc plus le centre mais le point de la sphère le plus proche du plan : quel est ce point ?). <span style="font-weight:bold">Testez</span>
+ : les sphères ne doivent plus s’enfoncer dans le sol. Testez notamment 
+avec une restitution de 0 : constatez que les sphères doivent être 
+correctement sur le plan.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;3. </span></span>
+On gère à présent la collision entre toutes les paires de sphères (<span style="font-style:italic">p</span>1,<span style="font-style:italic">p</span>2). Ceci est fait dans la méthode <code>Engine::interCollision()</code> que vous devez compléter :
+</p><ol class="enumerate" type="1"><li class="li-enumerate">
+Il faut détecter la collision entre <span style="font-style:italic">p</span>1 et <span style="font-style:italic">p</span>2 (test d’intersection entre les 2 sphères)
+</li><li class="li-enumerate">S’il y a collision, il faut corriger les vitesses/positions de <span style="font-style:italic">p</span>1 et <span style="font-style:italic">p</span>2 par impulsion :
+<ul class="itemize"><li class="li-itemize">
+La vitesse de <span style="font-style:italic">p</span>1 est modifiée par <span style="font-style:italic">v</span><sub>1</sub><sub><span style="font-style:italic">new</span></sub>−<span style="font-style:italic">v</span><sub>1</sub><sub><span style="font-style:italic">old</span></sub>=−<span style="font-style:italic">k</span>/<span style="font-style:italic">m</span><sub>1</sub><span style="font-style:italic">N</span> (similaire pour <span style="font-style:italic">p</span>2) où <span style="font-style:italic">N</span> est la normale (normalisée) au point de collision supposé. Le coefficient d’impulsion <span style="font-style:italic">k</span> est déjà calculé pour vous dans <code>Engine::computeImpulse(...)</code> (voir formule du cours). <span style="font-style:italic">m</span><sub>1</sub> et <span style="font-style:italic">m</span><sub>2</sub> sont les masses des sphères p1 et p2 qui sont obtenues par <code>p1-&gt;mass()</code> et <code>p2-&gt;mass()</code>.
+</li><li class="li-itemize">La correction en position pour <span style="font-style:italic">p</span><sub>1</sub> (similaire pour <span style="font-style:italic">p</span><sub>2</sub>) est <span style="font-style:italic">p</span><sub>1</sub><sub><span style="font-style:italic">new</span></sub>−<span style="font-style:italic">p</span><sub>1</sub><sub><span style="font-style:italic">old</span></sub>=(1+є)<span style="font-style:italic">m</span><sub>1</sub>/(<span style="font-style:italic">m</span><sub>1</sub>+<span style="font-style:italic">m</span><sub>2</sub>)<span style="font-style:italic">dN</span> où <span style="font-style:italic">d</span> est la distance de recouvrement des 2 sphères (i.e. différence entre la distance des centres et les rayons).
+</li></ul>
+</li></ol><p><span style="font-weight:bold">Testez</span> : les sphères doivent avoir un comportement "naturel" lorsqu’elles entrent en collision (rebond les unes sur les autres).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;4. </span></span>
+<span style="font-weight:bold">Testez</span> l’ajout de plans (infinis) qui restreignent les sphères dans un volume (il suffit de décommenter les <code>_engine.addPlane</code> qui se trouvent dans la méthode <code>GLApplication::GLApplication()</code>;
+ les plans ne seront pas visualisés). Réglez alors au mieux les 
+différents paramètres (coefficient de restitution et/ou masses des 
+particules) pour avoir une animation relativement naturelle .</p><p><span style="font-weight:bold">Testez</span>
+ en augmentant le taux de naissance : vous devez constater une 
+instabilité du mouvement. Quelle est la raison principale de cette 
+instabilité selon vous ? (répondre dans le <code>Readme.txt</code>)</p><div class="center">
+<video controls="controls" width="30%">"<source src="m3ds_particle_fichiers/sphere.webm" type="video/webm"></video>
+</div><!--CUT END -->
+<!--HTMLFOOT-->
+<!--ENDHTML-->
+<!--FOOTER-->
+<hr style="height:2"><blockquote class="quote"><em>Ce document a été traduit de L<sup>A</sup>T<sub>E</sub>X par </em><a href="http://hevea.inria.fr/"><em>H</em><em><span style="font-size:small"><sup>E</sup></span></em><em>V</em><em><span style="font-size:small"><sup>E</sup></span></em><em>A</em></a></blockquote>
+
+</body></html>

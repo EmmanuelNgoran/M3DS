@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="hevea 2.32">
+<style type="text/css">
+.li-itemize{margin:1ex 0ex;}
+.li-enumerate{margin:1ex 0ex;}
+.dd-description{margin:0ex 0ex 1ex 4ex;}
+.dt-description{margin:0ex;}
+.toc{list-style:none;}
+.footnotetext{margin:0ex; padding:0ex;}
+div.footnotetext P{margin:0px; text-indent:1em;}
+.thefootnotes{text-align:left;margin:0ex;}
+.dt-thefootnotes{margin:0em;}
+.dd-thefootnotes{margin:0em 0em 0em 2em;}
+.footnoterule{margin:1em auto 1em 0px;width:50%;}
+.caption{padding-left:2ex; padding-right:2ex; margin-left:auto; margin-right:auto}
+.title{margin:2ex auto;text-align:center}
+.titlemain{margin:1ex 2ex 2ex 1ex;}
+.titlerest{margin:0ex 2ex;}
+.center{text-align:center;margin-left:auto;margin-right:auto;}
+.flushleft{text-align:left;margin-left:0ex;margin-right:auto;}
+.flushright{text-align:right;margin-left:auto;margin-right:0ex;}
+div table{margin-left:inherit;margin-right:inherit;margin-bottom:2px;margin-top:2px}
+td table{margin:auto;}
+table{border-collapse:collapse;}
+td{padding:0;}
+.cellpadding0 tr td{padding:0;}
+.cellpadding1 tr td{padding:1px;}
+pre{text-align:left;margin-left:0ex;margin-right:auto;}
+blockquote{margin-left:4ex;margin-right:4ex;text-align:left;}
+td p{margin:0px;}
+.boxed{border:1px solid black}
+.textboxed{border:1px solid black}
+.vbar{border:none;width:2px;background-color:black;}
+.hbar{border:none;height:2px;width:100%;background-color:black;}
+.hfill{border:none;height:1px;width:200%;background-color:black;}
+.vdisplay{border-collapse:separate;border-spacing:2px;width:auto; empty-cells:show; border:2px solid red;}
+.vdcell{white-space:nowrap;padding:0px; border:2px solid green;}
+.display{border-collapse:separate;border-spacing:2px;width:auto; border:none;}
+.dcell{white-space:nowrap;padding:0px; border:none;}
+.dcenter{margin:0ex auto;}
+.vdcenter{border:solid #FF8000 2px; margin:0ex auto;}
+.minipage{text-align:left; margin-left:0em; margin-right:auto;}
+.marginpar{border:solid thin black; width:20%; text-align:left;}
+.marginparleft{float:left; margin-left:0ex; margin-right:1ex;}
+.marginparright{float:right; margin-left:1ex; margin-right:0ex;}
+.theorem{text-align:left;margin:1ex auto 1ex 0ex;}
+.part{margin:2ex auto;text-align:center}
+.lstlisting{font-family:monospace;white-space:pre;margin-right:auto;margin-left:0pt;text-align:left}
+</style>
+
+<link rel="stylesheet" href="m3ds_interaction_fichiers/prog3d.css" type="text/css">
+<title>m3ds_interaction</title>
+</head>
+<body>
+<!--HEVEA command line is: hevea -entities style.hva m3ds_interaction.tex -o m3ds_interaction.html -->
+<!--CUT STYLE article--><!--CUT DEF section 1 --><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/logoFST_info.png"><img src="m3ds_interaction_fichiers/logoFST_info.png" style="width:30em"></a>
+</div>
+</div>
+ </td></tr>
+<tr><td style="text-align:center;white-space:nowrap"><span style="font-weight:bold">Master Informatique</span> 2018-2019</td></tr>
+</tbody></table><div class="center"><span style="font-weight:bold"><span style="font-size:large">M3DS</span></span></div><p>
+<br>
+<br>
+</p><div class="center"><span style="font-size:x-large"><span style="font-weight:bold">TP 10 : Interaction 3D</span></span></div><p><br>
+
+<span style="color:#004CFF"><span style="font-weight:bold"><u>Exercice&nbsp;1. Introduction</u></span></span><span style="color:#004CFF"><br>
+</span>
+
+</p><ul class="itemize"><li class="li-itemize">
+Reprenez <a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/interaction.zip">interaction.zip</a> sur le portail.
+</li><li class="li-itemize">Ce tp met en pratique principalement les changements de repère et l’intersection d’une droite avec un triangle.
+</li><li class="li-itemize">L’objectif du tp est :
+<ul class="itemize"><li class="li-itemize">
+la navigation (mouvement de la caméra).
+</li><li class="li-itemize">la sélection d’un objet 3D avec la souris.
+</li><li class="li-itemize">la manipulation par translation de l’objet sélectionné.
+</li><li class="li-itemize">la manipulation par rotation de l’objet sélectionné.
+</li></ul>
+</li></ul><p><br>
+
+<span style="color:#004CFF"><span style="font-weight:bold"><u>Exercice&nbsp;2. Navigation</u></span></span><span style="color:#004CFF"><br>
+</span>
+</p><p>Dans <code>GLApplication.cpp</code> vous disposez d’une variable pour la caméra <code>Camera2 _camera</code>. Une caméra est définie par (cf <code>Camera2.h</code>) :
+</p><ul class="itemize"><li class="li-itemize">
+son viewport : il permet de passer des coordonnées normalisées (NDC) aux coordonnées fenêtres (Window Coordinates).
+</li><li class="li-itemize">sa matrice de projection : elle permet de 
+passer des coordonnées dans le repère caméra (Eye Coordinates) aux NDC. 
+Dans le squelette elle est initialisées avec un frustum (projection 
+perspective).
+</li><li class="li-itemize">sa matrice <code>worldCamera</code> : elle traduit le positionnement de la caméra dans le monde (i.e. matrice de passage <span style="font-style:italic">M</span><sub><span style="font-style:italic">world</span> → <span style="font-style:italic">camera</span></sub>).
+</li></ul><p>Pour ce TP, vous n’avez pas à vous préoccuper des aspects OpenGL. Le squelette intègre le tracé de la scène (voir <code>GLApplication::draw()</code> qui appelle tous les tracés nécessaires), la gestion de la modelview (<code>p3d::modelviewMatrix</code>), de la projection (<code>p3d::projectionMatrix</code>) pour les shaders.</p><p>Pour
+ effectuer les changements de repère nécessaires au tp, vous disposez 
+déjà des méthodes pour passer du repère world au repère caméra, et 
+réciproquement (voir les déclarations dans <code>Camera2.h</code>) : 
+</p><ul class="itemize"><li class="li-itemize">
+<code>worldCamera()</code> donne <span style="font-style:italic">M</span><sub><span style="font-style:italic">world</span> → <span style="font-style:italic">camera</span></sub> et <code>cameraWorld()</code> donne <span style="font-style:italic">M</span><sub><span style="font-style:italic">camera</span> → <span style="font-style:italic">world</span></sub>
+ (pour rappel : attention à la confusion entre changement de repères et 
+transformation de points; par exemple, vous devrez appliquer <code>P_World = _camera.worldCamera()*P_Camera</code> si vous souhaitez P dans le repère du monde connaissant P dans le repère caméra.
+</li><li class="li-itemize"><code>_camera.translate(...)</code>, <code>_camera.rotate(...)</code> : modifient le positionnement de la caméra (i.e. modifient l’attribut <code>_worldCamera</code>); notez qu’on <span style="font-weight:bold">doit</span> préciser par rapport à quel repère on effectue ce translate/rotate : par exemple <code>translate(x,y,z,Coordinate_Local)</code>
+ effectue une translation interprétée dans le repère local de la caméra 
+(et x,y,z sont considérés dans le repère local de la caméra), et <code>translate(x,y,z,Coordinate_World)</code> fait une translation de la caméra selon les axes du repère du monde (et x,y,z sont considérés dans le repère du monde). 
+</li><li class="li-itemize"><code>p_camera=pointTo(Coordinate_Local,x_world,y_world,z_world)</code> : le point <code>(x_world,y_world,z_world)</code>, défini dans le repère du monde, est obtenu dans le repère local de la caméra.
+</li><li class="li-itemize"><code>p_world=pointTo(Coordinate_World,x_camera,y_camera,z_camera)</code> : le point <code>(x_camera,y_camera,z_camera)</code> défini dans le repère de la caméra, est obtenu dans le repère du monde.
+</li><li class="li-itemize">idem pour <code>directionTo(...)</code> (pour rappel : les vecteurs ne subissent pas la translation).
+</li></ul><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;1. </span></span>
+Dans le squelette, la mise à jour du positionnement de la caméra sera assurée par <code>GLApplication::updateCamera</code> (appelée avant le tracé de chaque image) : faites des <code>_camera.translate</code> qui conviennent pour les tests <code>if left()</code> (correspond à l’appui sur la touche ’q’), <code>right</code> (touche ’d’), <code>forward</code> (touche ’z’) et <code>backward</code> (touche ’s’).</p><p><span style="font-weight:bold">Testez</span> (réglez éventuellement l’amplitude choisie pour la translation).</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;2. </span></span>
+Pour orienter le point de vue, on va compléter le <code>if (mouseLeft())</code> de la même méthode <code>GLApplication::updateCamera</code>
+ (le test passe si on maintient le click gauche de la souris). Pour 
+cela, on choisit de considérer une navigation dite "Fly" : le mouvement 
+de la souris bas/haut correspond à orienter la tête bas/haut, et le 
+mouvement gauche/droite à tourner le <span style="font-weight:bold">torse</span> vers la gauche/droite. <span style="font-weight:bold">Le corps reste toujours vertical</span> par rapport au sol (i.e. l’axe "pied/tête" correspond à l’axe (0,1,0) du monde). Pour le résultat attendu, voir la vidéo :</p><div class="center">
+<video controls="controls" width="30%">"<source src="m3ds_interaction_fichiers/navigFly.webm" type="video/webm"></video>
+</div><p>Pour l’angle de rotation vous utiliserez les angles <code>deltaMouseX()</code> et <code>deltaMouseY()</code>
+ qui donne les incréments de la souris. Les translations (codées à la 
+question précédente) devront toujours correspondre à "avancer/reculer", 
+"gauche/droite" selon la caméra (i.e. la navigation doit être 
+"intuitive")</p><p>Codez les <code>_camera.rotate</code> corrects pour modifier l’orientation dans le <code>if (mouseLeft())</code> de <code>GLApplication::updateCamera()</code>
+ (la principale difficulté est de déterminer précisément par rapport à 
+quels axes, et dans quel ordre, on fait les rotations; toute approche 
+par tatonnement risque de donner une navigation non intuitive).</p><p><span style="font-weight:bold">Testez</span>. </p><p>Assurez
+ vous d’avoir une navigation "intuitive" (pas de roulis par rapport au 
+monde; la caméra avance/recule dans la direction du point de vue; 
+vérifiez avec la vidéo. Remarque : il ne s’agit pas d’une navigation 
+First-Person par laquelle il faudrait avancer/reculer en tenant compte 
+uniquement de l’orientation du torse (mouvement toujours parallèle au 
+sol). </p><p><span style="font-weight:bold">Comprenez</span> parfaitement l’ensemble et, notamment, la différence entre un <code>_camera.translate(...,Coordinate_Local)</code> et un <code>_camera.translate(...,Coordinate_World)</code> pour les translations effectuées sur la caméra (testez les deux possibilités si ce n’est pas clair).</p><p><br>
+
+<span style="color:#004CFF"><span style="font-weight:bold"><u>Exercice&nbsp;3. Curseur Souris/Monde</u></span></span><span style="color:#004CFF"><br>
+</span>
+
+Pour effectuer une sélection d’objet avec un click souris (opération 
+dite de picking), la première chose à faire est d’obtenir les 
+coordonnées de la souris dans le repère du monde. Les coordonnées de la 
+souris sont initialement données en coordonnées Window (coordonnées 
+pixel récupérées par le serveur graphique). Dans le squelette on dispose
+ de ces coordonnées Window par <code>(mouseX(),mouseY())</code>. </p><p>Pour
+ savoir quel objet 3D est cliqué, nous allons déterminer tout d’abord la
+ droite qui part de la caméra et qui passe par le pixel <code>(mouseX(),mouseY())</code>. On nomme souvent cette droite <code>picking ray</code>.
+ Il faut exprimer ce rayon dans le repère du monde pour pouvoir ensuite 
+effectuer les intersections nécessaires avec les objets de la scène.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;1. </span></span>
+Pour exprimer la souris dans le repère du monde, il s’agit de faire 
+l’opération inverse du tracé quand on part des coordonnées locales d’un 
+objet (pour rappel : lors du tracé on effectue la "chaine" <code>local-&gt;world-&gt;eye-&gt;(clip coordinates)-&gt;NDC-&gt;window coordinates</code> sur les coordonnées d’un sommet à tracer). </p><p>Pour
+ notre souris, connue en Window Coordinate, on l’exprime donc d’abord en
+ NDC : il suffit d’appliquer le viewport inverse. Faites le dans <code>Camera2::windowToNDC(x,y)</code> ((le viewport est donné par les attributs <code>_viewX,_viewY,_viewWidth,_viewHeight</code>; la coordonnées <span style="font-style:italic">z</span> de la souris correspond à la position de l’écran, c’est à dire −1 en NDC). </p><p>Pour <span style="font-weight:bold">tester</span>
+ : vérifier dans la console lorsque vous cliquez avec le bouton gauche; 
+les coordonnées affichées doivent correspondre à des coordonnées 
+normalisées : notamment (-1,-1,-1) pour le coin bas gauche et (1,1,-1) 
+pour le coin haut droit, (0,0,-1) pour le centre de la fenêtre.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;2. </span></span>
+Une fois normalisées il suffit de passer en coordonnées Eye. Pour cela 
+on applique l’inverse de la projection aux coordonnées de la souris une 
+fois qu’elles sont connues en NDC : faites-le dans <code>Camera2::windowToCamera(x,y)</code>. Ensuite, il reste à trouver les coordonnées World (il suffit d’appliquer <span style="font-style:italic">M</span><sub><span style="font-style:italic">world</span> → <span style="font-style:italic">camera</span></sub> une fois qu’on connait la souris dans le repère Eye) : faites le tout dans <code>Camera2::windowToWorld(x,y)</code>. </p><p>Pour pouvoir tester, il reste à compléter <code>Camera2::pickingRay(x,y)</code>
+ qui doit donner le rayon (i.e. la droite d’origine la caméra et passant
+ par le pixel (x,y)) dans le repère world à partir du (x,y) de la 
+souris. Pour cela, grâce à votre <code>Camera2::windowToWorld(x,y)</code>, on connait les coordonnées souris dans le repère du monde <span style="font-style:italic">P</span><sub>world</sub>; l’origine de la droite lui est <span style="font-style:italic">A</span><sub>eye</sub>=(0,0,0) dans le repère Eye; on peut alors prendre comme vecteur directeur <span style="font-style:italic">A</span><sub>world</sub><span style="font-style:italic">P</span><sub>world</sub>.</p><p><span style="font-weight:bold">Testez</span> : vous devez voir une sphère rouge qui correspond au click souris (cette sphère est affichée dans <code>GLApplication::drawCursor</code>; elle utilise la droite définie par l’attribut <code>_pickingRay</code> pour la positionner; <code>_pickingRay</code> est affecté dans <code>GLApplication::selectObject</code> avant chaque image en appelant votre <code>_camera.pickingRay(x,y)</code>).</p><p><br>
+
+<span style="color:#004CFF"><span style="font-weight:bold"><u>Exercice&nbsp;4. Sélection</u></span></span><span style="color:#004CFF"><br>
+</span>
+
+Pour déterminer quel objet 3D est cliqué, on choisit de faire explicitement l’intersection du <code>_pickingRay</code> avec tous les triangles de la scène (sélection dite "fine"). C’est la classe <code>SceneIntersection</code> qui se charge de faire ces intersections. La méthode <code>SceneIntersection::intersect(MeshObject3D *mesh)</code> se charge de faire les intersections pour un objet 3D avec <code>_pickingRay</code> (la boucle sur tous les objets est déjà faite dans la méthode du dessous). La droite d’intersection est l’attribut <code>_pickingRay</code>. </p><p>On cherche l’intersection avec chaque triangle de l’objet. Chaque intersection trouvée est placée dans un tableau (membre <code>SceneIntersection::_result</code>). Chaque intersection (de classe <code>Intersection</code>)
+ contiendra les informations nécessaires pour exploiter cette 
+intersection par la suite (la référence de l’objet 3D intersecté, le 
+rayon, et le lambda de l’équation du rayon <span style="font-style:italic">P</span>=<span style="font-style:italic">A</span>+λ <span style="font-style:italic">u</span>
+ correspondant à l’intersection). L’insertion de l’intersection dans ce 
+tableau s’effectue par ordre croissant dans la direction du rayon 
+(lambda croissant). Toute cette démarche est déjà codée dans <code>SceneIntersection::intersect</code>. Il reste à compléter l’intersection du rayon avec un triangle.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;1. </span></span>
+Il manque l’intersection du rayon avec un triangle <code>bool SceneIntersection::intersectTriangle(ray,s0,s1,s2,*lambdaRes)</code>
+ que vous devez compléter (cf les commentaires pour les aspects 
+techniques). Pour tester, seul le gros triangle de la scène est pour 
+l’instant dans la liste des objets à intersecter (voir la méthode <code>GLApplication::selectObject</code>). </p><p><span style="font-weight:bold">Testez</span>
+ : lorsque vous faites un click droit les intersections doivent 
+s’afficher à l’écran (notamment un "0" s’affiche sur le triangle, ainsi 
+que le rayon); bougez avec le click-gauche pour s’assurer que 
+l’intersection est bien valide quelque soit le point de vue.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;2. </span></span>
+Mettez tous les objets en faisant <code>_sceneIntersection.intersect({&amp;_triangle,&amp;_triceratops,&amp;_cow},_pickingRay);</code> dans <code>GLApplication::selectObject</code> et constatez que <span style="font-weight:bold">toutes</span> les intersections apparaissent bien.</p><div class="center">
+<table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tbody><tr><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/testIntersect0.png"><img src="m3ds_interaction_fichiers/testIntersect0.png" style="width:25em"></a>
+</div>
+</div>
+</td><td style="text-align:center;white-space:nowrap"> <div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/testIntersect1.png"><img src="m3ds_interaction_fichiers/testIntersect1.png" style="width:25em"></a>
+</div>
+</div>
+ </td></tr>
+<tr><td style="text-align:center;white-space:nowrap">Click droit souris</td><td style="text-align:center;white-space:nowrap">après mouvement de la caméra
+</td></tr>
+</tbody></table>
+</div><p><br>
+
+<span style="color:#004CFF"><span style="font-weight:bold"><u>Exercice&nbsp;5. Manipulation en translation</u></span></span><span style="color:#004CFF"><br>
+</span>
+
+Le déplacement de l’objet sélectionné selon la souris est géré dans <code>GLApplication::moveSelectedObject</code>.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;1. </span></span>
+Dans le bloc <code>if (_controlMouse==Manipulation_Translation)</code>, essayez un simple <code>mesh-&gt;translate(dx,dy,0,Coordinate_Local);</code> (dx et dy dépendent directement des incréments de la souris; <code>mesh</code> correspond à l’objet intersecté lors du select). <span style="font-weight:bold">Constatez</span> (et comprenez) que :
+</p><ul class="itemize"><li class="li-itemize">
+L’objet sélectionné ne suit pas le curseur (il suffit de s’éloigner ou 
+de se rapprocher pour s’en convaincre) : on doit donc trouver les dx et 
+dy corrects.
+</li><li class="li-itemize">Et, surtout, le mouvement n’est pas 
+indépendant du point de vue : si vous bougez et tournez autour des 
+objets, il est difficile de "prévoir" comment vont bouger les objets 
+avec la souris, comme le montre la vidéo suivante.
+</li></ul><div class="center">
+<video controls="controls" width="30%">"<source src="m3ds_interaction_fichiers/moveLocal.webm" type="video/webm"></video>
+</div><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;2. </span></span>
+De nombreux principes peuvent être adoptés pour faire la manipulation 
+(la difficulté étant d’offrir le maximum de liberté tout en ayant une 
+interaction intuitive). Ici on choisit de déplacer l’objet toujours dans
+ un plan parallèle à la caméra. La vidéo montre le résultat attendu :</p><div class="center">
+<video controls="controls" width="30%">"<source src="m3ds_interaction_fichiers/moveCameraPlane.webm" type="video/webm"></video>
+</div><p>La translation à effectuer sur l’objet doit bien correspondre à un déplacement <code>(dx,dy,0)</code>
+ mais considérés dans le repère de la caméra. Il suffit de convertir ce 
+déplacement (dx,dy,0) du repère caméra dans le repère de l’objet avant 
+le <code>mesh-&gt;translate(?,?,?,Coordinate_Local)</code> la classe <code>Mesh</code> disposent des même facilités que la camera : notamment vous disposez de <code>mesh-&gt;pointTo(Coordinate_Local,...)</code> , <code>mesh-&gt;directionTo(Coordinate_Local,...)</code>, etc). <span style="font-weight:bold">Testez</span> (vérifiez notamment l’indépendance du point de vue en bougeant la caméra). </p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;3. </span></span>
+On souhaite que le point clické corresponde maintenant précisément au 
+curseur. Comparez le résultat précédent avec le résultat attendu :</p><div class="center">
+<video controls="controls" width="30%">"<source src="m3ds_interaction_fichiers/moveDirect.webm" type="video/webm"></video>
+</div><p>
+moveDirect</p><p>Pour résoudre ce problème, on peut s’appuyer sur le schéma suivant :</p><div class="minipage">
+<div class="center">
+<a href="http://www.fil.univ-lille1.fr/~aubert/m3ds/img/directe2.png"><img src="m3ds_interaction_fichiers/directe2.png" style="width:25em"></a>
+</div>
+</div><p><span style="font-style:italic">T</span> correspond au mouvement de la souris sur l’écran. Il faut trouver la translation <span style="font-style:italic">T</span>′ à appliquer à l’objet pour que l’objet suive le curseur (i.e. <span style="font-style:italic">P</span> doit être déplacé en <span style="font-style:italic">P</span>′). La difficulté est de trouver <span style="font-style:italic">T</span>′ en fonction des informations qu’on possède. Le point <span style="font-style:italic">P</span> est mémorisé par le squelette à chaque update dans <code>_attachPointWorld</code> (initialement c’est l’intersection entre le premier <code>_pickingRay</code> et l’objet). Ensuite, pour trouver <span style="font-style:italic">P</span>′,
+ on propose de procéder par intersection entre le picking ray et le plan
+ d’interaction (i.e. le plan parallèle à l’écran passant par le point <span style="font-style:italic">P</span>; i.e. le plan où est représenté <span style="font-style:italic">T</span>′ sur le schéma)</p><p>Pour le plan d’interaction, on connait le point <span style="font-style:italic">P</span> dans le repère world (c’est <code>_attachPointWorld</code>)
+ et sa normale est (0,0,1) dans le repère caméra. Il suffit de résoudre 
+l’intersection droite/plan pour trouver P’ (tout exprimer dans le repère
+ world, par exemple, avant de faire le calcul).</p><p>Une fois connue P’, la translation est PP’^→ (qu’il faut exprimer dans le repère de l’objet pour effectuer un <code>mesh-&gt;translate(..., Coordinate_Local)</code> ou dans le repère world avec un <code>mesh-&gt;translate(..., Coordinate_World)</code> ).</p><p><span style="font-weight:bold">Testez</span>
+ : le click droit doit translater l’objet sélectionné parallèlement au 
+plan de la caméra. Le point cliqué doit rester au même endroit par 
+rapport à l’objet (revoir la vidéo du résultat attendu; notez que la 
+sphère rouge est fixe par rapport à l’objet manipulé et désigne toujours
+ le même point de l’objet). Vérifier également que cette manipulation 
+est indépendante du point de vue en naviguant avec click gauche (i.e. le
+ déplacement de l’objet est toujours parallèle au plan de la caméra 
+quelque soit le point de vue).</p><p>Remarque : d’autres calculs peuvent
+ aboutir au même résultat (le schéma fait penser à thales par 
+exemple...), mais ici le principe reste général pour contraindre 
+l’interaction sur n’importe quel plan. Par exemple, on peut envisager 
+d’interagir pour placer les objets les uns par rapport aux autres avec 
+un plan d’interaction parallèle au sol : <span style="font-weight:bold">testez cette possibilité</span> (il suffit simplement de changer la normale du plan d’interaction).</p><p><br>
+
+<span style="color:#004CFF"><span style="font-weight:bold"><u>Exercice&nbsp;6. Manipulation en rotation</u></span></span><span style="color:#004CFF"><br>
+</span>
+
+En interaction 3D, il est difficile de proposer une manipulation en 
+orientation intuitive et générique quelque soit l’application (rotations
+ autour des axes de l’objet, des axes de la caméra ?). Les logiciels 
+tentent de proposer toutes les possibilités en visualisant explicitement
+ les axes de rotation (par des cercles accompagnés de "poignées" 
+généralement : cf par exemple <a href="https://docs.blender.org/manual/en/dev/editors/3dview/object/editing/transform/control/orientations.html">https://docs.blender.org/manual/en/dev/editors/3dview/object/editing/transform/control/orientations.html</a>). On se contente ici d’une solution simple en tournant l’objet autour de l’axe X ou l’axe Y de la caméra.</p><p><span style="color:blue"><span style="font-weight:bold">Question&nbsp;1. </span></span>
+Proposez (dans <code>GLApplication::moveSelectedObject</code> dans le bloc <code>Manipulation_Orientation</code>) une orientation selon les axes X (souris bas/haut) et Y (souris gauche/droite) de la caméra : vous pouvez utiliser <code>mesh-&gt;rotate(angle,axe,Coordinate_???)</code> pour tourner l’objet. <span style="font-weight:bold">Testez</span> et critiquez brièvement votre solution dans le <code>Readme.txt</code> (manipulez par exemple aléatoirement la vache, puis essayez de la ré-orienter pour qu’elle regarde vers la caméra).</p><div class="center">
+<video controls="controls" width="30%">"<source src="m3ds_interaction_fichiers/manipulationRotation.webm" type="video/webm"></video>
+</div><!--CUT END -->
+<!--HTMLFOOT-->
+<!--ENDHTML-->
+<!--FOOTER-->
+<hr style="height:2"><blockquote class="quote"><em>Ce document a été traduit de L<sup>A</sup>T<sub>E</sub>X par </em><a href="http://hevea.inria.fr/"><em>H</em><em><span style="font-size:small"><sup>E</sup></span></em><em>V</em><em><span style="font-size:small"><sup>E</sup></span></em><em>A</em></a></blockquote>
+
+</body></html>
